@@ -10,12 +10,15 @@ public class Servicio implements VOServicio{
 	
 	private int horaCierre;
 	
-     
-	public Servicio(int capacidad, int horaInicio, int horaCierre)
+	private long idTipoServicio;
+	
+	public Servicio(long id, int capacidad, int horaInicio, int horaCierre, long idTipoServicio)
 	{
 		this.capacidad = capacidad; 
 		this.horaInicio = horaInicio;
 		this.horaCierre = horaCierre; 
+		this.id = id; 
+		this.idTipoServicio = idTipoServicio;
 	}
 	public Servicio()
 	{
@@ -56,7 +59,12 @@ public class Servicio implements VOServicio{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	public long getIdTipoServicio() {
+		return idTipoServicio;
+	}
+	public void setIdTipoServicio(long idTipoServicio) {
+		this.idTipoServicio = idTipoServicio;
+	}
 	
 	
 }

@@ -269,7 +269,7 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlRol.adicionarRol(pm, idRol, nombre);
             tx.commit();
             
-            log.trace ("Inserción de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
             return new Rol(idRol, nombre);
         }
@@ -394,7 +394,7 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlIPS.adicionarIPS(pm, idIPS, nombre, localizacion);
             tx.commit();
             
-            log.trace ("Inserción de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
             return new IPS(localizacion, nombre, idIPS);
         }
@@ -456,7 +456,7 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlCita.adicionarCita(pm, idCita, hora, idFecha, idServicio, idAfiliado);
             tx.commit();
             
-            log.trace ("Inserción de una cita: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("InserciÃ³n de una cita: " + ": " + tuplasInsertadas + " tuplas insertadas");
             
             return new Cita(idCita, idServicio, idAfiliado, idFecha, hora);
         }
@@ -475,6 +475,106 @@ public class PersistenciaEpsAndes {
             pm.close();
         }  
 	}
+	
+	public Orden adicionarOrden(long idAfiliado, long idMedico, long idTipoServicio)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlOrden.adicionarOrden(pm, idAfiliado, idMedico, idTipoServicio);
+            tx.commit();
+            
+            log.trace ("Insercion de una Orden: " +  ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Orden(idMedico, idTipoServicio, idAfiliado);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+	public Fecha adicionarFecha(String fecha) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long idFecha = nextval ();
+            long tuplasInsertadas = sqlFecha.AdicionarFecha(pm, idFecha, fecha);
+            tx.commit();
+            
+            log.trace ("Insercion de una fecha: " + fecha + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Fecha(idFecha, fecha);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
+
+	public Servicio adicionarServicio(int capacidad, int horaInicio, int horaFinal, long idTipoServicio)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long idServicio = nextval ();
+            long tuplasInsertadas = sqlServicio.adicionarServicio(pm, idServicio, capacidad, horaInicio, horaFinal, idTipoServicio);
+            tx.commit();
+            
+            log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new Servicio(idServicio, capacidad, horaInicio, horaFinal, idTipoServicio);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+      
+	}
+	
+	
+
 	
 
 	

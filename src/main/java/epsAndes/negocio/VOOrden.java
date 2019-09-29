@@ -1,8 +1,6 @@
 package epsAndes.negocio;
 
 public interface VOOrden {
-
-	public long getId(); 
 	
 	public long getIdMedico();
 	

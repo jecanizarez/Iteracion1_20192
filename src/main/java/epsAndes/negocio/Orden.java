@@ -1,8 +1,6 @@
 package epsAndes.negocio;
 
 public class Orden implements VOOrden {
-
-	private long id;
 	
 	private long idMedico;
 	
@@ -10,9 +8,8 @@ public class Orden implements VOOrden {
 	
 	private long idAfiliado;
 
-	public Orden(long id, long idMedico, long idServicio, long idAfiliado)
+	public Orden( long idMedico, long idServicio, long idAfiliado)
 	{
-		this.id = id; 
 		this.idMedico = idMedico; 
 		this.idAfiliado = idAfiliado; 
 		this.idServicio = idServicio;
@@ -20,20 +17,11 @@ public class Orden implements VOOrden {
 	
 	public Orden()
 	{
-		id = 0; 
 		idMedico = 0; 
 		idServicio = 0; 
 		idAfiliado = 0; 
 	}
 	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public long getIdMedico() {
 		return idMedico;
 	}

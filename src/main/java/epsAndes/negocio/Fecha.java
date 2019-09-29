@@ -8,7 +8,7 @@ public class Fecha implements VOFecha{
 	
 	public String fecha;
 
-	public Fecha(String fecha)
+	public Fecha(long id, String fecha)
 	{
 		this.id = id; 
 		this.fecha = fecha;
