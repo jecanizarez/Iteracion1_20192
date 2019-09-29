@@ -1,0 +1,41 @@
+11:42:05,711 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Limpiando la BD de Parranderos
+11:42:05,809 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.persistencia.PersistenciaParranderos] - Borrada la base de datos
+11:42:05,810 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Limpiando la BD de Parranderos: Listo!
+17:49:19,884 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Interfaz
+17:49:19,884 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se aplica configuración indicada en el archivo de configuración
+17:49:19,896 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Tablas BD
+16:34:02,150 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
+16:34:02,152 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
+16:34:02,614 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
+16:34:48,711 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
+16:34:48,712 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
+16:34:48,756 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
+16:36:09,774 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
+16:36:09,776 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
+16:36:09,813 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
+16:38:03,176 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
+16:38:03,178 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
+16:38:03,220 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
+16:39:50,425 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando bar: Los Amigos
+16:39:50,763 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando bar: Bar [id=1, nombre=Los Amigos, ciudad=Bogotá, presupuesto=Bajo, cantSedes=2]
+16:39:50,763 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Generando los VO de Bares
+16:39:50,779 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Generando los VO de Bares: 1 bares existentes
+16:39:50,779 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando bar por nombre: Los Amigos
+16:39:50,792 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando bar: 1 tuplas eliminadas
+16:41:31,318 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando Tipo de bebida: Vino tinto
+16:41:31,464 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando Tipo de bebida: TipoBebida [id=2, nombre=Vino tinto]
+16:41:31,464 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Generando los VO de Tipos de bebida
+16:41:31,482 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Generando los VO de Tipos de bebida: 1 existentes
+16:41:31,482 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando Tipo de bebida por id: 2
+16:41:31,501 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Eliminando Tipo de bebida por id: 1 tuplas eliminadas
+22:25:31,712 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Interfaz
+22:25:31,714 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se aplica configuración indicada en el archivo de configuración
+22:25:32,209 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Tablas BD
+22:26:01,694 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando Tipo de bebida: Arroz
+22:26:02,816 (AWT-EventQueue-0) INFO  [uniandes.isis2304.parranderos.negocio.Parranderos] - Adicionando Tipo de bebida: TipoBebida [id=21, nombre=Arroz]
+22:31:59,895 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Interfaz
+22:31:59,897 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se aplica configuración indicada en el archivo de configuración
+22:31:59,948 (main) INFO  [uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp] - Se encontró un archivo de configuración válido: Tablas BD
+22:42:57,903 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
+22:42:57,907 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
+22:42:57,968 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
