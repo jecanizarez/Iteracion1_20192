@@ -18,6 +18,16 @@ public class ControllerView
 		print("No ingrese comillas sencillas o dobles:\n");
 	}
 	
+	public static void printMenuAdministrador()
+	{
+		System.out.println("Bienvenido administrador");
+		System.out.println("1. Registrar roles");
+		System.out.println("2. Registrar IPS");
+		System.out.println("3. Registrar Medico");
+		System.out.println("4. Registrar Afiliado");
+		System.out.println("5. Registrar Servicio de salud");
+	}
+		
 	/**
 	 * Prints any String.
 	 * @param string The String to print.

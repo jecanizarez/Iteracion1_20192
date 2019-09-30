@@ -28,6 +28,63 @@ public class Controller
 			{
 				ControllerView.print("El usuario no existe");
 			}
+			else if (usuario.getIdRol() == 4)
+			{
+				ControllerView.printMenuAdministrador();
+				
+				int numero = sc.nextInt(); 
+				if(numero == 1)
+				{
+					System.out.println("Ingrese nombre del rol");
+					String nombre = sc.nextLine(); 
+					persistencia.adicionarRol(nombre);
+					System.out.println("Rol adicionado");
+				}
+				else if(numero == 2)
+				{
+					System.out.println("Ingrese un nombre");
+					String nombre = sc.nextLine();
+					System.out.println("Ingrese una localizacion");
+					String localizacion = sc.nextLine(); 
+					persistencia.adicionarIPS(nombre, localizacion);
+					System.out.println("Se ha añadido la IPS correctamente");
+				}
+				else if(numero == 3)
+				{
+					int rolMed = 2;
+					System.out.println("Ingrese documento");
+					int documento = sc.nextInt(); 
+					System.out.println("Ingrese un login");
+					String loginMedico = sc.nextLine();
+					System.out.println("Ingrese un tipo de documento (TI,CC,CE");
+					String tipoDocumento = sc.nextLine();
+					int IdtipoDocumento = 0;
+					if(tipoDocumento.equalsIgnoreCase("CC"))
+					{
+						IdtipoDocumento = 1;
+					}
+					else if(tipoDocumento.equalsIgnoreCase("TI"))
+					{
+						IdtipoDocumento = 3;
+					}
+					else if(tipoDocumento.equalsIgnoreCase("CE"))
+					{
+						IdtipoDocumento = 2;
+					}
+					else
+					{
+						System.out.println("Tipo de documento no valido");
+					}
+					System.out.println("Ingrese un nombre");
+					String nombreMedico =  sc.nextLine();
+					
+					System.out.println("Ingrese registro medico");
+					
+										
+					
+					
+				}
+			}
 			
 			// Acá hiría la QUERY de pedir login y luego se hace switch para roles.
 			

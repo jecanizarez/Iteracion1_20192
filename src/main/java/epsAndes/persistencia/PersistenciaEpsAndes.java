@@ -277,6 +277,7 @@ public class PersistenciaEpsAndes {
         {
 //        	e.printStackTrace();
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error adicionado el rol");
         	return null;
         }
         finally
