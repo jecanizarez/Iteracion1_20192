@@ -7,7 +7,7 @@ public class Medico extends Usuario implements VOMedico {
 	
 	private String especialidad; 
 	
-	public Medico(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, long login,  long numRegistroMed, String especialidad) {
+	public Medico(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login,  long numRegistroMed, String especialidad) {
 		super(nombre, identificacion, correo, tipoDocumento, idRol, login);
 	    this.numRegistroMed = numRegistroMed; 
 	    this.especialidad = especialidad; 

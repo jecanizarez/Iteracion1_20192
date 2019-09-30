@@ -4,7 +4,7 @@ public class Recepcionista extends Usuario implements VORecepcionista{
 
 	private long idIPS;
      
-	public Recepcionista(String nombre, long identificacion, String correo, long tipoDocumento, long idRol,long login,  long idIPS)
+	public Recepcionista(String nombre, long identificacion, String correo, long tipoDocumento, long idRol,String login,  long idIPS)
 	{
 	  super(nombre, identificacion, correo, tipoDocumento, idRol, login); 	
 	  

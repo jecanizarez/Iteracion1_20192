@@ -14,13 +14,13 @@ public class Usuario implements VOUsuario{
 	
 	private long  idRol; 
 	
-	private long login;
+	private String login;
 	
 	
 	public void setIdentificacion(long identificacion) {
 		this.identificacion = identificacion;
 	}
-	public Usuario(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, long login)
+	public Usuario(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login)
 	{
 		this.nombre = nombre; 
 		this.identificacion = identificacion; 
@@ -76,10 +76,10 @@ public class Usuario implements VOUsuario{
 		this.idRol = idRol;
 	}
 	
-	public long getLogin() {
+	public String getLogin() {
 		return login;
 	}
-	public void setLogin(long login) {
+	public void setLogin(String login) {
 		this.login = login;
 	}
 	

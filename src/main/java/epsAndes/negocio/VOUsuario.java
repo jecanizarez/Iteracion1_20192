@@ -12,7 +12,7 @@ public interface VOUsuario {
 	
 	public long getIdRol();
 	
-	public long getLogin();
+	public String getLogin();
 	@Override
 	public String toString(); 
 }
