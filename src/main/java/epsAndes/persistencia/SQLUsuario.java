@@ -14,10 +14,10 @@ class SQLUsuario {
 		this.pp = pp;
 	}
 	
-	public long adicionarUsuario(PersistenceManager pm, long id, long login, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
+	public long adicionarUsuario(PersistenceManager pm, long id, String login, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(id, login, idRol, idTipoDocumento, nombre, correoElectronico) values (?, ?, ?, ?, ?, ?) ");
-		q.setParameters(id, login, idRol, idTipoDocumento, nombre, correoElectronico);
+		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?) ");
+		q.setParameters(login, idRol, id, idTipoDocumento, nombre);
 		return (long) q.executeUnique();
 	}
 }

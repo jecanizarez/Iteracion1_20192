@@ -6,7 +6,7 @@ public class Afiliado extends Usuario implements VOAfiliado{
 	
 	private long idFecha;
 	
-	public Afiliado(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, long login, long idEps, long idFecha)
+	public Afiliado(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login, long idEps, long idFecha)
 	{
 		super(nombre, identificacion, correo, tipoDocumento, idRol, login);
 		this.idEps = idEps; 

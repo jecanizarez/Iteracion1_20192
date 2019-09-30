@@ -75,8 +75,8 @@ public class PersistenciaEpsAndes {
 		
 		
 		tablas = new LinkedList<String>();
-		tablas.add("EpsAndes_sequence");
-		tablas.add("AFILIADO");
+		tablas.add("EPS_sequence");
+		tablas.add("AFILIADOS");
 		tablas.add("CITA");
 		tablas.add("EPS");
 		tablas.add("FECHA");
@@ -289,7 +289,7 @@ public class PersistenciaEpsAndes {
         }
 	}
 	
-	public Usuario adicionarUsuario(long login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
+	public Usuario adicionarUsuario(String login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -320,7 +320,7 @@ public class PersistenciaEpsAndes {
         }
 	}
 	
-	public Medico adicionarMedico(long login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long numRegistroMed, String especialidad, long idIPS)
+	public Medico adicionarMedico(String login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long numRegistroMed, String especialidad, long idIPS)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -351,7 +351,7 @@ public class PersistenciaEpsAndes {
         }
 	}
 	
-	public Afiliado adicionarAfiliado(long login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idFecha, long idEPS) 
+	public Afiliado adicionarAfiliado(String login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idFecha, long idEPS) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -413,7 +413,7 @@ public class PersistenciaEpsAndes {
             pm.close();
         }  
 	}
-	public Recepcionista adicionarRecepcionista(long login, long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idIPS) 
+	public Recepcionista adicionarRecepcionista(String login, long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idIPS) 
     {
     	PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
