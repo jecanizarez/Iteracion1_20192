@@ -24,6 +24,11 @@ public class Controller
 			ControllerView.printMenuLogin();
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
+			if(usuario == null)
+			{
+				ControllerView.print("El usuario no existe");
+			}
+			
 			// Acá hiría la QUERY de pedir login y luego se hace switch para roles.
 			
 		}
