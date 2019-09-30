@@ -68,7 +68,7 @@ public class PersistenciaEpsAndes {
 	
 	private SQLUsuario sqlUsuario;
 	
-	private PersistenciaEpsAndes()
+	public PersistenciaEpsAndes()
 	{
 		pmf = JDOHelper.getPersistenceManagerFactory("EpsAndes");	
 		crearClasesSQL();
@@ -77,12 +77,12 @@ public class PersistenciaEpsAndes {
 		tablas = new LinkedList<String>();
 		tablas.add("EPS_sequence");
 		tablas.add("AFILIADOS");
-		tablas.add("CITA");
+		tablas.add("CITAS");
 		tablas.add("EPS");
 		tablas.add("FECHA");
 		tablas.add("IPS");
 		tablas.add("MEDICO");
-		tablas.add("ORDEN");
+		tablas.add("ORDENES");
 		tablas.add("PRESTANSERVICIO");
 		tablas.add("RECEPCIONISTA");
 		tablas.add("RECETA");
@@ -572,6 +572,12 @@ public class PersistenciaEpsAndes {
         }
       
 	}
+	
+	public Usuario darUsuarioPorLogin(String login)
+	{
+		return sqlUsuario.buscarUsuarioPorLogin(pmf.getPersistenceManager(), login);
+	}
+	
 	
 	
 

@@ -2,6 +2,9 @@ package epsAndes.main;
 
 import java.util.Scanner;
 
+import epsAndes.negocio.*;
+import epsAndes.persistencia.PersistenciaEpsAndes;
+
 public class Controller 
 {
 	// Attributes
@@ -15,11 +18,14 @@ public class Controller
 	{
 		Scanner sc = new Scanner(System.in);
 		boolean end = false;
+		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
 			ControllerView.printMenuLogin();
 			String login = sc.nextLine();
+			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			// Acá hiría la QUERY de pedir login y luego se hace switch para roles.
+			
 		}
 	}
 }

@@ -2,6 +2,9 @@
 
  import javax.jdo.PersistenceManager;
  import javax.jdo.Query;
+
+import epsAndes.negocio.Usuario;
+import uniandes.isis2304.parranderos.negocio.Bar;
  
 class SQLUsuario {
 
@@ -19,5 +22,13 @@ class SQLUsuario {
 		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?) ");
 		q.setParameters(login, idRol, id, idTipoDocumento, nombre);
 		return (long) q.executeUnique();
+	}
+	
+	public Usuario buscarUsuarioPorLogin(PersistenceManager pm,String login)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE login = ?");
+		q.setResultClass(Usuario.class);
+		q.setParameters(login);
+		return (Usuario) q.executeUnique();
 	}
 }
