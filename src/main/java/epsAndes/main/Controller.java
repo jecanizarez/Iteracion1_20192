@@ -78,11 +78,25 @@ public class Controller
 					System.out.println("Ingrese un nombre");
 					String nombreMedico =  sc.nextLine();
 					
-					System.out.println("Ingrese registro medico");
-					
-										
-					
-					
+					System.out.println("Ingrese numero del registro medico");
+					long numRegistroMed = sc.nextLong();
+					System.out.println("Ingrese especialidad");
+					String especialidad = sc.nextLine(); 
+					System.out.println("Ingrese nombre IPS");
+					String IPS = sc.nextLine(); 
+					IPS ips = persistencia.darIPSPorNombre(IPS);
+					long idIPS = 0;
+					if (ips != null)
+					{
+						idIPS = ips.getId();
+					}
+					else
+					{
+						System.out.println("La IPS no existe");
+					}
+					Usuario usuarioMedico = persistencia.adicionarUsuario(loginMedico, documento, rolMed, IdtipoDocumento, nombreMedico, "");
+					persistencia.adicionarMedico(loginMedico, documento, rolMed, IdtipoDocumento, nombreMedico, "", numRegistroMed, especialidad, idIPS);
+					System.out.println("Se ha adicionado el medico correctamente");
 				}
 			}
 			

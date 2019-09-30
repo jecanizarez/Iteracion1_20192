@@ -579,6 +579,11 @@ public class PersistenciaEpsAndes {
 		return sqlUsuario.buscarUsuarioPorLogin(pmf.getPersistenceManager(), login);
 	}
 	
+	public IPS darIPSPorNombre(String nombre)
+	{
+		return sqlIPS.buscarIPSPorNombre(pmf.getPersistenceManager(), nombre);
+	}
+	
 	
 	
 
