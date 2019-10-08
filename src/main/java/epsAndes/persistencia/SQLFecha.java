@@ -16,7 +16,7 @@ class SQLFecha {
 	
 	public long AdicionarFecha(PersistenceManager pm,long id, String fecha)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaFecha() + "(id, Fecha) values (?, ?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaFecha() + "(id, Fecha) values (?, ?) ");
 		q.setParameters(id, fecha);
 		return (long) q.executeUnique();
 	}

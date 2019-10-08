@@ -16,8 +16,8 @@ class SQLServicio {
 	
 	public long adicionarServicio(PersistenceManager pm, long id, int capacidad, int horaInicio, int horaFinal, long idTipoServicio)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaServicio() + "(id, capacidad, horaInicio, horaFinal, TipoServicio) values (?, ?, ?, ? ,?) ");
-		q.setParameters(id, capacidad, horaInicio, horaFinal, idTipoServicio);
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServicio() + "(capacidad, horaInicio, horaFinal, TipoServicio) values (?, ?, ? ,?) ");
+		q.setParameters(capacidad, horaInicio, horaFinal, idTipoServicio);
 		return (long) q.executeUnique();
 	}
 }

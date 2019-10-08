@@ -16,7 +16,7 @@ class SQLOrden {
 	
 	public long adicionarOrden(PersistenceManager pm, long idAfiliado, long idMedico, long idTipoServicio)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaOrden() + "(idAfiliado, idMedico, TipoServicio) values (?, ?, ?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaOrden() + "(idAfiliado, idMedico, TipoServicio) values (?, ?, ?) ");
 		q.setParameters(idAfiliado, idMedico, idTipoServicio);
 		return (long) q.executeUnique();
 	}
