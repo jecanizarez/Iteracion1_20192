@@ -42,3 +42,9 @@
 10:22:23,990 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Interfaz
 10:22:24,011 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se aplica configuración indicada en el archivo de configuración
 10:22:24,172 (main) INFO  [uniandes.isis2304.parranderos.interfazDemo.InterfazParranderosDemo] - Se encontró un archivo de configuración válido: Tablas BD
+01:23:00,050 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO AFILIADOS(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?)".
+ORA-00942: la tabla o vista no existe
+
+01:26:36,619 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO AFILIADOS(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?)".
+ORA-00942: la tabla o vista no existe
+
