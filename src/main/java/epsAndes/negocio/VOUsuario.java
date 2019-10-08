@@ -6,8 +6,6 @@ public interface VOUsuario {
 	
 	public String getNombre();
 	
-	public String getCorreoElectronico();
-	
 	public long getIdTipoDocumento();
 	
 	public long getIdRol();

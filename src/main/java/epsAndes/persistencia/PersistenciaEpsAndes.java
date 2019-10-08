@@ -70,7 +70,7 @@ public class PersistenciaEpsAndes {
 	
 	public PersistenciaEpsAndes()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("EpsAndes");	
+		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion");	
 		crearClasesSQL();
 		
 		
@@ -265,19 +265,20 @@ public class PersistenciaEpsAndes {
         try
         {
             tx.begin();
-            long idRol = nextval ();
-            long tuplasInsertadas = sqlRol.adicionarRol(pm, idRol, nombre);
+            long idRol = nextval();
+            long tuplasInsertadas = sqlRol.adicionarRol(pm, nombre);
             tx.commit();
             
             log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
+            //ARREGLAR
             return new Rol(idRol, nombre);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
+
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
         	System.out.println("Error adicionado el rol");
+        	e.printStackTrace();
         	return null;
         }
         finally
@@ -303,7 +304,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Usuario(nombre, documento, correoElectronico, idTipoDocumento, idRol, login);
+            return new Usuario(nombre, documento,  idTipoDocumento, idRol, login);
         }
         catch (Exception e)
         {
@@ -334,7 +335,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un Medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Medico(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, numRegistroMed, especialidad);
+            return new Medico(nombre, documento, idTipoDocumento, idRol, login, numRegistroMed, especialidad);
         }
         catch (Exception e)
         {
@@ -365,7 +366,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Afiliado(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, idEPS, idFecha);
+            return new Afiliado(nombre, documento,  idTipoDocumento, idRol, login, idEPS, idFecha);
         }
         catch (Exception e)
         {
@@ -427,7 +428,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Recepcionista(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, idIPS);
+            return new Recepcionista(nombre, documento,  idTipoDocumento, idRol, login, idIPS);
         }
         catch (Exception e)
         {
@@ -582,6 +583,11 @@ public class PersistenciaEpsAndes {
 	public IPS darIPSPorNombre(String nombre)
 	{
 		return sqlIPS.buscarIPSPorNombre(pmf.getPersistenceManager(), nombre);
+	}
+	
+	public Rol darRolPorNombre(String rol)
+	{
+		return sqlRol.buscaRolNombre(pmf.getPersistenceManager(), rol);
 	}
 	
 	

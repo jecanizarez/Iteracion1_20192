@@ -24,6 +24,12 @@ public class Controller
 			ControllerView.printMenuLogin();
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
+			System.out.println("Ingrese nombre del rol");
+			String nombre = sc.nextLine(); 
+			persistencia.adicionarRol(nombre);
+			System.out.println("Rol adicionado");
+			System.out.println(persistencia.darRolPorNombre(nombre).getRol());
+			
 			if(usuario == null)
 			{
 				ControllerView.print("El usuario no existe");
@@ -35,19 +41,19 @@ public class Controller
 				int numero = sc.nextInt(); 
 				if(numero == 1)
 				{
-					System.out.println("Ingrese nombre del rol");
-					String nombre = sc.nextLine(); 
-					persistencia.adicionarRol(nombre);
-					System.out.println("Rol adicionado");
+//					System.out.println("Ingrese nombre del rol");
+//					String nombre = sc.nextLine(); 
+//					persistencia.adicionarRol(nombre);
+//					System.out.println("Rol adicionado");
 				}
 				else if(numero == 2)
 				{
-					System.out.println("Ingrese un nombre");
-					String nombre = sc.nextLine();
-					System.out.println("Ingrese una localizacion");
-					String localizacion = sc.nextLine(); 
-					persistencia.adicionarIPS(nombre, localizacion);
-					System.out.println("Se ha añadido la IPS correctamente");
+//					System.out.println("Ingrese un nombre");
+//					String nombre = sc.nextLine();
+//					System.out.println("Ingrese una localizacion");
+//					String localizacion = sc.nextLine(); 
+//					persistencia.adicionarIPS(nombre, localizacion);
+//					System.out.println("Se ha añadido la IPS correctamente");
 				}
 				else if(numero == 3)
 				{

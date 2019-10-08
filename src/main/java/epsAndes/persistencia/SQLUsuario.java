@@ -26,6 +26,7 @@ class SQLUsuario {
 	
 	public Usuario buscarUsuarioPorLogin(PersistenceManager pm,String login)
 	{
+		System.out.println(pp.darTablaUsuario());
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE login = ?");
 		q.setResultClass(Usuario.class);
 		q.setParameters(login);

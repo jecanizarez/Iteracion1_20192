@@ -10,8 +10,6 @@ public interface VOMedico {
 	
 	public String getEspecialidad();
 	
-	public String getCorreoElectronico();
-	
 	public long getIdTipoDocumento();
 	
 	public long getIdRol();

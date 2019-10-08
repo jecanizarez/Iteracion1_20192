@@ -7,8 +7,8 @@ public class Medico extends Usuario implements VOMedico {
 	
 	private String especialidad; 
 	
-	public Medico(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login,  long numRegistroMed, String especialidad) {
-		super(nombre, identificacion, correo, tipoDocumento, idRol, login);
+	public Medico(String nombre, long identificacion,  long tipoDocumento, long idRol, String login,  long numRegistroMed, String especialidad) {
+		super(nombre, identificacion, tipoDocumento, idRol, login);
 	    this.numRegistroMed = numRegistroMed; 
 	    this.especialidad = especialidad; 
 	}
@@ -41,11 +41,6 @@ public class Medico extends Usuario implements VOMedico {
 	public long getIdentificacion()
 	{
 		return super.getIdentificacion(); 
-	}
-	
-	public String getCorreoElectronico()
-	{
-		return super.getCorreoElectronico();
 	}
 	
 	public long getIdTipoDocumento()

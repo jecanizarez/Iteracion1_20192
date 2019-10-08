@@ -7,7 +7,7 @@ public class Usuario implements VOUsuario{
 	
 	private long identificacion; 
 	
-	private String correoElectronico;
+	
 	
 	private long idTipoDocumento;
 	
@@ -20,11 +20,10 @@ public class Usuario implements VOUsuario{
 	public void setIdentificacion(long identificacion) {
 		this.identificacion = identificacion;
 	}
-	public Usuario(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login)
+	public Usuario(String nombre, long identificacion, long tipoDocumento, long idRol, String login)
 	{
 		this.nombre = nombre; 
 		this.identificacion = identificacion; 
-		correoElectronico = correo; 
 		this.idTipoDocumento = tipoDocumento; 
 		this.idRol = idRol;
 		this.login = login;
@@ -33,7 +32,6 @@ public class Usuario implements VOUsuario{
 	{
 		nombre = ""; 
 		identificacion = 0;
-		correoElectronico = "";
 		idTipoDocumento = 0;
 		
 		
@@ -56,17 +54,11 @@ public class Usuario implements VOUsuario{
 		this.identificacion = indentificacion;
 	}
 
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
 
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
 	
 	public String toString()
 	{
-		return "Usuario  [nombre: " + nombre + ", correo: " + correoElectronico + ", identificacion: " + identificacion + "]";
+		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + identificacion + "]";
 	}
 
 	public long getIdRol() {
