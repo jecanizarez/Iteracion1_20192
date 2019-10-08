@@ -91,3 +91,4 @@ INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (20, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (21, 1, 1);
+COMMIT;

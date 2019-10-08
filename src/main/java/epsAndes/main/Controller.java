@@ -24,17 +24,27 @@ public class Controller
 			ControllerView.printMenuLogin();
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
-			System.out.println("Ingrese nombre del rol");
-			String nombre = sc.nextLine(); 
-			persistencia.adicionarRol(nombre);
-			System.out.println("Rol adicionado");
-			System.out.println(persistencia.darRolPorNombre(nombre).getRol());
-			
 			if(usuario == null)
 			{
 				ControllerView.print("El usuario no existe");
+				// TODO
 			}
-			else if (usuario.getIdRol() == 4)
+			else if(usuario.getIdRol() == 1) // Case: afiliado.
+			{
+				ControllerView.printMenuAfiliado();
+				// TODO
+			}
+			else if(usuario.getIdRol() == 2) // Case: medico
+			{
+				ControllerView.printMenuMedico();
+				// TODO
+			}
+			else if(usuario.getIdRol() == 3) // Case: recepcionista
+			{
+				ControllerView.printMenuRecepcionista();
+				// TODO
+			}
+			else if(usuario.getIdRol() == 4) // Case: admin.
 			{
 				ControllerView.printMenuAdministrador();
 				

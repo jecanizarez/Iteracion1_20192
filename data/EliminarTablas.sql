@@ -5,6 +5,8 @@ DROP TABLE ServicioMedico;
 
 DROP TABLE PrestanServicio;
 
+DROP TABLE ServiciosAfiliado;
+
 DROP TABLE Trabajan;
 
 DROP TABLE Receta;

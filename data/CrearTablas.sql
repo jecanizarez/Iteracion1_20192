@@ -132,6 +132,14 @@ CONSTRAINT PS_IdServicio_Unique UNIQUE (IdServicio),
 CONSTRAINT PS_IdMedico FOREIGN KEY (IdIPS) REFERENCES IPS(Id),
 CONSTRAINT PS_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 
+-- Tabla de ServiciosAfiliado:
+CREATE TABLE ServiciosAfiliado(
+IdServicio NUMBER,
+IdAfiliado NUMBER,
+CONSTRAINT SA_PK PRIMARY KEY (IdServicio, IdAfiliado),
+CONSTRAINT SA_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id),
+CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento));
+
 -- Tabla de Trabajan:
 CREATE TABLE Trabajan(
 IdEPS NUMBER,
