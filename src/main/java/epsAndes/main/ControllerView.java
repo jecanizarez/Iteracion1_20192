@@ -15,6 +15,7 @@ public class ControllerView
 		print("Ingrese su login (genericos, 'admin1' para rol Admin,");
 		print("'gerente1' para rol Gerente, 'med1' para rol Medico,");
 		print("'afil1' para rol Afiliado y 'recep1' para rol Recepcionista).");
+		print("-------------------------------------------------------------");
 		print("No ingrese comillas sencillas o dobles:\n");
 	}
 	
