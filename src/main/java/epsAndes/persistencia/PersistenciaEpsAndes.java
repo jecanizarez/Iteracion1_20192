@@ -686,6 +686,17 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
 	}
+	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
+	{
+		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
+		for(Object e: lista)
+		{
+			Object[] datos = (Object[]) e;
+			String nombre = (String) datos[1];
+			System.out.println(nombre);
+		}
+		
+	}
 	
 	
 
