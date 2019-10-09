@@ -134,10 +134,11 @@ CONSTRAINT PS_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 
 -- Tabla de ServiciosAfiliado:
 CREATE TABLE ServiciosAfiliado(
-IdServicio NUMBER,
+--IdServicio NUMBER,
+IdTipoServicio NUMBER,
 IdAfiliado NUMBER,
-CONSTRAINT SA_PK PRIMARY KEY (IdServicio, IdAfiliado),
-CONSTRAINT SA_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id),
+CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado),
+CONSTRAINT SA_IdTipoServicio FOREIGN KEY (IdTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento));
 
 -- Tabla de Trabajan:
