@@ -26,7 +26,7 @@ class SQLTipoServicio {
 	
 	public TipoServicio buscarTipoServicioPorNombre(PersistenceManager pm, String nombre)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE NOMBRE = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE TIPO = ?");
 		q.setResultClass(TipoServicio.class);
 		q.setParameters(nombre);
 		return (TipoServicio) q.executeUnique();

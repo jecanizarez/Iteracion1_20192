@@ -54,3 +54,9 @@ ORA-00001: unique constraint (ISIS2304B051920.ROL_ROL_UNIQUE) violated
 10:18:59,259 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO USUARIO(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?)".
 ORA-00001: unique constraint (ISIS2304B051920.USUARIO_LOGIN_UNIQUE) violated
 
+11:31:39,464 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO PRESTANSERVICIO(idIPS, idServicio) values (?, ?)".
+ORA-02291: integrity constraint (ISIS2304B051920.PS_IDSERVICIO) violated - parent key not found
+
+11:35:41,954 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO PRESTANSERVICIO(idIPS, idServicio) values (?, ?)".
+ORA-02291: integrity constraint (ISIS2304B051920.PS_IDSERVICIO) violated - parent key not found
+
