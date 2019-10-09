@@ -26,6 +26,7 @@ class SQLRol {
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaRol() + "(rol) values (?) ");
 		q.setParameters(rol);
+		// Arreglo para manejo del error:
 		return (long) q.executeUnique();
 	}
 	

@@ -48,3 +48,6 @@ ORA-00942: la tabla o vista no existe
 01:26:36,619 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO AFILIADOS(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?)".
 ORA-00942: la tabla o vista no existe
 
+08:53:29,312 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO ROL(rol) values (?)".
+ORA-00001: unique constraint (ISIS2304B051920.ROL_ROL_UNIQUE) violated
+
