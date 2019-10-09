@@ -681,7 +681,10 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
 	}
-	
+	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
+	{
+		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
+	}
 	
 	
 
