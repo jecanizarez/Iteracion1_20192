@@ -687,7 +687,30 @@ public class PersistenciaEpsAndes {
 		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
 	}
 	
-	
+	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
+	{
+		try
+		{
+		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+				Object[] datos = (Object[]) e;
+				String nombre = (String) datos[1];
+				System.out.println(nombre);
+			}
+		}
+		else
+		{
+			System.out.println("No se ha prestado ningun servicio en las fechas indicadas");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("No hay servicios.");
+		}
+	}
 
 	
 

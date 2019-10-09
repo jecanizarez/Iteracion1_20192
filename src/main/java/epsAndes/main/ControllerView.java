@@ -64,6 +64,7 @@ public class ControllerView
 		print("3. Registrar Medico");
 		print("4. Registrar Afiliado");
 		print("5. Registrar Servicio de salud");
+		print("6. Mostrar los 20 servicios mas solicitados");
 		print("0. Salir del programa");
 	}
 	

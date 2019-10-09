@@ -134,7 +134,7 @@ public class Controller
 					if(validateNum(num))
 						action = Integer.parseInt(num);
 					if(action != -1 && (action == 0 || action == 1 || action == 2 || action == 3
-							|| action == 4 || action == 5))
+							|| action == 4 || action == 5 || action == 6))
 					{
 						if(action == 0)
 							end = true;
@@ -352,6 +352,14 @@ public class Controller
 								if(servicio != null && result != null)
 									System.out.println("Servicio agregado correctamente.");	
 							}
+						}
+						else if(action == 6)
+						{
+							System.out.println("Ingrese la fecha inicial (e.g., 15-02-2019)");
+							String inicial = sc.nextLine();
+							System.out.println("Ingrese la fecha final (e.g., 16-02-2019)");
+							String ffinal = sc.nextLine();
+							persistencia.requerimientoConsulta2(inicial, ffinal);
 						}
 					}
 					else

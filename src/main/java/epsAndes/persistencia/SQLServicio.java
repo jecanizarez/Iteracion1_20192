@@ -1,6 +1,7 @@
 package epsAndes.persistencia;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -29,5 +30,13 @@ class SQLServicio {
 	{
 		Query q = pm.newQuery(SQL, "SELECT MAX(id) FROM " + pp.darTablaServicio());
 		return ((BigDecimal) q.executeUnique()).longValue();
+	}
+	
+	public List<Servicio> darServiciosConCapacidadMayorA(PersistenceManager pm, int capacidad)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicio() + " WHERE capacidad > " +capacidad);
+		q.setResultClass(Servicio.class);
+		q.setParameters(capacidad);
+		return (List<Servicio>) q.executeList();
 	}
 }
