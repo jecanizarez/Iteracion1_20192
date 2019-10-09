@@ -51,3 +51,6 @@ ORA-00942: la tabla o vista no existe
 08:53:29,312 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO ROL(rol) values (?)".
 ORA-00001: unique constraint (ISIS2304B051920.ROL_ROL_UNIQUE) violated
 
+10:18:59,259 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO USUARIO(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?)".
+ORA-00001: unique constraint (ISIS2304B051920.USUARIO_LOGIN_UNIQUE) violated
+

@@ -32,4 +32,12 @@ class SQLMedico {
 		return (Medico) q.executeUnique();
 	}
 	
+	public Medico buscaMedicoPorRegistroMed(PersistenceManager pm, long registroMed)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaMedico() + " WHERE NUMREGISTROMED = ?");
+		q.setResultClass(Medico.class);
+		q.setParameters(registroMed);
+		return (Medico) q.executeUnique();
+	}
+	
 }

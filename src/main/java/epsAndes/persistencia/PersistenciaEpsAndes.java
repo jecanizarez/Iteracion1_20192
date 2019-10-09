@@ -312,8 +312,9 @@ public class PersistenciaEpsAndes {
         }
         catch (Exception e)
         {
-          	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//          	e.printStackTrace();
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicional el usuario: el usuario ya existe.");
         	return null;
         }
         finally
@@ -343,8 +344,9 @@ public class PersistenciaEpsAndes {
         }
         catch (Exception e)
         {
-        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//        	e.printStackTrace();
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicional el medico: el medico ya existe.");
         	return null;
         }
         finally
@@ -665,6 +667,12 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlMedico.buscaMedicoPorDocumento(pmf.getPersistenceManager(), documento);
 	}
+	
+	public Medico darMedicoPorRegistroMed(long registroMed)
+	{
+		return sqlMedico.buscaMedicoPorRegistroMed(pmf.getPersistenceManager(), registroMed);
+	}
+	
 	public Fecha darFecha(String fecha)
 	{
 		return sqlFecha.buscarFecha(pmf.getPersistenceManager(), fecha);

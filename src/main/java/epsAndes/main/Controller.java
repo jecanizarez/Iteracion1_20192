@@ -170,92 +170,84 @@ public class Controller
 							String tipoDocumento = sc.nextLine();
 							int IdtipoDocumento = 0;
 							if(tipoDocumento.equalsIgnoreCase("CC"))
-							{
 								IdtipoDocumento = 1;
-							}
 							else if(tipoDocumento.equalsIgnoreCase("TI"))
-							{
 								IdtipoDocumento = 3;
-							}
 							else if(tipoDocumento.equalsIgnoreCase("CE"))
-							{
 								IdtipoDocumento = 2;
-							}
 							else
 							{
-								System.out.println("Tipo de documento inválido, acción terminada.");
+								System.out.println("Tipo de documento invalido, accion terminada.");
 								continue;
 							}
-							System.out.println("Ingrese un nombre");
+							System.out.println("Ingrese el nombre del medico (e.g., Daniel del Castillo)");
 							String nombreMedico =  sc.nextLine();
-
-							System.out.println("Ingrese numero del registro medico");
+							System.out.println("Ingrese numero del registro medico (e.g., 87960)");
 							long numRegistroMed = Long.parseLong(sc.nextLine());
-							System.out.println("Ingrese especialidad");
+							Medico medicoTest = persistencia.darMedicoPorRegistroMed(numRegistroMed);
+							if(medicoTest != null)
+							{
+								System.out.println("Ya existe un medico con ese registro, accion terminada.");
+								continue;
+							}
+							System.out.println("Ingrese especialidad (e.g., Neurocirugia)");
 							String especialidad = sc.nextLine(); 
-							System.out.println("Ingrese nombre IPS");
+							System.out.println("Ingrese nombre IPS (e.g., Fundacion Santa Fe de Bogota)");
 							String IPS = sc.nextLine(); 
 							IPS ips = persistencia.darIPSPorNombre(IPS);
 							long idIPS = 0;
 							if (ips != null)
-							{
 								idIPS = ips.getId();
-							}
 							else
 							{
-								System.out.println("La IPS no existe");
+								System.out.println("La IPS no existe, accion terminada.");
+								continue;
 							}
 							Usuario usuarioMedico = persistencia.adicionarUsuario(loginMedico, documento, rolMed, IdtipoDocumento, nombreMedico, "");
-							persistencia.adicionarMedico(loginMedico, documento, rolMed, IdtipoDocumento, nombreMedico, "", numRegistroMed, especialidad, idIPS);
-							System.out.println("Se ha adicionado el medico correctamente");
+							if(usuarioMedico != null)
+							{
+								Medico result = persistencia.adicionarMedico(loginMedico, documento, rolMed, IdtipoDocumento, nombreMedico, "", numRegistroMed, especialidad, idIPS);
+								if(result != null)
+									System.out.println("Se ha adicionado el medico correctamente.");
+							}
 						}
 						else if(action == 4)
 						{
 							// TODO registrar afiliado.
 							int rolAfiliado = 1;
-							System.out.println("Ingrese documento");
+							System.out.println("Ingrese el numero de documento (e.g., numero de CC)");
 							int documento = Integer.parseInt(sc.nextLine()); 
-							System.out.println("Ingrese un login");
+							System.out.println("Ingrese un login (e.g., je.canizarez)");
 							String loginMedico = sc.nextLine();
-							System.out.println("Ingrese un tipo de documento (TI,CC,CE)");
+							System.out.println("Ingrese un tipo de documento (TI, CC, CE)");
 							String tipoDocumento = sc.nextLine();
 							int IdtipoDocumento = 0;
 							if(tipoDocumento.equalsIgnoreCase("CC"))
-							{
 								IdtipoDocumento = 1;
-							}
 							else if(tipoDocumento.equalsIgnoreCase("TI"))
-							{
 								IdtipoDocumento = 3;
-							}
 							else if(tipoDocumento.equalsIgnoreCase("CE"))
-							{
 								IdtipoDocumento = 2;
-							}
 							else
 							{
-								System.out.println("Tipo de documento no valido");
+								System.out.println("Tipo de documento invalido, accion terminada.");
+								continue;
 							}
-							System.out.println("Ingrese un nombre");
+							System.out.println("Ingrese el nombre del afiliado (e.g., Juan Cañizarez)");
 							String nombreAfiliado =  sc.nextLine();
-							System.out.println("Ingrese su fecha de nacimiento con el siguiente formato: dd/MM/yyyy");
+							System.out.println("Ingrese la fecha de nacimiento con el siguiente formato: dd-MM-yyyy (e.g., 15-12-1997)");
 							String fecha = sc.nextLine();
 							Fecha fechaBuscada = persistencia.darFecha(fecha);
 							long idFecha = 0;
 							if(fechaBuscada == null)
-							{
 								idFecha = persistencia.adicionarFecha(fecha).getId();
-							}
 							else
-							{
 								idFecha = fechaBuscada.getId();
-							}
 							long idEPS = 1; 
 							Usuario usuarioMedico = persistencia.adicionarUsuario(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "");
-							persistencia.adicionarAfiliado(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "", idFecha, idEPS);
-							System.out.println("Se ha adicionado la fecha");
-
-
+							Afiliado result = persistencia.adicionarAfiliado(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "", idFecha, idEPS);
+							if(result != null)
+								System.out.println("Se ha adicionado la fecha");
 						}
 						else if(action == 5)
 						{
