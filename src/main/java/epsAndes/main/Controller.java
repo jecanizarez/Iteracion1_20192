@@ -143,15 +143,27 @@ public class Controller
 							// TODO registrar roles.
 							System.out.println("Ingrese nombre del rol");
 							String nombre = sc.nextLine(); 
+							Rol rolTest = persistencia.darRolPorNombre(nombre);
+							if(rolTest != null)
+							{
+								System.out.println("Ya existe un rol con ese nombre, accion terminada.");
+								continue;
+							}
 							Rol result = persistencia.adicionarRol(nombre);
 							if(result != null)
-								System.out.println("Rol adicionado");
+								System.out.println("Rol adicionado.");
 						}
 						else if(action == 2)
 						{
 							// TODO registrar IPS.
 							System.out.println("Ingrese nombre de la IPS (e.g., SaludAndes)");
 							String nombre = sc.nextLine(); 
+							IPS ipsTest = persistencia.darIPSPorNombre(nombre);
+							if(ipsTest != null)
+							{
+								System.out.println("Ya existe una IPS con ese nombre, accion terminada.");
+								continue;
+							}
 							System.out.println("Ingrese la localización (e.g., Calle 69 #4-20)");
 							String localizacion = sc.nextLine();
 							IPS result = persistencia.adicionarIPS(nombre, localizacion);
@@ -229,8 +241,20 @@ public class Controller
 							int rolAfiliado = 1;
 							System.out.println("Ingrese el numero de documento (e.g., numero de CC)");
 							int documento = Integer.parseInt(sc.nextLine()); 
+							Usuario test1 = persistencia.darUsuarioPorDocumento(documento);
+							if(test1 != null)
+							{
+								System.out.println("Ya existe un usuario con ese documento, accion terminada.");
+								continue;
+							}
 							System.out.println("Ingrese un login (e.g., je.canizarez)");
-							String loginMedico = sc.nextLine();
+							String loginAfiliado = sc.nextLine();
+							Usuario test2 = persistencia.darUsuarioPorLogin(loginAfiliado);
+							if(test2 != null)
+							{
+								System.out.println("Ya existe un usuario con ese login, accion terminada.");
+								continue;
+							}
 							System.out.println("Ingrese un tipo de documento (TI, CC, CE)");
 							String tipoDocumento = sc.nextLine();
 							int IdtipoDocumento = 0;
@@ -256,10 +280,10 @@ public class Controller
 							else
 								idFecha = fechaBuscada.getId();
 							long idEPS = 1; 
-							Usuario usuarioMedico = persistencia.adicionarUsuario(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "");
-							Afiliado result = persistencia.adicionarAfiliado(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "", idFecha, idEPS);
+							Usuario usuarioMedico = persistencia.adicionarUsuario(loginAfiliado, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "");
+							Afiliado result = persistencia.adicionarAfiliado(loginAfiliado, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "", idFecha, idEPS);
 							if(result != null)
-								System.out.println("Se ha adicionado la fecha");
+								System.out.println("Se ha adicionado la fecha.");
 						}
 						else if(action == 5)
 						{
@@ -269,28 +293,46 @@ public class Controller
 							IPS ips = persistencia.darIPSPorNombre(nombreIPS);
 							if(ips == null)
 							{
-								System.out.println("La IPS no existe");
+								System.out.println("La IPS no existe, accion terminada.");
+								continue;
 							}
-							System.out.println("Ingrese el documento del medico a cargo");
+							System.out.println("Ingrese el documento del medico a cargo (e.g., numero de CC)");
 							long idMedico = Long.parseLong(sc.nextLine());
-							System.out.println("Ingrese la capacidad del servicio de salud");
+							System.out.println("Ingrese la capacidad del servicio de salud (e.g., 20)");
 							int capacidad = Integer.parseInt(sc.nextLine());
-							System.out.println("Ingrese la hora de inicio del servicio de salud");
+							if(capacidad <= 0)
+							{
+								System.out.println("Capacidad invalida, accion terminada.");
+								continue;
+							}
+							System.out.println("Ingrese la hora de inicio del servicio de salud (entre 0 y 24)");
 							int horaInicio = Integer.parseInt(sc.nextLine());
-							System.out.println("Ingrese la hora de cierre");
+							if(horaInicio < 0 || horaInicio > 24)
+							{
+								System.out.println("Hora de inicio invalida, accion terminada.");
+								continue;
+							}
+							System.out.println("Ingrese la hora de cierre (entre hora inicio y 24)");
 							int horaFinal = Integer.parseInt(sc.nextLine());
-							System.out.println("Ingrese el tipo de servicio, Ej: (ConsultaEmergencia, ConsultaEspecialista, Terapia, ConsultaControl, " + "\n" +
-									"Examenes,Hospitalizacion, ProcesoMedicoEspecializado ");
+							if(horaFinal <= horaInicio || horaFinal > 24)
+							{
+								System.out.println("Hora de cierre invalida, accion terminada.");
+								continue;
+							}
+							System.out.println("Ingrese el tipo de servicio (ConsultaEmergencia, ConsultaEspecialista, Terapia, ConsultaControl, " +
+									"Examenes, Hospitalizacion, ProcesoMedicoEspecializado).");
 							String NombreServicio = sc.nextLine();
 							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(NombreServicio);
 							if(tipoServicio == null)
 							{
-								System.out.println("El tipo de servicio no existe");
+								System.out.println("El tipo de servicio es invalido, accion terminada.");
+								continue;
 							}
 							long idTipoServicio = tipoServicio.getId();
 							Servicio servicio = persistencia.adicionarServicio(capacidad, horaInicio, horaFinal, idTipoServicio);
-							persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
-							System.out.println("Servicio agregado correctamente");	
+							PrestanServicio result = persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
+							if(servicio != null && result != null)
+								System.out.println("Servicio agregado correctamente.");	
 						}
 					}
 					else

@@ -276,13 +276,13 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlRol.adicionarRol(pm, nombre);
             tx.commit();
             
-            log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("Insercion de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             //ARREGLAR
             return new Rol(idRol, nombre);
         }
         catch (Exception e)
         {
-        	System.out.println("Error adicionado el rol: el rol ya existe.");
+        	System.out.println("Error adicionado el rol.");
         	return null;
         }
         finally
@@ -410,7 +410,7 @@ public class PersistenciaEpsAndes {
         {
 //        	e.printStackTrace();
 //        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	System.out.println("Error al adicionar la IPS: la IPS ya existe.");
+        	System.out.println("Error al adicionar la IPS.");
         	return null;
         }
         finally
@@ -568,7 +568,8 @@ public class PersistenciaEpsAndes {
         catch (Exception e)
         {
 //        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicionar el servicio.");
         	return null;
         }
         finally
