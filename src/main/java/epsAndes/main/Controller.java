@@ -288,7 +288,7 @@ public class Controller
 						else if(action == 5)
 						{
 							// TODO registrar servicio de salud.
-							System.out.println("Ingrese el nombre de la IPS la cual desea registrar el servicio de salud");
+							System.out.println("Ingrese el nombre de la IPS la cual desea registrar el servicio de salud (e.g., Fundacion Santa Fe de Bogota)");
 							String nombreIPS = sc.nextLine();
 							IPS ips = persistencia.darIPSPorNombre(nombreIPS);
 							if(ips == null)
@@ -298,6 +298,22 @@ public class Controller
 							}
 							System.out.println("Ingrese el documento del medico a cargo (e.g., numero de CC)");
 							long idMedico = Long.parseLong(sc.nextLine());
+							Usuario userTest = persistencia.darUsuarioPorDocumento(idMedico);
+							if(userTest != null)
+							{
+								long rolId = userTest.getRol();
+								if(rolId != 2)
+								{
+									System.out.println("El documento no corresponde a un medico, accion terminada.");
+									continue;
+								}
+							}
+							else
+							{
+								System.out.println("No hay usuario con ese documento, accion terminada.");
+								continue;
+							}
+
 							System.out.println("Ingrese la capacidad del servicio de salud (e.g., 20)");
 							int capacidad = Integer.parseInt(sc.nextLine());
 							if(capacidad <= 0)
@@ -330,9 +346,12 @@ public class Controller
 							}
 							long idTipoServicio = tipoServicio.getId();
 							Servicio servicio = persistencia.adicionarServicio(capacidad, horaInicio, horaFinal, idTipoServicio);
-							PrestanServicio result = persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
-							if(servicio != null && result != null)
-								System.out.println("Servicio agregado correctamente.");	
+							if(servicio != null)
+							{
+								PrestanServicio result = persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
+								if(servicio != null && result != null)
+									System.out.println("Servicio agregado correctamente.");	
+							}
 						}
 					}
 					else
