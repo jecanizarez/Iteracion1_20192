@@ -17,10 +17,10 @@ class SQLServiciosAfiliado {
 		this.pp = pp;
 	}
 	
-	public long adicionarServiciosAfiliado(PersistenceManager pm, long idTipoServicio, long idAfiliado)
+	public long adicionarServiciosAfiliado(PersistenceManager pm, long idTipoServicio, long idAfiliado, String fecha, long IPS)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServiciosAfiliado() + "(idServicio, idAfiliado) values (?,?) ");
-		q.setParameters(idTipoServicio, idAfiliado);
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServiciosAfiliado() + "(idServicio, idAfiliado, fechaAsistida, IPS) values (?,?,?,?) ");
+		q.setParameters(idTipoServicio, idAfiliado, fecha, IPS);
 		return (long) q.executeUnique();
 	}
 	

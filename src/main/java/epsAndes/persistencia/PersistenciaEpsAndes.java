@@ -610,7 +610,7 @@ public class PersistenciaEpsAndes {
         }
       
 	}
-	public ServiciosAfiliado adicionarServiciosAfiliado(long idTipoServicio, long idAfiliado)
+	public ServiciosAfiliado adicionarServiciosAfiliado(long idTipoServicio, long idAfiliado, String fecha, long IPS)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -618,12 +618,12 @@ public class PersistenciaEpsAndes {
         try
         {
             tx.begin();
-            long tuplasInsertadas = sqlPrestanServicio.adicionarPrestanServicio(pm, idTipoServicio, idAfiliado);
+            long tuplasInsertadas = sqlServiciosAfiliado.adicionarServiciosAfiliado(pm, idTipoServicio, idAfiliado, fecha, IPS);
             tx.commit();
             
             log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new ServiciosAfiliado(idTipoServicio, idAfiliado);
+            return new ServiciosAfiliado(idTipoServicio, idAfiliado, fecha, IPS);
         }
         catch (Exception e)
         {
