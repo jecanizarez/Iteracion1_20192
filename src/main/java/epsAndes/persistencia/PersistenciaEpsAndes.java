@@ -704,6 +704,25 @@ public class PersistenciaEpsAndes {
 		}
 
 	}
+	public void requerimientoConsulta5(String fechaInicial, String fechaFinal, long idAfiliado)
+	{
+		List<Object> lista = sqlPrestanServicio.darServiciosAfiliado(pmf.getPersistenceManager(), idAfiliado, fechaInicial, fechaFinal);
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+				Object[] datos = (Object[]) e;
+				String nombre = (String) datos[1];
+				System.out.println(nombre);
+			}
+		}
+		else
+		{
+			System.out.println("El afiliado no ha solicitado ningun servicio en las fechas indicadas");
+		}
+
+	}
+	
 
 
 

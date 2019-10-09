@@ -5,6 +5,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.sun.org.apache.bcel.internal.generic.IDIV;
+
 import epsAndes.negocio.ServiciosAfiliado;
 
 class SQLPrestanServicio {
@@ -38,7 +40,8 @@ class SQLPrestanServicio {
 	}
 	public List<Object> darLos20ServiciosMasSolicitados(PersistenceManager pm, String fechaInicial, String fechaFinal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) FROM "+ pp.darTablaServiciosAfiliado()
+		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) "
+				+ "FROM "+ pp.darTablaServiciosAfiliado()
 				+ "WHERE CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date) ?"
 				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)"
 			    + " GROUP BY idTipoServicio"
@@ -48,4 +51,15 @@ class SQLPrestanServicio {
 		return q.executeList();
 
 	}
+	public List<Object> darServiciosAfiliado(PersistenceManager pm, long idAfiliado, String fechaInicial, String fechaFinal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idTipoServicio "
+				+ "FROM "+ pp.darTablaServiciosAfiliado()
+				+ "WHERE idAfiliado = ?"
+				+ " AND CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date) ?"
+				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)");
+		q.setParameters(idAfiliado);
+		return q.executeList();
+	}
+	
 }
