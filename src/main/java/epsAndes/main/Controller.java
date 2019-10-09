@@ -110,24 +110,24 @@ public class Controller
 					else if(action == 1)
 					{
 						// TODO registrar roles.
-//						System.out.println("Ingrese nombre del rol");
-//						String nombre = sc.nextLine(); 
-//						persistencia.adicionarRol(nombre);
-//						System.out.println("Rol adicionado");
+						System.out.println("Ingrese nombre del rol");
+						String nombre = sc.nextLine(); 
+						persistencia.adicionarRol(nombre);
+						System.out.println("Rol adicionado");
 					}
 					else if(action == 2)
 					{
-						// TODO registrar IPS.
-//						System.out.println("Ingrese nombre del rol");
-//						String nombre = sc.nextLine(); 
-//						persistencia.adicionarRol(nombre);
-//						System.out.println("Rol adicionado");
+						 // TODO registrar IPS.
+						System.out.println("Ingrese nombre del rol");
+						String nombre = sc.nextLine(); 
+						persistencia.adicionarRol(nombre);
+						System.out.println("Rol adicionado");
 					}
 					else if(action == 3) 
 					{
 						int rolMed = 2;
 						System.out.println("Ingrese documento");
-						int documento = sc.nextInt(); 
+						int documento = Integer.parseInt(sc.nextLine()); 
 						System.out.println("Ingrese un login");
 						String loginMedico = sc.nextLine();
 						System.out.println("Ingrese un tipo de documento (TI,CC,CE");
@@ -153,7 +153,7 @@ public class Controller
 						String nombreMedico =  sc.nextLine();
 						
 						System.out.println("Ingrese numero del registro medico");
-						long numRegistroMed = sc.nextLong();
+						long numRegistroMed = Long.parseLong(sc.nextLine());
 						System.out.println("Ingrese especialidad");
 						String especialidad = sc.nextLine(); 
 						System.out.println("Ingrese nombre IPS");
@@ -175,10 +175,57 @@ public class Controller
 					else if(action == 4)
 					{
 						// TODO registrar afiliado.
+						int rolAfiliado = 1;
+						System.out.println("Ingrese documento");
+						int documento = Integer.parseInt(sc.nextLine()); 
+						System.out.println("Ingrese un login");
+						String loginMedico = sc.nextLine();
+						System.out.println("Ingrese un tipo de documento (TI,CC,CE)");
+						String tipoDocumento = sc.nextLine();
+						int IdtipoDocumento = 0;
+						if(tipoDocumento.equalsIgnoreCase("CC"))
+						{
+							IdtipoDocumento = 1;
+						}
+						else if(tipoDocumento.equalsIgnoreCase("TI"))
+						{
+							IdtipoDocumento = 3;
+						}
+						else if(tipoDocumento.equalsIgnoreCase("CE"))
+						{
+							IdtipoDocumento = 2;
+						}
+						else
+						{
+							System.out.println("Tipo de documento no valido");
+						}
+						System.out.println("Ingrese un nombre");
+						String nombreAfiliado =  sc.nextLine();
+						System.out.println("Ingrese su fecha de nacimiento con el siguiente formato: dd/MM/yyyy");
+						String fecha = sc.nextLine();
+						Fecha fechaBuscada = persistencia.darFecha(fecha);
+						long idFecha = 0;
+						if(fechaBuscada == null)
+						{
+							idFecha = persistencia.adicionarFecha(fecha).getId();
+						}
+						else
+						{
+							idFecha = fechaBuscada.getId();
+						}
+						long idEPS = 1; 
+						Usuario usuarioMedico = persistencia.adicionarUsuario(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "");
+						persistencia.adicionarAfiliado(loginMedico, documento, rolAfiliado, IdtipoDocumento, nombreAfiliado, "", idFecha, idEPS);
+						System.out.println("Se ha adicionado la fecha");
+						
+						
 					}
 					else if(action == 5)
 					{
 						// TODO registrar servicio de salud.
+						System.out.println("Ingrese el nombre de la IPS la cual desea registrar el servicio de salud");
+						String nombreIPS = sc.nextLine();
+						
 					}
 				}
 				else

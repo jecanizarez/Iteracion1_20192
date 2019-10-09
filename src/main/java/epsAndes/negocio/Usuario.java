@@ -3,36 +3,33 @@ package epsAndes.negocio;
 public class Usuario implements VOUsuario{
 
 	
-	private String nombre; 
-	
-	private long identificacion; 
-	
-	
-	
-	private long idTipoDocumento;
-	
-	
-	private long  idRol; 
-	
 	private String login;
+	
+	private long  rol; 
+	
+	private long documento; 
+	
+	private long tipoDocumento;
+	
+	private String nombre; 
 	
 	
 	public void setIdentificacion(long identificacion) {
-		this.identificacion = identificacion;
+		this.documento = identificacion;
 	}
 	public Usuario(String nombre, long identificacion, long tipoDocumento, long idRol, String login)
 	{
 		this.nombre = nombre; 
-		this.identificacion = identificacion; 
-		this.idTipoDocumento = tipoDocumento; 
-		this.idRol = idRol;
+		this.documento = identificacion; 
+		this.tipoDocumento = tipoDocumento; 
+		this.rol = idRol;
 		this.login = login;
 	}
 	public Usuario()
 	{
 		nombre = ""; 
-		identificacion = 0;
-		idTipoDocumento = 0;
+		documento = 0;
+		tipoDocumento = 0;
 		
 		
 	}
@@ -47,25 +44,25 @@ public class Usuario implements VOUsuario{
 	}
 
 	public long getIdentificacion() {
-		return identificacion;
+		return documento;
 	}
 
 	public void setIndentificacion(long indentificacion) {
-		this.identificacion = indentificacion;
+		this.documento = indentificacion;
 	}
 
 
 	
 	public String toString()
 	{
-		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + identificacion + "]";
+		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + documento + "]";
 	}
 
 	public long getIdRol() {
-		return idRol;
+		return rol;
 	}
 	public void setIdRol(long idRol) {
-		this.idRol = idRol;
+		this.rol = idRol;
 	}
 	
 	public String getLogin() {
@@ -76,10 +73,10 @@ public class Usuario implements VOUsuario{
 	}
 	
 	public long getIdTipoDocumento() {
-		return idTipoDocumento;
+		return tipoDocumento;
 	}
 	public void setIdTipoDocumento(long idTipoDocumento) {
-		this.idTipoDocumento = idTipoDocumento;
+		this.tipoDocumento = idTipoDocumento;
 	}
 	
 	

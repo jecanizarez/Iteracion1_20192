@@ -2,17 +2,14 @@ package epsAndes.negocio;
 
 public interface VOMedico {
 
-	public long getIdentificacion(); 
+	public long getDocumento(); 
 	
-	public String getNombre(); 
+    public long getIPS();
 	
 	public long getNumRegistroMed();
 	
 	public String getEspecialidad();
-	
-	public long getIdTipoDocumento();
-	
-	public long getIdRol();
+
 	
 	@Override
 	public String toString(); 

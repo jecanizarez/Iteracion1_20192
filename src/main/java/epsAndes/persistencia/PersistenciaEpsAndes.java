@@ -76,7 +76,7 @@ public class PersistenciaEpsAndes {
 		
 		tablas = new LinkedList<String>();
 		tablas.add("EPS_sequence");
-		tablas.add("AFILIADOS");
+		tablas.add("AFILIADO");
 		tablas.add("CITAS");
 		tablas.add("EPS");
 		tablas.add("FECHA");
@@ -335,11 +335,11 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un Medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Medico(nombre, documento, idTipoDocumento, idRol, login, numRegistroMed, especialidad);
+            return new Medico(documento, numRegistroMed, especialidad, idIPS);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
+        	e.printStackTrace();
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
         	return null;
         }
@@ -366,7 +366,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Afiliado(nombre, documento,  idTipoDocumento, idRol, login, idEPS, idFecha);
+            return new Afiliado(documento, idFecha, idEPS);
         }
         catch (Exception e)
         {
@@ -588,6 +588,19 @@ public class PersistenciaEpsAndes {
 	public Rol darRolPorNombre(String rol)
 	{
 		return sqlRol.buscaRolNombre(pmf.getPersistenceManager(), rol);
+	}
+	
+	public Usuario darUsuarioPorDocumento(long documento)
+	{
+		return sqlUsuario.buscarUsuarioPorDocumento(pmf.getPersistenceManager(), documento);
+	}
+	public Medico darMedicoPorDocumento(long documento)
+	{
+		return sqlMedico.buscaMedicoPorDocumento(pmf.getPersistenceManager(), documento);
+	}
+	public Fecha darFecha(String fecha)
+	{
+		return sqlFecha.buscarFecha(pmf.getPersistenceManager(), fecha);
 	}
 	
 	

@@ -3,6 +3,9 @@ package epsAndes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import epsAndes.negocio.Medico;
+import epsAndes.negocio.Rol;
+
 class SQLMedico {
 
 	private final static String SQL = PersistenciaEpsAndes.SQL;
@@ -20,4 +23,13 @@ class SQLMedico {
 		q.setParameters(numRegistroMed,idUsuario, especialidad, idIPS);
 		return (long) q.executeUnique();
 	}
+	
+	public Medico buscaMedicoPorDocumento(PersistenceManager pm, long documento)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaMedico() + " WHERE DOCUMENTO = ?");
+		q.setResultClass(Medico.class);
+		q.setParameters(documento);
+		return (Medico) q.executeUnique();
+	}
+	
 }

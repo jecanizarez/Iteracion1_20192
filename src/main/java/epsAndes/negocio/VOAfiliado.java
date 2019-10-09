@@ -2,10 +2,12 @@ package epsAndes.negocio;
 
 public interface VOAfiliado {
 
-	public long getId();
+
+	public long getDocumento();
 	
-	public long getIdEps();
+	public long getEps();
 	
-	public long getIdRol();
+	public long getFechaNacimiento();
+
 	
 }

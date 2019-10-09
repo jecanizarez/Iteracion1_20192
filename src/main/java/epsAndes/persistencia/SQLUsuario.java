@@ -1,6 +1,8 @@
  package epsAndes.persistencia;
 
- import javax.jdo.PersistenceManager;
+ import java.util.List;
+
+import javax.jdo.PersistenceManager;
  import javax.jdo.Query;
 
 import epsAndes.negocio.Usuario;
@@ -30,6 +32,14 @@ class SQLUsuario {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE login = ?");
 		q.setResultClass(Usuario.class);
 		q.setParameters(login);
+		return (Usuario) q.executeUnique();
+	}
+	
+	public Usuario buscarUsuarioPorDocumento(PersistenceManager pm,long documento)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE DOCUMENTO = ?");
+		q.setResultClass(Usuario.class);
+		q.setParameters(documento);
 		return (Usuario) q.executeUnique();
 	}
 }
