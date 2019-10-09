@@ -137,7 +137,10 @@ CREATE TABLE ServiciosAfiliado(
 --IdServicio NUMBER,
 IdTipoServicio NUMBER,
 IdAfiliado NUMBER,
+FechaAsistida VARCHAR2(255 BYTE) NOT NULL,
+IPS NUMBER,
 CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado),
+CONSTRAINT SA_IPS_FK FOREIGN KEY (IPS) REFERENCES IPS(Id),
 CONSTRAINT SA_IdTipoServicio FOREIGN KEY (IdTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento));
 

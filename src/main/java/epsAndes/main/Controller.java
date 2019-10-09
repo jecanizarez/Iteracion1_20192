@@ -162,11 +162,11 @@ public class Controller
 						{
 							//Registrar Medico
 							int rolMed = 2;
-							System.out.println("Ingrese documento");
+							System.out.println("Ingrese el numero de documento (e.g., numero de C.C.)");
 							int documento = Integer.parseInt(sc.nextLine()); 
-							System.out.println("Ingrese un login");
+							System.out.println("Ingrese un login (e.g., d.delcastillo)");
 							String loginMedico = sc.nextLine();
-							System.out.println("Ingrese un tipo de documento (TI,CC,CE");
+							System.out.println("Ingrese un tipo de documento (TI, CC o CE)");
 							String tipoDocumento = sc.nextLine();
 							int IdtipoDocumento = 0;
 							if(tipoDocumento.equalsIgnoreCase("CC"))
@@ -183,7 +183,8 @@ public class Controller
 							}
 							else
 							{
-								System.out.println("Tipo de documento no valido");
+								System.out.println("Tipo de documento inválido, acción terminada.");
+								continue;
 							}
 							System.out.println("Ingrese un nombre");
 							String nombreMedico =  sc.nextLine();
