@@ -164,8 +164,20 @@ public class Controller
 							int rolMed = 2;
 							System.out.println("Ingrese el numero de documento (e.g., numero de C.C.)");
 							int documento = Integer.parseInt(sc.nextLine()); 
+							Usuario test1 = persistencia.darUsuarioPorDocumento(documento);
+							if(test1 != null)
+							{
+								System.out.println("Ya existe un usuario con ese documento, accion terminada.");
+								continue;
+							}
 							System.out.println("Ingrese un login (e.g., d.delcastillo)");
 							String loginMedico = sc.nextLine();
+							Usuario test2 = persistencia.darUsuarioPorLogin(loginMedico);
+							if(test2 != null)
+							{
+								System.out.println("Ya existe un usuario con ese login, accion terminada.");
+								continue;
+							}
 							System.out.println("Ingrese un tipo de documento (TI, CC o CE)");
 							String tipoDocumento = sc.nextLine();
 							int IdtipoDocumento = 0;
