@@ -3,6 +3,9 @@ package epsAndes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import epsAndes.negocio.Rol;
+import epsAndes.negocio.TipoServicio;
+
 class SQLTipoServicio {
 
 	private final static String SQL = PersistenciaEpsAndes.SQL;
@@ -19,5 +22,13 @@ class SQLTipoServicio {
 		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(id, tipo) values (?, ?) ");
 		q.setParameters(id, tipo);
 		return (long) q.executeUnique();
+	}
+	
+	public TipoServicio buscarTipoServicioPorNombre(PersistenceManager pm, String nombre)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE NOMBRE = ?");
+		q.setResultClass(TipoServicio.class);
+		q.setParameters(nombre);
+		return (TipoServicio) q.executeUnique();
 	}
 }

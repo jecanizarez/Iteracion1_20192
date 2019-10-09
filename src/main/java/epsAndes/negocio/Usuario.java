@@ -14,10 +14,7 @@ public class Usuario implements VOUsuario{
 	private String nombre; 
 	
 	
-	public void setIdentificacion(long identificacion) {
-		this.documento = identificacion;
-	}
-	public Usuario(String nombre, long identificacion, long tipoDocumento, long idRol, String login)
+	public Usuario(String login, long identificacion, long tipoDocumento, long idRol, String nombre)
 	{
 		this.nombre = nombre; 
 		this.documento = identificacion; 
@@ -33,51 +30,43 @@ public class Usuario implements VOUsuario{
 		
 		
 	}
-
-	
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public long getIdentificacion() {
-		return documento;
-	}
-
-	public void setIndentificacion(long indentificacion) {
-		this.documento = indentificacion;
-	}
-
-
-	
-	public String toString()
-	{
-		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + documento + "]";
-	}
-
-	public long getIdRol() {
-		return rol;
-	}
-	public void setIdRol(long idRol) {
-		this.rol = idRol;
-	}
-	
 	public String getLogin() {
 		return login;
 	}
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
-	public long getIdTipoDocumento() {
+	public long getRol() {
+		return rol;
+	}
+	public void setRol(long rol) {
+		this.rol = rol;
+	}
+	public long getDocumento() {
+		return documento;
+	}
+	public void setDocumento(long documento) {
+		this.documento = documento;
+	}
+	public long getTipoDocumento() {
 		return tipoDocumento;
 	}
-	public void setIdTipoDocumento(long idTipoDocumento) {
-		this.tipoDocumento = idTipoDocumento;
+	public void setTipoDocumento(long tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String toString()
+	{
+		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + documento + "]";
+	}
+
+	
 	
 	
 }

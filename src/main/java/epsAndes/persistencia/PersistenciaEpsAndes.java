@@ -68,6 +68,8 @@ public class PersistenciaEpsAndes {
 	
 	private SQLUsuario sqlUsuario;
 	
+	private SQLServiciosAfiliado sqlServiciosAfiliado;
+	
 	public PersistenciaEpsAndes()
 	{
 		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion");	
@@ -93,6 +95,7 @@ public class PersistenciaEpsAndes {
 		tablas.add("TIPOSERVICIO");
 		tablas.add("TRABAJAN");
 		tablas.add("USUARIO");
+		tablas.add("SERVICIOSAFILIADO");
 		
 	}
 	
@@ -238,6 +241,10 @@ public class PersistenciaEpsAndes {
 	{
 		return tablas.get(17);
 	}
+	public String darTablaServiciosAfiliado()
+	{
+		return tablas.get(18);
+	}
 	
 	private long nextval()
 	{
@@ -335,7 +342,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un Medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Medico(documento, numRegistroMed, especialidad, idIPS);
+            return new Medico( numRegistroMed,documento, especialidad, idIPS);
         }
         catch (Exception e)
         {
@@ -415,7 +422,7 @@ public class PersistenciaEpsAndes {
             pm.close();
         }  
 	}
-	public Recepcionista adicionarRecepcionista(String login, long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idIPS) 
+	public Recepcionista adicionarRecepcionista(long documento, long idIPS) 
     {
     	PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -426,9 +433,9 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlRecepcionista.adicionarRecepcionista(pm, documento, idIPS);
             tx.commit();
             
-            log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("Insercion de un usuario: " + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Recepcionista(nombre, documento,  idTipoDocumento, idRol, login, idIPS);
+            return new Recepcionista( documento, idIPS);
         }
         catch (Exception e)
         {
@@ -574,6 +581,68 @@ public class PersistenciaEpsAndes {
         }
       
 	}
+	public PrestanServicio adicionarPrestanServicio(long idIPS, long idServicio)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlPrestanServicio.adicionarPrestanServicio(pm, idIPS,idServicio );
+            tx.commit();
+            
+            log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            System.out.println("Se ha adicionado correctamente");
+            return new PrestanServicio(idIPS, idServicio);
+        }
+        catch (Exception e)
+        {
+        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+      
+	}
+	public ServiciosAfiliado adicionarServiciosAfiliado(long idTipoServicio, long idAfiliado)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlPrestanServicio.adicionarPrestanServicio(pm, idTipoServicio, idAfiliado);
+            tx.commit();
+            
+            log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new ServiciosAfiliado(idTipoServicio, idAfiliado);
+        }
+        catch (Exception e)
+        {
+        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+      
+	}
 	
 	public Usuario darUsuarioPorLogin(String login)
 	{
@@ -601,6 +670,10 @@ public class PersistenciaEpsAndes {
 	public Fecha darFecha(String fecha)
 	{
 		return sqlFecha.buscarFecha(pmf.getPersistenceManager(), fecha);
+	}
+	public TipoServicio darTipoServicioPorNombre(String nombre)
+	{
+		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
 	}
 	
 	

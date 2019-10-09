@@ -29,7 +29,7 @@ public class Controller
 				ControllerView.print("El usuario no existe.");
 				// TODO
 			}
-			else if(usuario.getIdRol() == 1) // Case: afiliado.
+			else if(usuario.getRol() == 1) // Case: afiliado.
 			{
 				while(!end)
 				{
@@ -51,7 +51,7 @@ public class Controller
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
-			else if(usuario.getIdRol() == 2) // Case: medico
+			else if(usuario.getRol() == 2) // Case: medico
 			{
 				while(!end)
 				{
@@ -67,13 +67,26 @@ public class Controller
 						else if(action == 1)
 						{
 							// TODO registrar una orden de servicio de salud.
+							System.out.println("Ingrese el documento del afiliado");
+							long idAfiliado = Long.parseLong(sc.nextLine());
+							System.out.println("Ingrese el tipo de servicio Ej: (ConsultaEmergencia, ConsultaEspecialista, Terapia, ConsultaControl, " + "\n" + 
+									"Examenes,Hospitalizacion, ProcesoMedicoEspecializado ");
+							String NombreServicio = sc.nextLine();
+							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(NombreServicio);
+							if(tipoServicio == null)
+							{
+								System.out.println("El tipo de servicio no existe");
+							}
+							long idTipoServicio = tipoServicio.getId();
+							persistencia.adicionarOrden(idAfiliado, usuario.getDocumento(), idTipoServicio);
+							
 						}
 					}
 					else
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
-			else if(usuario.getIdRol() == 3) // Case: recepcionista
+			else if(usuario.getRol() == 3) // Case: recepcionista
 			{
 				while(!end)
 				{
@@ -89,13 +102,25 @@ public class Controller
 						else if(action == 1)
 						{
 							// TODO registrar la prestación de un servicio de salud.
+							System.out.println("Ingrese el documento del paciente");
+							long idPaciente = Long.parseLong(sc.nextLine());
+							System.out.println("Ingrese el tipo de servicio ");
+							String nombreTipoServicio = sc.nextLine();
+							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(nombreTipoServicio);
+							if(tipoServicio == null)
+							{
+								System.out.println("Nombre incorrecto");
+							}
+							persistencia.adicionarPrestanServicio(tipoServicio.getId(), idPaciente);
+							
+							
 						}
 					}
 					else
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
-			else if(usuario.getIdRol() == 4) // Case: admin.
+			else if(usuario.getRol() == 4) // Case: admin.
 			{
 				ControllerView.printMenuAdministrador();
 				String num = sc.nextLine();
@@ -125,6 +150,7 @@ public class Controller
 					}
 					else if(action == 3) 
 					{
+						//Registrar Medico
 						int rolMed = 2;
 						System.out.println("Ingrese documento");
 						int documento = Integer.parseInt(sc.nextLine()); 
@@ -225,7 +251,31 @@ public class Controller
 						// TODO registrar servicio de salud.
 						System.out.println("Ingrese el nombre de la IPS la cual desea registrar el servicio de salud");
 						String nombreIPS = sc.nextLine();
-						
+						IPS ips = persistencia.darIPSPorNombre(nombreIPS);
+						if(ips == null)
+						{
+							System.out.println("La IPS no existe");
+						}
+						System.out.println("Ingrese el documento del medico a cargo");
+						long idMedico = Long.parseLong(sc.nextLine());
+						System.out.println("Ingrese la capacidad del servicio de salud");
+						int capacidad = Integer.parseInt(sc.nextLine());
+						System.out.println("Ingrese la hora de inicio del servicio de salud");
+						int horaInicio = Integer.parseInt(sc.nextLine());
+						System.out.println("Ingrese la hora de cierre");
+						int horaFinal = Integer.parseInt(sc.nextLine());
+						System.out.println("Ingrese el tipo de servicio, Ej: (ConsultaEmergencia, ConsultaEspecialista, Terapia, ConsultaControl, " + "\n" +
+						"Examenes,Hospitalizacion, ProcesoMedicoEspecializado ");
+						String NombreServicio = sc.nextLine();
+						TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(NombreServicio);
+						if(tipoServicio == null)
+						{
+							System.out.println("El tipo de servicio no existe");
+						}
+						long idTipoServicio = tipoServicio.getId();
+						Servicio servicio = persistencia.adicionarServicio(capacidad, horaInicio, horaFinal, idTipoServicio);
+						persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
+                        System.out.println("Servicio agregado correctamente");	
 					}
 				}
 				else
