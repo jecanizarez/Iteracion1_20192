@@ -1,6 +1,8 @@
  package epsAndes.persistencia;
 
- import javax.jdo.PersistenceManager;
+ import java.util.List;
+
+import javax.jdo.PersistenceManager;
  import javax.jdo.Query;
 
 import epsAndes.negocio.Usuario;
@@ -19,7 +21,7 @@ class SQLUsuario {
 	
 	public long adicionarUsuario(PersistenceManager pm, long id, String login, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaUsuario() + "(Login, Rol, Documento, TipoDocumento, Nombre) values (?, ?, ?, ?, ?) ");
 		q.setParameters(login, idRol, id, idTipoDocumento, nombre);
 		return (long) q.executeUnique();
 	}
@@ -29,6 +31,14 @@ class SQLUsuario {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE login = ?");
 		q.setResultClass(Usuario.class);
 		q.setParameters(login);
+		return (Usuario) q.executeUnique();
+	}
+	
+	public Usuario buscarUsuarioPorDocumento(PersistenceManager pm,long documento)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaUsuario() + " WHERE DOCUMENTO = ?");
+		q.setResultClass(Usuario.class);
+		q.setParameters(documento);
 		return (Usuario) q.executeUnique();
 	}
 }

@@ -60,7 +60,7 @@ VALUES ('afil14', 1, 20, 1, 'afil14');
 INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('afil15', 1, 21, 1, 'afil15');
 -- Se crea una fecha de nacimiento genérica:
-INSERT INTO Fecha(Fecha) VALUES ('15-12-97');
+INSERT INTO Fecha(Fecha) VALUES ('15-12-1997');
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (7, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
@@ -91,3 +91,4 @@ INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (20, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (21, 1, 1);
+COMMIT;

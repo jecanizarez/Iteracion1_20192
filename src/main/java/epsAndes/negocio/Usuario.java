@@ -3,92 +3,70 @@ package epsAndes.negocio;
 public class Usuario implements VOUsuario{
 
 	
-	private String nombre; 
-	
-	private long identificacion; 
-	
-	private String correoElectronico;
-	
-	private long idTipoDocumento;
-	
-	
-	private long  idRol; 
-	
 	private String login;
 	
+	private long  rol; 
 	
-	public void setIdentificacion(long identificacion) {
-		this.identificacion = identificacion;
-	}
-	public Usuario(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login)
+	private long documento; 
+	
+	private long tipoDocumento;
+	
+	private String nombre; 
+	
+	
+	public Usuario(String login, long identificacion, long tipoDocumento, long idRol, String nombre)
 	{
 		this.nombre = nombre; 
-		this.identificacion = identificacion; 
-		correoElectronico = correo; 
-		this.idTipoDocumento = tipoDocumento; 
-		this.idRol = idRol;
+		this.documento = identificacion; 
+		this.tipoDocumento = tipoDocumento; 
+		this.rol = idRol;
 		this.login = login;
 	}
 	public Usuario()
 	{
 		nombre = ""; 
-		identificacion = 0;
-		correoElectronico = "";
-		idTipoDocumento = 0;
+		documento = 0;
+		tipoDocumento = 0;
 		
 		
 	}
-
-	
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public long getIdentificacion() {
-		return identificacion;
-	}
-
-	public void setIndentificacion(long indentificacion) {
-		this.identificacion = indentificacion;
-	}
-
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
-
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
-	
-	public String toString()
-	{
-		return "Usuario  [nombre: " + nombre + ", correo: " + correoElectronico + ", identificacion: " + identificacion + "]";
-	}
-
-	public long getIdRol() {
-		return idRol;
-	}
-	public void setIdRol(long idRol) {
-		this.idRol = idRol;
-	}
-	
 	public String getLogin() {
 		return login;
 	}
 	public void setLogin(String login) {
 		this.login = login;
 	}
+	public long getRol() {
+		return rol;
+	}
+	public void setRol(long rol) {
+		this.rol = rol;
+	}
+	public long getDocumento() {
+		return documento;
+	}
+	public void setDocumento(long documento) {
+		this.documento = documento;
+	}
+	public long getTipoDocumento() {
+		return tipoDocumento;
+	}
+	public void setTipoDocumento(long tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String toString()
+	{
+		return "Usuario  [nombre: " + nombre + ", correo:  " +  "identificacion: " + documento + "]";
+	}
+
 	
-	public long getIdTipoDocumento() {
-		return idTipoDocumento;
-	}
-	public void setIdTipoDocumento(long idTipoDocumento) {
-		this.idTipoDocumento = idTipoDocumento;
-	}
 	
 	
 }

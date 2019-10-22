@@ -68,15 +68,17 @@ public class PersistenciaEpsAndes {
 	
 	private SQLUsuario sqlUsuario;
 	
+	private SQLServiciosAfiliado sqlServiciosAfiliado;
+	
 	public PersistenciaEpsAndes()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("EpsAndes");	
+		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion");	
 		crearClasesSQL();
 		
 		
 		tablas = new LinkedList<String>();
 		tablas.add("EPS_sequence");
-		tablas.add("AFILIADOS");
+		tablas.add("AFILIADO");
 		tablas.add("CITAS");
 		tablas.add("EPS");
 		tablas.add("FECHA");
@@ -93,6 +95,7 @@ public class PersistenciaEpsAndes {
 		tablas.add("TIPOSERVICIO");
 		tablas.add("TRABAJAN");
 		tablas.add("USUARIO");
+		tablas.add("SERVICIOSAFILIADO");
 		
 	}
 	
@@ -238,6 +241,10 @@ public class PersistenciaEpsAndes {
 	{
 		return tablas.get(17);
 	}
+	public String darTablaServiciosAfiliado()
+	{
+		return tablas.get(18);
+	}
 	
 	private long nextval()
 	{
@@ -265,19 +272,17 @@ public class PersistenciaEpsAndes {
         try
         {
             tx.begin();
-            long idRol = nextval ();
-            long tuplasInsertadas = sqlRol.adicionarRol(pm, idRol, nombre);
+            long idRol = nextval();
+            long tuplasInsertadas = sqlRol.adicionarRol(pm, nombre);
             tx.commit();
             
-            log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-            
+            log.trace ("Insercion de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            //ARREGLAR
             return new Rol(idRol, nombre);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-        	System.out.println("Error adicionado el rol");
+        	System.out.println("Error adicionado el rol.");
         	return null;
         }
         finally
@@ -303,12 +308,13 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Usuario(nombre, documento, correoElectronico, idTipoDocumento, idRol, login);
+            return new Usuario(nombre, documento,  idTipoDocumento, idRol, login);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//          	e.printStackTrace();
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicional el usuario: el usuario ya existe.");
         	return null;
         }
         finally
@@ -334,12 +340,13 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un Medico: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Medico(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, numRegistroMed, especialidad);
+            return new Medico( numRegistroMed,documento, especialidad, idIPS);
         }
         catch (Exception e)
         {
 //        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicional el medico: el medico ya existe.");
         	return null;
         }
         finally
@@ -365,7 +372,7 @@ public class PersistenciaEpsAndes {
             
             log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Afiliado(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, idEPS, idFecha);
+            return new Afiliado(documento, idFecha, idEPS);
         }
         catch (Exception e)
         {
@@ -395,14 +402,15 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlIPS.adicionarIPS(pm, idIPS, nombre, localizacion);
             tx.commit();
             
-            log.trace ("InserciÃ³n de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("Insercion de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
             
             return new IPS(localizacion, nombre, idIPS);
         }
         catch (Exception e)
         {
 //        	e.printStackTrace();
-        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicionar la IPS.");
         	return null;
         }
         finally
@@ -414,7 +422,7 @@ public class PersistenciaEpsAndes {
             pm.close();
         }  
 	}
-	public Recepcionista adicionarRecepcionista(String login, long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico, long idIPS) 
+	public Recepcionista adicionarRecepcionista(long documento, long idIPS) 
     {
     	PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -425,9 +433,9 @@ public class PersistenciaEpsAndes {
             long tuplasInsertadas = sqlRecepcionista.adicionarRecepcionista(pm, documento, idIPS);
             tx.commit();
             
-            log.trace ("Insercion de un usuario: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("Insercion de un usuario: " + ": " + tuplasInsertadas + " tuplas insertadas");
             
-            return new Recepcionista(nombre, documento, correoElectronico, idTipoDocumento, idRol, login, idIPS);
+            return new Recepcionista( documento, idIPS);
         }
         catch (Exception e)
         {
@@ -549,17 +557,80 @@ public class PersistenciaEpsAndes {
         try
         {
             tx.begin();
-            long idServicio = nextval ();
-            long tuplasInsertadas = sqlServicio.adicionarServicio(pm, idServicio, capacidad, horaInicio, horaFinal, idTipoServicio);
+            sqlServicio.adicionarServicio(pm, capacidad, horaInicio, horaFinal, idTipoServicio);
             tx.commit();
             
-            log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            long idServicio = sqlServicio.darIdUltimoServicio(pm);
+            log.trace ("Insercion de un fservicio: " + ": " + idServicio + " tuplas insertadas");
             
             return new Servicio(idServicio, capacidad, horaInicio, horaFinal, idTipoServicio);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
+        	e.printStackTrace();
+//        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	System.out.println("Error al adicionar el servicio.");
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+      
+	}
+	public PrestanServicio adicionarPrestanServicio(long idIPS, long idServicio)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlPrestanServicio.adicionarPrestanServicio(pm, idIPS,idServicio );
+            tx.commit();
+            
+            log.trace ("Insercion de un servicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            System.out.println("Se ha adicionado correctamente");
+            return new PrestanServicio(idIPS, idServicio);
+        }
+        catch (Exception e)
+        {
+        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+      
+	}
+	public ServiciosAfiliado adicionarServiciosAfiliado(long idTipoServicio, long idAfiliado, String fecha, long IPS)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlServiciosAfiliado.adicionarServiciosAfiliado(pm, idTipoServicio, idAfiliado, fecha, IPS);
+            tx.commit();
+            
+            log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+            
+            return new ServiciosAfiliado(idTipoServicio, idAfiliado, fecha, IPS);
+        }
+        catch (Exception e)
+        {
+        	e.printStackTrace();
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
         	return null;
         }
@@ -584,8 +655,62 @@ public class PersistenciaEpsAndes {
 		return sqlIPS.buscarIPSPorNombre(pmf.getPersistenceManager(), nombre);
 	}
 	
+	public Rol darRolPorNombre(String rol)
+	{
+		return sqlRol.buscaRolNombre(pmf.getPersistenceManager(), rol);
+	}
 	
+	public Usuario darUsuarioPorDocumento(long documento)
+	{
+		return sqlUsuario.buscarUsuarioPorDocumento(pmf.getPersistenceManager(), documento);
+	}
+	public Medico darMedicoPorDocumento(long documento)
+	{
+		return sqlMedico.buscaMedicoPorDocumento(pmf.getPersistenceManager(), documento);
+	}
 	
+	public Medico darMedicoPorRegistroMed(long registroMed)
+	{
+		return sqlMedico.buscaMedicoPorRegistroMed(pmf.getPersistenceManager(), registroMed);
+	}
+	
+	public Fecha darFecha(String fecha)
+	{
+		return sqlFecha.buscarFecha(pmf.getPersistenceManager(), fecha);
+	}
+	public TipoServicio darTipoServicioPorNombre(String nombre)
+	{
+		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
+	}
+	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
+	{
+		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
+	}
+	
+	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
+	{
+		try
+		{
+		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+				Object[] datos = (Object[]) e;
+				String nombre = (String) datos[1];
+				System.out.println(nombre);
+			}
+		}
+		else
+		{
+			System.out.println("No se ha prestado ningun servicio en las fechas indicadas");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("No hay servicios.");
+		}
+	}
 
 	
 

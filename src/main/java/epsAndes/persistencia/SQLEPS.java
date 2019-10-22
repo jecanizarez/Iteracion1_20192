@@ -16,7 +16,7 @@ class SQLEPS {
 	
 	public long adicionarEPS(PersistenceManager pm, long id, String nombre)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaEPS() + "(id, nombre) values (?, ?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaEPS() + "(id, nombre) values (?, ?) ");
 		q.setParameters(id, nombre);
 		return (long) q.executeUnique();
 	}

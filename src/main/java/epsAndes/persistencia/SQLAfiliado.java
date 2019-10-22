@@ -16,7 +16,7 @@ class SQLAfiliado {
 	
 	public long adicionarAfiliado(PersistenceManager pm, long idUsuario,long idFecha, long idEps )
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaAfiliado() + "(DOCUMENTO, FECHANACIMIENTO, EPS) values (?, ?, ?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaAfiliado() + "(DOCUMENTO, FECHANACIMIENTO, EPS) values (?, ?, ?) ");
 		q.setParameters(idUsuario, idFecha, idEps);
 		return (long) q.executeUnique();
 	}

@@ -1,22 +1,33 @@
 package epsAndes.negocio;
 
-public class Recepcionista extends Usuario implements VORecepcionista{
+public class Recepcionista  implements VORecepcionista{
 
-	private long idIPS;
+	private long documento;
+	
+	private long IPS;
      
-	public Recepcionista(String nombre, long identificacion, String correo, long tipoDocumento, long idRol,String login,  long idIPS)
+	
+
+	public Recepcionista(long documento, long IPS)
 	{
-	  super(nombre, identificacion, correo, tipoDocumento, idRol, login); 	
-	  
-	  this.idIPS = idIPS;
+	  this.documento = documento;
+	  this.IPS = IPS;
 	}
 	
-	public long getIdIPS() {
-		return idIPS;
+	public long getDocumento() {
+		return documento;
 	}
 
-	public void setIdIPS(long idIPS) {
-		this.idIPS = idIPS;
+	public void setDocumento(long documento) {
+		this.documento = documento;
+	}
+
+	public long getIPS() {
+		return IPS;
+	}
+
+	public void setIPS(long iPS) {
+		IPS = iPS;
 	}
 	
 

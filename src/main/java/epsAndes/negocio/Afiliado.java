@@ -1,51 +1,59 @@
 package epsAndes.negocio;
 
-public class Afiliado extends Usuario implements VOAfiliado{
+public class Afiliado  implements VOAfiliado{
 	
-	private  long idEps;
-	
-	private long idFecha;
-	
-	public Afiliado(String nombre, long identificacion, String correo, long tipoDocumento, long idRol, String login, long idEps, long idFecha)
-	{
-		super(nombre, identificacion, correo, tipoDocumento, idRol, login);
-		this.idEps = idEps; 
-		this.idFecha = idFecha; 
-	}
-	
-	public Afiliado()
-	{
-		super();
-	}
-	
+	private long documento;
 
+	private long fechaNacimiento;
+	
+	private  long eps;
+
+	public Afiliado(long documento, long fechaNacimiento, long eps)
+	{
+		this.documento = documento;
+		this.fechaNacimiento = fechaNacimiento; 
+		this.eps = eps;
+	}
+	
 	public long getIdEps() {
-		return idEps;
+		return eps;
 	}
 
 	public void setIdEps(long idEps) {
-		this.idEps = idEps;
+		this.eps = idEps;
 	}
-	
-	public long getIdRol()
-	{
-		return super.getIdRol();
-	}
-	
-	public long getId()
-	{
-		return super.getIdentificacion();
-	}
-	
-    
+	    
 	public long getIdFecha() {
-		return idFecha;
+		return fechaNacimiento;
 	}
 
 	public void setIdFecha(long idFecha) {
-		this.idFecha = idFecha;
+		this.fechaNacimiento = idFecha;
 	}
 
+	public long getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(long documento) {
+		this.documento = documento;
+	}
+
+	public long getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(long fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public long getEps() {
+		return eps;
+	}
+
+	public void setEps(long eps) {
+		this.eps = eps;
+	}
 
 	
 	

@@ -14,10 +14,10 @@ public class Servicio implements VOServicio{
 	
 	public Servicio(long id, int capacidad, int horaInicio, int horaCierre, long idTipoServicio)
 	{
+		this.id = id; 
 		this.capacidad = capacidad; 
 		this.horaInicio = horaInicio;
 		this.horaCierre = horaCierre; 
-		this.id = id; 
 		this.idTipoServicio = idTipoServicio;
 	}
 	public Servicio()

@@ -16,8 +16,8 @@ import javax.jdo.Query;
 		
 		public long adicionarCita(PersistenceManager pm, long id, int hora, long idFecha, long idServicio, long idAfiliado ) 
 		{
-			Query q = pm.newQuery(SQL, "INSERT INTO" + pp.darTablaCita() + "(id, hora, Fecha, idServicio, idAfiliado) values (?, ?, ?, ?, ?) ");
-			q.setParameters(id, hora, idFecha, idServicio, idAfiliado);
+			Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita() + "(hora, Fecha, idServicio, idAfiliado) values (?, ?, ?, ?) ");
+			q.setParameters(hora, idFecha, idServicio, idAfiliado);
 			return (long) q.executeUnique();
 		}
 }
