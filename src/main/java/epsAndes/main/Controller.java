@@ -22,6 +22,7 @@ public class Controller
 		while(!end)
 		{
 			ControllerView.printMenuLogin();
+			persistencia.requerimientoConsulta2("2012-06-05", "2012-06-08");
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)

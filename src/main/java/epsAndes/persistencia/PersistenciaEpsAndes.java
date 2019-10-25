@@ -1,5 +1,6 @@
 package epsAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class PersistenciaEpsAndes {
 
 	public PersistenciaEpsAndes()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion");	
+		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion1");	
 		crearClasesSQL();
 
 
@@ -682,20 +683,41 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
 	}
+	
+	public TipoServicio darTipoServicioPorId(Long id)
+	{
+		return sqlTipoServicio.buscarTipoServicioPorId(pmf.getPersistenceManager(), id);
+	}
+	
+	
 	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
 	{
 		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
 	}
+
+	
+	
+	
+	
 	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
 	{
+		
 		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
 		if(!lista.isEmpty())
 		{
 			for(Object e: lista)
 			{
+				
 				Object[] datos = (Object[]) e;
-				String nombre = (String) datos[1];
-				System.out.println(nombre);
+				
+				Long idTipoServicio = ((BigDecimal) datos[0]).longValue();
+				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
+				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
+				System.out.print("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
+				
+				
+				
+				
 			}
 		}
 		else

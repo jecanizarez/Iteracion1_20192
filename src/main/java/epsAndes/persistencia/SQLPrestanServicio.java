@@ -40,14 +40,15 @@ class SQLPrestanServicio {
 	}
 	public List<Object> darLos20ServiciosMasSolicitados(PersistenceManager pm, String fechaInicial, String fechaFinal)
 	{
+		
 		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) "
 				+ "FROM "+ pp.darTablaServiciosAfiliado()
-				+ "WHERE CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date) ?"
-				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)"
+				+ " WHERE TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
 			    + " GROUP BY idTipoServicio"
-				+ "ORDER BY COUNT(idAfiliado) DESC"
-			    + "FETCH NEXT 20 ROWS ONLY");
-		
+				+ " ORDER BY COUNT(idAfiliado) DESC"
+			    + " FETCH NEXT 20 ROWS ONLY");
+		q.setParameters(fechaInicial,fechaFinal);
 		return q.executeList();
 
 	}

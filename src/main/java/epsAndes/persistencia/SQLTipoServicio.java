@@ -31,4 +31,13 @@ class SQLTipoServicio {
 		q.setParameters(nombre);
 		return (TipoServicio) q.executeUnique();
 	}
+	
+	public TipoServicio buscarTipoServicioPorId(PersistenceManager pm, Long id)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE id = ?");
+		q.setResultClass(TipoServicio.class);
+		q.setParameters(id);
+		return (TipoServicio) q.executeUnique();
+	}
+	
 }
