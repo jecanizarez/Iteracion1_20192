@@ -134,11 +134,9 @@ public class Controller
 					if(validateNum(num))
 						action = Integer.parseInt(num);
 					if(action != -1 && (action == 0 || action == 1 || action == 2 || action == 3
-<<<<<<< HEAD
-							|| action == 4 || action == 5 || action == 6))
-=======
-							|| action == 4 || action == 5 || action == 6 || action == 7 ))
->>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
+
+							|| action == 4 || action == 5 || action == 6|| action == 7 ))
+
 					{
 						if(action == 0)
 							end = true;
@@ -359,13 +357,7 @@ public class Controller
 						}
 						else if(action == 6)
 						{
-<<<<<<< HEAD
-							System.out.println("Ingrese la fecha inicial (e.g., 15-02-2019)");
-							String inicial = sc.nextLine();
-							System.out.println("Ingrese la fecha final (e.g., 16-02-2019)");
-							String ffinal = sc.nextLine();
-							persistencia.requerimientoConsulta2(inicial, ffinal);
-=======
+
 							System.out.println("Ingrese la feche de inicio que desea (e.g. 2012-06-05)");
 							String fechaInicio = sc.nextLine();
 							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
@@ -383,7 +375,6 @@ public class Controller
 							String fechaFinal = sc.nextLine();
 							System.out.println("El numero de servicios prestador por la IPS es: ");
 							System.out.println(persistencia.requerimientoConsulta1(idIPS, fechaInicial, fechaFinal));
->>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 						}
 					}
 					else

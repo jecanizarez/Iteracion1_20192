@@ -45,21 +45,13 @@ class SQLPrestanServicio {
 		
 		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) "
 				+ "FROM "+ pp.darTablaServiciosAfiliado()
-<<<<<<< HEAD
-				+ " WHERE CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date) ?"
-				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)"
-			    + " GROUP BY idTipoServicio"
-				+ " ORDER BY COUNT(idAfiliado) DESC"
-			    + " FETCH NEXT 20 ROWS ONLY");
-		
-=======
+
 				+ " WHERE TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
 				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
 			    + " GROUP BY idTipoServicio"
 				+ " ORDER BY COUNT(idAfiliado) DESC"
 			    + " FETCH NEXT 20 ROWS ONLY");
 		q.setParameters(fechaInicial,fechaFinal);
->>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 		return q.executeList();
 
 	}
