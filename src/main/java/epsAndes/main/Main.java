@@ -1,5 +1,9 @@
 package epsAndes.main;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
+
 import epsAndes.persistencia.PersistenciaEpsAndes;
 
 public class Main 
@@ -12,16 +16,17 @@ public class Main
 	private static Controller controller;
 	
 	
-	// Main method 
-	
+
 	/**
 	 * Starts the project.
 	 * @param args Arguments.
 	 */
 	public static void main(String[] args) 
 	{
-
 		controller = new Controller();
 		controller.run();
+		
 	}
+
+	   
 }

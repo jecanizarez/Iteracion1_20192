@@ -1,5 +1,6 @@
 package epsAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class PersistenciaEpsAndes {
 	
 	public PersistenciaEpsAndes()
 	{
-		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion");	
+		pmf = JDOHelper.getPersistenceManagerFactory("Iteracion1");	
 		crearClasesSQL();
 		
 		
@@ -267,6 +268,7 @@ public class PersistenciaEpsAndes {
 	public Rol adicionarRol(String nombre)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
+<<<<<<< HEAD
         Transaction tx=pm.currentTransaction();
         
         try
@@ -293,6 +295,35 @@ public class PersistenciaEpsAndes {
             }
             pm.close();
         }
+=======
+		Transaction tx=pm.currentTransaction();
+
+		try
+		{
+			tx.begin();
+			long idRol = nextval();
+			long tuplasInsertadas = sqlRol.adicionarRol(pm, nombre);
+			tx.commit();
+
+			log.trace ("Insercion de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			//ARREGLAR
+			return darRolPorNombre(nombre);
+
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error adicionado el rol.");
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+>>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 	}
 	
 	public Usuario adicionarUsuario(String login,long documento, long idRol, long idTipoDocumento, String nombre, String correoElectronico)
@@ -519,6 +550,7 @@ public class PersistenciaEpsAndes {
 	public Fecha adicionarFecha(String fecha) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
+<<<<<<< HEAD
         Transaction tx=pm.currentTransaction();
         
         try
@@ -546,6 +578,35 @@ public class PersistenciaEpsAndes {
             }
             pm.close();
         }
+=======
+		Transaction tx=pm.currentTransaction();
+
+		try
+		{
+			tx.begin();
+			long idFecha = nextval ();
+			long tuplasInsertadas = sqlFecha.AdicionarFecha(pm, idFecha, fecha);
+			tx.commit();
+
+			log.trace ("Insercion de una fecha: " + fecha + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return darFecha(fecha);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+>>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 	}
 	
 
@@ -682,23 +743,50 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
 	}
+	
+	public TipoServicio darTipoServicioPorId(Long id)
+	{
+		return sqlTipoServicio.buscarTipoServicioPorId(pmf.getPersistenceManager(), id);
+	}
+	
+	
 	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
 	{
 		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
+		
 	}
+<<<<<<< HEAD
 	
 	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
 	{
 		try
 		{
+=======
+
+	
+	
+	
+	
+	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
+	{
+		
+>>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
 		if(!lista.isEmpty())
 		{
 			for(Object e: lista)
 			{
+				
 				Object[] datos = (Object[]) e;
-				String nombre = (String) datos[1];
-				System.out.println(nombre);
+				
+				Long idTipoServicio = ((BigDecimal) datos[0]).longValue();
+				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
+				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
+				System.out.print("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
+				
+				
+				
+				
 			}
 		}
 		else
@@ -711,6 +799,16 @@ public class PersistenciaEpsAndes {
 			System.out.println("No hay servicios.");
 		}
 	}
+<<<<<<< HEAD
+=======
+	
+	
+
+
+
+
+
+>>>>>>> 8b8a37ce94481c0f04fc30b05fe1dc2ae055354a
 
 	
 
