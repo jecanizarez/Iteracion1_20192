@@ -21,8 +21,7 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
-			ControllerView.printMenuLogin();
-			persistencia.requerimientoConsulta2("2012-06-05", "2012-06-08");
+		
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)
@@ -135,7 +134,7 @@ public class Controller
 					if(validateNum(num))
 						action = Integer.parseInt(num);
 					if(action != -1 && (action == 0 || action == 1 || action == 2 || action == 3
-							|| action == 4 || action == 5))
+							|| action == 4 || action == 5 || action == 6 || action == 7 ))
 					{
 						if(action == 0)
 							end = true;
@@ -353,6 +352,26 @@ public class Controller
 								if(servicio != null && result != null)
 									System.out.println("Servicio agregado correctamente.");	
 							}
+						}
+						else if(action == 6)
+						{
+							System.out.println("Ingrese la feche de inicio que desea (e.g. 2012-06-05)");
+							String fechaInicio = sc.nextLine();
+							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
+							String fechaFinal = sc.nextLine();
+							persistencia.requerimientoConsulta2(fechaInicio, fechaFinal);
+						}
+						else if(action == 7)
+						{
+							System.out.println("Ingrese el nombre de la IPS");
+							String ips = sc.nextLine();
+							Long idIPS = persistencia.darIPSPorNombre(ips).getId();
+							System.out.println("Ingrese la fecha de inicio de la busqueda (e.g. 2012-06-05) ");
+							String fechaInicial = sc.nextLine();
+							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
+							String fechaFinal = sc.nextLine();
+							System.out.println("El numero de servicios prestador por la IPS es: ");
+							System.out.println(persistencia.requerimientoConsulta1(idIPS, fechaInicial, fechaFinal));
 						}
 					}
 					else

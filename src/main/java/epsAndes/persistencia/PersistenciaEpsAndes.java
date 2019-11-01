@@ -279,7 +279,8 @@ public class PersistenciaEpsAndes {
 
 			log.trace ("Insercion de un rol: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 			//ARREGLAR
-			return new Rol(idRol, nombre);
+			return darRolPorNombre(nombre);
+
 		}
 		catch (Exception e)
 		{
@@ -531,7 +532,7 @@ public class PersistenciaEpsAndes {
 
 			log.trace ("Insercion de una fecha: " + fecha + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Fecha(idFecha, fecha);
+			return darFecha(fecha);
 		}
 		catch (Exception e)
 		{
@@ -693,6 +694,7 @@ public class PersistenciaEpsAndes {
 	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
 	{
 		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
+		
 	}
 
 	

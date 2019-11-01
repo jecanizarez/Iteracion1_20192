@@ -1,5 +1,6 @@
 package epsAndes.persistencia;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -29,13 +30,14 @@ class SQLPrestanServicio {
 	
 	public long darCantidadDeServiciosPrestadorPorUnaIps(PersistenceManager pm, String fechaInicial, long IPS, String fechaFinal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT COUNT(idTipoServicio) FROM "+ pp.darTablaServiciosAfiliado()
-				+ "WHERE IPS = ?"
-				+ " AND CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date)+ "
-				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)"
+		Query q = pm.newQuery(SQL, "SELECT COUNT(idTipoServicio)"
+				+ " FROM "+ pp.darTablaServiciosAfiliado()
+				+ " WHERE IPS = ?"
+				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
 			    + " GROUP BY IPS");
-		q.setParameters(IPS);
-		return (long) q.executeUnique();
+		q.setParameters(IPS,fechaInicial,fechaFinal);
+		return ((BigDecimal) q.executeUnique()).longValue();
 
 	}
 	public List<Object> darLos20ServiciosMasSolicitados(PersistenceManager pm, String fechaInicial, String fechaFinal)
