@@ -1,4 +1,4 @@
-﻿-- Este archivo debe ejecutarse después de ConfiguracionInicialBD.
+-- Este archivo debe ejecutarse después de ConfiguracionInicialBD.
 -- Un admin:
 INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('admin1', 4, 0, 1, 'admin1');
@@ -91,13 +91,20 @@ INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (20, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (21, 1, 1);
+
+--Servicio
+INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado) VALUES (300,1,20,2,1,'Disponible',0);
+INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado) VALUES (30,1,20,1,1 'Disponible',0);
+
+
+--Citas realmente efectuadas
 INSERT INTO SERVICIOSAFILIADO(idtipoServicio, idAfiliado,FechaAsistida,IPS)
-VALUES(1,7,2012-06-05,1)
+VALUES(1,7,2012-06-05,1);
 INSERT INTO SERVICIOSAFILIADO(idtipoServicio, idAfiliado,FechaAsistida,IPS)
-VALUES(1,8,2012-06-06,1)
+VALUES(1,8,2012-06-06,1);
 INSERT INTO SERVICIOSAFILIADO(idtipoServicio, idAfiliado,FechaAsistida,IPS)
-VALUES(1,9,2012-06-07,1)
+VALUES(2,9,2012-06-07,1);
 INSERT INTO SERVICIOSAFILIADO(idtipoServicio, idAfiliado,FechaAsistida,IPS)
-VALUES(1,10,2012-06-08,1)
+VALUES(2,10,2012-06-08,1);
 
 COMMIT;

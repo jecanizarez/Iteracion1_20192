@@ -106,8 +106,10 @@ HoraFinal NUMBER NOT NULL,
 TipoServicio NUMBER,
 IdIPS NUMBER,
 Estado VARCHAR2(255 BYTE) NOT NULL,
+CapacidadActual NUMBER NOT NULL,
 CONSTRAINT Servicio_PK PRIMARY KEY (Id),
 CONSTRAINT Servicio_Capacidad_CK CHECK (Capacidad > 0),
+CONSTRAINT Servicio_CapacidadActual_CK CHECK (CapacidadActual >= 0),
 CONSTRAINT Servicio_HoraFinal_CK_1 CHECK (HoraFinal >= 0),
 CONSTRAINT Servicio_HoraFinal_CK_2 CHECK (HoraFinal <= 24),
 CONSTRAINT Servicio_HoraInicio_CK_1 CHECK (HoraInicio >= 0),
@@ -200,3 +202,31 @@ IdServicio NUMBER,
 CONSTRAINT Citas_PK PRIMARY KEY (Id),
 CONSTRAINT Citas_Fecha_FK FOREIGN KEY (Fecha) REFERENCES Fecha(Id),
 CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
+
+CREATE TABLE Campaña(
+Id NUMBER GENERATED ALWAYS AS IDENTITY,
+Nombre VARCHAR2(255 BYTE) NOT NULL,
+CONSTRAINT Campaña_Unique  UNIQUE (Nombre),
+CONSTRAINT Campaña_PK PRIMARY KEY (Id));
+
+CREATE TABLE ServiciosCampaña(
+idTipoServicio NUMBER,
+idCampaña NUMBER,
+CantidadReservada NUMBER NOT NULL,
+CONSTRAINT ServiciosCampaña_PK PRIMARY KEY (idTipoServicio, idCampaña),
+CONSTRAINT Campaña_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
+CONSTRAINT CampañaId_FK FOREIGN KEY (idCampaña) REFERENCES Campaña(Id));
+
+
+
+
+
+
+
+
+
+
+
+
+
+

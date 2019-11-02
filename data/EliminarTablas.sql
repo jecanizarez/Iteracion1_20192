@@ -7,6 +7,10 @@ DROP TABLE PrestanServicio;
 
 DROP TABLE ServiciosAfiliado;
 
+DROP TABLE ServiciosCampaña;
+
+DROP TABLE Campaña;
+
 DROP TABLE Trabajan;
 
 DROP TABLE Receta;

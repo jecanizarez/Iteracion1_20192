@@ -57,6 +57,8 @@ public class Controller
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
+			
+			
 			else if(usuario.getRol() == 2) // Case: medico
 			{
 				ControllerView.print("Bienvenido medico.");
@@ -379,6 +381,10 @@ public class Controller
 							persistencia.requerimientoConsulta1(fechaInicial, fechaFinal);
 							
 						}
+					}
+					else if(usuario.getRol() == 6) // caso Organizador
+					{
+						
 					}
 					else
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");

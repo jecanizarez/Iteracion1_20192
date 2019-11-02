@@ -4,6 +4,7 @@ INSERT INTO Rol(Rol) VALUES('Medico');
 INSERT INTO Rol(Rol) VALUES('Recepcionista');
 INSERT INTO Rol(Rol) VALUES('Administrador');
 INSERT INTO Rol(Rol) VALUES('Gerente');
+INSERT INTO Rol(Rol) VALUES('OrganizadorCampaña');
 -- Inicialización de los TipoDocumento:
 INSERT INTO TipoDocumento(TipoDocumento) VALUES ('CC');
 INSERT INTO TipoDocumento(TipoDocumento) VALUES ('CE');

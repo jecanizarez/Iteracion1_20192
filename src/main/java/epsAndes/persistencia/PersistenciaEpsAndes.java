@@ -473,7 +473,7 @@ public class PersistenciaEpsAndes {
 
 			return new Cita(idCita, idServicio, idAfiliado, idFecha, hora);
 		}
-		catch (Exception e)
+		catch (Exception e)	
 		{
 			//        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
@@ -481,7 +481,7 @@ public class PersistenciaEpsAndes {
 		}
 		finally
 		{
-			if (tx.isActive())
+			if (tx.isActive())	
 			{
 				tx.rollback();
 			}

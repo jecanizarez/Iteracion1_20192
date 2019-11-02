@@ -12,13 +12,16 @@ public class Servicio implements VOServicio{
 	
 	private long idTipoServicio;
 	
-	public Servicio(long id, int capacidad, int horaInicio, int horaCierre, long idTipoServicio)
+	private int capacidadActual;
+	
+	public Servicio(long id, int capacidad, int horaInicio, int horaCierre, long idTipoServicio, int capacidadActual)
 	{
 		this.id = id; 
 		this.capacidad = capacidad; 
 		this.horaInicio = horaInicio;
 		this.horaCierre = horaCierre; 
 		this.idTipoServicio = idTipoServicio;
+		this.capacidadActual = capacidadActual;
 	}
 	public Servicio()
 	{
@@ -64,6 +67,13 @@ public class Servicio implements VOServicio{
 	}
 	public void setIdTipoServicio(long idTipoServicio) {
 		this.idTipoServicio = idTipoServicio;
+	}
+
+	public int getCapacidadActual() {
+		return capacidadActual;
+	}
+	public void setCapacidadActual(int capacidadActual) {
+		this.capacidadActual = capacidadActual;
 	}
 	
 	
