@@ -730,6 +730,59 @@ public class PersistenciaEpsAndes {
 			System.out.println("No se ha prestado ningun servicio en las fechas indicadas");
 		}
 	}
+	
+	public void requerimientoConsulta5(Long idAfiliado, String fechaInicial, String fechaFinal)
+	{
+		List<Object> lista = sqlPrestanServicio.darServiciosAfiliado(pmf.getPersistenceManager(), idAfiliado, fechaInicial, fechaFinal);
+		System.out.println("El usuario ha tomado los siguientes servicios");
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+				Object[] datos = (Object[]) e;
+
+				Long idTipoServicio = ((BigDecimal) datos[0]).longValue();
+				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
+				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
+				System.out.print("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
+			}
+		}
+		else
+		{
+			System.out.println("El usuario no ha tomado ningun servicio en las fechas indicadas");
+		}
+	}
+	
+	public void requerimientoConsulta4(int capacidad)
+	{
+		List<Object> lista = sqlServicio.darServiciosConCapacidadMayorA(pmf.getPersistenceManager(), capacidad);
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+				Object[] datos = (Object[]) e;
+
+				Long id = ((BigDecimal) datos[0]).longValue();
+				System.out.print("id: " + id + " ");
+				Long capacidadServicio = ((BigDecimal) datos[1]).longValue();
+				System.out.print("Capacidad: " + capacidadServicio+ " ");
+				Long horaInicial = ((BigDecimal) datos[2]).longValue();
+				System.out.print("hora de inicio: " + horaInicial + " ");
+				Long horaFinal = ((BigDecimal) datos[3]).longValue();
+				System.out.print("hora de cierre: " + horaFinal + " ");
+				Long idTipoServicio = ((BigDecimal) datos[4]).longValue();
+				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
+				System.out.println("Tipo de servicio: " + tipo.getTipo());
+			}
+		}
+		else
+		{
+			System.out.println("No existe ningun servicio con más capacidad a la indicada");
+		}
+	}
+	public void requerimientoConsulta3()
+	{
+		
+	}
 
 }
-

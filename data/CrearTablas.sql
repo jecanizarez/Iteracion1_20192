@@ -1,4 +1,4 @@
-﻿-- Secuencia de la BD:
+-- Secuencia de la BD:
 CREATE SEQUENCE EPS_sequence;
 ---------------------------------------------------------------
 -- Creación de la tabla de roles, usuarios, fechas y entidades:
@@ -104,6 +104,8 @@ Capacidad NUMBER NOT NULL,
 HoraInicio NUMBER NOT NULL,
 HoraFinal NUMBER NOT NULL,
 TipoServicio NUMBER,
+IdIPS NUMBER,
+CONSTRAINT PS_IdIPS_Unique UNIQUE (IdIPS),
 CONSTRAINT Servicio_PK PRIMARY KEY (Id),
 CONSTRAINT Servicio_Capacidad_CK CHECK (Capacidad > 0),
 CONSTRAINT Servicio_HoraFinal_CK_1 CHECK (HoraFinal >= 0),
@@ -126,9 +128,8 @@ CONSTRAINT SM_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 CREATE TABLE PrestanServicio(
 IdIPS NUMBER,
 IdServicio NUMBER,
-CONSTRAINT PS_IdIPS_Unique UNIQUE (IdIPS),
-CONSTRAINT PS_PK PRIMARY KEY (IdIPS, IdServicio),
-CONSTRAINT PS_IdServicio_Unique UNIQUE (IdServicio),
+IdMedico NUMBER,
+CONSTRAINT PS_PK_Unique PRIMARY KEY (IdIPS, IdServicio),
 CONSTRAINT PS_IdMedico FOREIGN KEY (IdIPS) REFERENCES IPS(Id),
 CONSTRAINT PS_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 
@@ -139,7 +140,7 @@ IdTipoServicio NUMBER,
 IdAfiliado NUMBER,
 FechaAsistida VARCHAR2(255 BYTE) NOT NULL,
 IPS NUMBER,
-CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado,FechaAsistida),
+CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado),
 CONSTRAINT SA_IPS_FK FOREIGN KEY (IPS) REFERENCES IPS(Id),
 CONSTRAINT SA_IdTipoServicio FOREIGN KEY (IdTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento));

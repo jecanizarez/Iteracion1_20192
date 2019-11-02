@@ -45,7 +45,6 @@ class SQLPrestanServicio {
 		
 		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) "
 				+ "FROM "+ pp.darTablaServiciosAfiliado()
-
 				+ " WHERE TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
 				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
 			    + " GROUP BY idTipoServicio"
@@ -57,12 +56,13 @@ class SQLPrestanServicio {
 	}
 	public List<Object> darServiciosAfiliado(PersistenceManager pm, long idAfiliado, String fechaInicial, String fechaFinal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT idTipoServicio "
+		Query q = pm.newQuery(SQL, "SELECT DISTINCT idTipoServicio, COUNT(idAfiliado) "
 				+ "FROM "+ pp.darTablaServiciosAfiliado()
-				+ "WHERE idAfiliado = ?"
-				+ " AND CAST(fechaAsistida AS date) >= CAST("+ fechaInicial+ " AS date) ?"
-				+ " AND CAST(fechaAsistida AS date) <= CAST("+fechaFinal  +" AS date)");
-		q.setParameters(idAfiliado);
+				+ " WHERE idAfiliado = ?"
+				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " GROUP BY idTipoServicio");
+		q.setParameters(idAfiliado, fechaInicial, fechaFinal);
 		return q.executeList();
 	}
 	

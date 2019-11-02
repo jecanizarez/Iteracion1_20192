@@ -21,6 +21,8 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
+
+			persistencia.requerimientoConsulta4(0);
 		
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);

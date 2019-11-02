@@ -37,11 +37,10 @@ class SQLServicio {
 	}
 
 
-	public List<Servicio> darServiciosConCapacidadMayorA(PersistenceManager pm, int capacidad)
+	public List<Object> darServiciosConCapacidadMayorA(PersistenceManager pm, int capacidad)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicio() + " WHERE capacidad > " +capacidad);
-		q.setResultClass(Servicio.class);
 		q.setParameters(capacidad);
-		return (List<Servicio>) q.executeList();
+		return q.executeList();
 	}
 }
