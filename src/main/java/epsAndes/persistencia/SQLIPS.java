@@ -4,6 +4,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import epsAndes.negocio.IPS;
+import epsAndes.negocio.TipoServicio;
 import epsAndes.negocio.Usuario;
 
 class SQLIPS {
@@ -28,6 +29,14 @@ class SQLIPS {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaIPS() + " WHERE nombre = ?");
 		q.setResultClass(IPS.class);
 		q.setParameters(nombre);
+		return (IPS) q.executeUnique();
+	}
+	
+	public IPS buscarTipoServicioPorNombre(PersistenceManager pm, long id)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaIPS() + " WHERE id = ?");
+		q.setResultClass(IPS.class);
+		q.setParameters(id);
 		return (IPS) q.executeUnique();
 	}
 }

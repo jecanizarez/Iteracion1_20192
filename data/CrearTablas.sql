@@ -105,14 +105,15 @@ HoraInicio NUMBER NOT NULL,
 HoraFinal NUMBER NOT NULL,
 TipoServicio NUMBER,
 IdIPS NUMBER,
-CONSTRAINT PS_IdIPS_Unique UNIQUE (IdIPS),
+Estado VARCHAR2(255 BYTE) NOT NULL,
 CONSTRAINT Servicio_PK PRIMARY KEY (Id),
 CONSTRAINT Servicio_Capacidad_CK CHECK (Capacidad > 0),
 CONSTRAINT Servicio_HoraFinal_CK_1 CHECK (HoraFinal >= 0),
 CONSTRAINT Servicio_HoraFinal_CK_2 CHECK (HoraFinal <= 24),
 CONSTRAINT Servicio_HoraInicio_CK_1 CHECK (HoraInicio >= 0),
 CONSTRAINT Servicio_HoraInicio_CK_2 CHECK (HoraInicio <= 24),
-CONSTRAINT Servicio_HoraFinal_CK_3 CHECK (HoraFinal > HoraInicio));
+CONSTRAINT Servicio_HoraFinal_CK_3 CHECK (HoraFinal > HoraInicio),
+CONSTRAINT Estado_CK CHECK(Estado IN ('Disponible','Deshabilitado')));
 
 -- Tabla de ServicioMedico:
 CREATE TABLE ServicioMedico(
@@ -140,7 +141,7 @@ IdTipoServicio NUMBER,
 IdAfiliado NUMBER,
 FechaAsistida VARCHAR2(255 BYTE) NOT NULL,
 IPS NUMBER,
-CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado),
+CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado, FechaAsistida),
 CONSTRAINT SA_IPS_FK FOREIGN KEY (IPS) REFERENCES IPS(Id),
 CONSTRAINT SA_IdTipoServicio FOREIGN KEY (IdTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento));

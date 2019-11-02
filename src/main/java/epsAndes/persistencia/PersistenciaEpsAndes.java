@@ -661,6 +661,11 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlIPS.buscarIPSPorNombre(pmf.getPersistenceManager(), nombre);
 	}
+	
+	public IPS darIPSPorId(long id)
+	{
+		return sqlIPS.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), id);
+	}
 
 	public Rol darRolPorNombre(String rol)
 	{
@@ -696,9 +701,27 @@ public class PersistenciaEpsAndes {
 	}
 
 
-	public long requerimientoConsulta1(long IPS, String fechaInicial, String fechaFinal)
+	public void requerimientoConsulta1(String fechaInicial, String fechaFinal)
 	{
-		return sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, IPS, fechaFinal);
+		List<Object> lista = sqlPrestanServicio.darCantidadDeServiciosPrestadorPorUnaIps(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
+		if(!lista.isEmpty())
+		{
+			for(Object e: lista)
+			{
+
+				Object[] datos = (Object[]) e;
+
+				Long id = ((BigDecimal) datos[0]).longValue();
+				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
+				IPS tipo = darIPSPorId(id);
+				System.out.print("IPS: " + tipo.getNombre()+ " Solicitudes: " + repeticiones);
+
+			}
+		}
+		else
+		{
+			System.out.println("No se ha prestado ningun servicio en las fechas indicadas");
+		}
 
 	}
 
@@ -782,7 +805,22 @@ public class PersistenciaEpsAndes {
 	}
 	public void requerimientoConsulta3()
 	{
+		List<Object> listaCapacidadTotal = sqlPrestanServicio.darCantidadDeServicios(pmf.getPersistenceManager());
+		List<Object> listaCapacidadActual = sqlPrestanServicio.darCantidadServiciosPrestados(pmf.getPersistenceManager());
 		
+		for(int i = 0; i < listaCapacidadActual.size(); i++)
+		{
+                Object[] actual = (Object[]) listaCapacidadActual.get(i);
+                Object[] total = (Object[]) listaCapacidadTotal.get(i);
+                Long idTipo = ((BigDecimal)actual[0]).longValue();
+                Long usoActual = ((BigDecimal)actual[1]).longValue();
+                Long cantidad = ((BigDecimal)total[1]).longValue();
+                
+                TipoServicio tipo = darTipoServicioPorId(idTipo);
+                
+                System.out.println("Indice de uso de " + tipo.getTipo() + " es: " + (double)usoActual/cantidad);
+                
+		}
 	}
 
 }

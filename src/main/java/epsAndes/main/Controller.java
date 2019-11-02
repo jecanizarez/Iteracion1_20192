@@ -22,7 +22,7 @@ public class Controller
 		while(!end)
 		{
 
-			persistencia.requerimientoConsulta4(0);
+			persistencia.requerimientoConsulta3();
 		
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
@@ -48,6 +48,9 @@ public class Controller
 						else if(action == 1)
 						{
 							// TODO reservar una cita de servicio de salud.
+							System.out.println("Ingrese el tipo de servicio que desea, este debe ser una ConsultaGenereal o una ConsultaEmergencia");
+							
+							
 						}
 					}
 					else
@@ -368,15 +371,13 @@ public class Controller
 						}
 						else if(action == 7)
 						{
-							System.out.println("Ingrese el nombre de la IPS");
-							String ips = sc.nextLine();
-							Long idIPS = persistencia.darIPSPorNombre(ips).getId();
+							
 							System.out.println("Ingrese la fecha de inicio de la busqueda (e.g. 2012-06-05) ");
 							String fechaInicial = sc.nextLine();
 							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
 							String fechaFinal = sc.nextLine();
-							System.out.println("El numero de servicios prestador por la IPS es: ");
-							System.out.println(persistencia.requerimientoConsulta1(idIPS, fechaInicial, fechaFinal));
+							persistencia.requerimientoConsulta1(fechaInicial, fechaFinal);
+							
 						}
 					}
 					else

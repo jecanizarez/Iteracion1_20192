@@ -13,43 +13,43 @@ import epsAndes.negocio.ServiciosAfiliado;
 class SQLPrestanServicio {
 
 	private final static String SQL = PersistenciaEpsAndes.SQL;
-	
+
 	private PersistenciaEpsAndes pp;
-	
+
 	public SQLPrestanServicio(PersistenciaEpsAndes pp)
 	{
 		this.pp = pp;
 	}
-	
+
 	public long adicionarPrestanServicio(PersistenceManager pm, long idIPS, long idServicio)
 	{
 		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPrestanServicio() + " (idIPS, idServicio) VALUES (?, ?) ");
 		q.setParameters(idIPS, idServicio);
 		return (long) q.executeUnique();
 	}
-	
-	public long darCantidadDeServiciosPrestadorPorUnaIps(PersistenceManager pm, String fechaInicial, long IPS, String fechaFinal)
+
+	public List<Object> darCantidadDeServiciosPrestadorPorUnaIps(PersistenceManager pm, String fechaInicial, String fechaFinal)
 	{
-		Query q = pm.newQuery(SQL, "SELECT COUNT(idTipoServicio)"
-				+ " FROM "+ pp.darTablaServiciosAfiliado()
-				+ " WHERE IPS = ?"
-				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
+		Query q = pm.newQuery(SQL, "SELECT IPS, COUNT(idTipoServicio)"
+				+ " FROM "+ pp.darTablaServiciosAfiliado() + ", " + pp.darTablaServicio()
+				+ " WHERE"
+				+ " TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
 				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
-			    + " GROUP BY IPS");
-		q.setParameters(IPS,fechaInicial,fechaFinal);
-		return ((BigDecimal) q.executeUnique()).longValue();
+				+ " GROUP BY IPS");
+		q.setParameters(fechaInicial,fechaFinal);
+		return q.executeList();
 
 	}
 	public List<Object> darLos20ServiciosMasSolicitados(PersistenceManager pm, String fechaInicial, String fechaFinal)
 	{
-		
+
 		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado) "
 				+ "FROM "+ pp.darTablaServiciosAfiliado()
 				+ " WHERE TO_DATE(fechaAsistida, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
 				+ " AND TO_DATE(fechaAsistida, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
-			    + " GROUP BY idTipoServicio"
+				+ " GROUP BY idTipoServicio"
 				+ " ORDER BY COUNT(idAfiliado) DESC"
-			    + " FETCH NEXT 20 ROWS ONLY");
+				+ " FETCH NEXT 20 ROWS ONLY");
 		q.setParameters(fechaInicial,fechaFinal);
 		return q.executeList();
 
@@ -65,5 +65,24 @@ class SQLPrestanServicio {
 		q.setParameters(idAfiliado, fechaInicial, fechaFinal);
 		return q.executeList();
 	}
-	
+	public List<Object> darCantidadDeServicios(PersistenceManager pm)
+	{
+
+		Query q = pm.newQuery(SQL, "SELECT TipoServicio, SUM(capacidad)"
+				+ " FROM " + pp.darTablaServicio()
+				+ " GROUP BY TipoServicio");
+		return q.executeList();
+
+	}
+
+	public List<Object> darCantidadServiciosPrestados(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idTipoServicio, COUNT(idAfiliado)"
+				+ " FROM " + pp.darTablaServiciosAfiliado()
+				+ " GROUP BY idTipoServicio");
+		return q.executeList();
+
+	}
+
+
 }
