@@ -61,5 +61,26 @@ class SQLServicio {
 		q.setParameters(id);
 		q.executeUnique();
 	}
+	public void aumentarCapacidadActualServicio(PersistenceManager pm, Long id, int cantidad)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET capacidadActual = capacidadActual+ " +cantidad+ " WHERE id = ?");
+		q.setParameters(id);
+		q.executeUnique();
+	}
+	public void deshabilitarServicioDeSalud(PersistenceManager pm, Long id)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE id = ?");
+		q.setParameters("Deshabiliado",id);
+		q.executeUnique();
+	}
+	
+	public void habilitarServicioDeSalud(PersistenceManager pm, Long idTipoServicio)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE TipoServicio = ?"
+				+ " AND estado = ?");
+		q.setParameters("Disponible",idTipoServicio,"Deshabilitado");
+		q.executeUnique();
+	}
+	
 	
 }

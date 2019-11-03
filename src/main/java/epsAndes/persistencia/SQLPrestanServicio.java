@@ -112,10 +112,12 @@ class SQLPrestanServicio {
 	
 	public List<Object> darIPSYDisponibilidadDelServicio(PersistenceManager pm, long idTipoServicio)
 	{
+		String disponible = "Disponible";
 		Query q = pm.newQuery(SQL, "SELECT idips, capacidadActual, id"
 				+ " FROM " + pp.darTablaServicio()
-				+ " WHERE tiposervicio = ? ");
-		q.setParameters(idTipoServicio);
+				+ " WHERE tiposervicio = ? "
+				+ " AND estado = ?");
+		q.setParameters(idTipoServicio, disponible);
 		return q.executeList();
 	}
 	
@@ -127,6 +129,47 @@ class SQLPrestanServicio {
 		q.setResultClass(Cita.class);
 		return (Cita)q.executeUnique();
 	}
+	
+	public List<Object> darNumeroServiciosReservadorPorAfiliado(PersistenceManager pm, Long idAfiliado)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idServicio, COUNT(idServicio)"
+				+ " FROM " + pp.darTablaCita()
+				+ " WHERE idAfiliado = ? "
+				+ " GROUP BY idServicio,idAfiliado");
+		q.setParameters(idAfiliado);
+		return q.executeList();
+	}
+	public List<Object> darServiciosRangoFechas(PersistenceManager pm, String FechaInicio, String FechaFinal)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idServicio, SERVICIO.TIPOSERVICIO, CITAS.ID, CITAS.idAfiliado"
+				+ " FROM " + pp.darTablaCita() + ", "+pp.darTablaFecha() + ", "+ pp.darTablaServicio()
+				+ " WHERE CITAS.FECHA = FECHA.ID"
+				+ " AND SERVICIO.ID = CITAS.IDSERVICIO"
+				+ " AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
+				+ " GROUP BY idServicio,idAfiliado");
+		q.setParameters(FechaInicio, FechaFinal);
+		return q.executeList();
+	}
+	public long darIdServicioDiferente(PersistenceManager pm, Long idServicio, Long idTipoServicio)
+	{
+		Query q = pm.newQuery(SQL, "SELECT id"
+				+ " FROM " + pp.darTablaServicio()
+				+ " WHERE id NOT IN ? "
+				+ " AND TIPOSERVICIO IN ? ");
+		q.setParameters(idServicio, idTipoServicio);
+		Object respuesta = q.executeUnique();
+		if(respuesta != null)
+		{
+		return ((BigDecimal)respuesta).longValue();
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
+	
 
 
 }

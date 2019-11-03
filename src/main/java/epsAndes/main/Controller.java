@@ -1,5 +1,7 @@
 package epsAndes.main;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 import epsAndes.negocio.*;
@@ -21,9 +23,9 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
-		
-			persistencia.registrarCampaña(2, 0, 0, 22, "Porfavor");
-			//persistencia.adicionarServiciosCampaña((long)2, (long)6, 20);
+		  
+			System.out.println(persistencia.darServicioDiferente((long)22,(long) 2));
+			System.out.println("yap");
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)
@@ -54,8 +56,27 @@ public class Controller
 							if(servicio == null)
 							{
 								System.out.println("El servicio especificado no existe");
-								System.exit(-1);
+								continue;
 							}
+							List<Object> listaDisponibilidad = persistencia.darUltFechaIdYHoraServicio(servicio.getId());
+							Object[] datos = (Object[])listaDisponibilidad.get(0);
+							Fecha fecha = persistencia.darFechaPorId(((BigDecimal)datos[1]).longValue());
+							System.out.println("Puedes inscribir desde: " + fecha.getFecha());
+							
+							System.out.println("Desde la hora: " +((BigDecimal)datos[2]).longValue());
+							
+							System.out.println("Ingrese la fecha que desee");
+							String fechaU = sc.nextLine();
+							Fecha fechaIndicada = persistencia.darFecha(fechaU);
+							if(fechaIndicada == null)
+							{
+								fechaIndicada = persistencia.adicionarFecha(fechaU);
+							}
+							System.out.println("Ingrese la hora que desea");
+							int hora = Integer.parseInt(sc.nextLine());
+							
+							persistencia.adicionarCita(hora, fechaIndicada.getId(), ((BigDecimal)datos[0]).longValue(), usuario.getDocumento(), 2);
+							
 							
 							
 						}

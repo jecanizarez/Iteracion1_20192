@@ -70,9 +70,9 @@ public class PersistenciaEpsAndes {
 	private SQLUsuario sqlUsuario;
 
 	private SQLServiciosAfiliado sqlServiciosAfiliado;
-	
+
 	private SQLCampana sqlCampaña;
-	
+
 	private SQLServiciosCampana sqlServiciosCampaña;
 
 	public PersistenciaEpsAndes()
@@ -176,7 +176,7 @@ public class PersistenciaEpsAndes {
 		sqlUtil = new SQLUtil(this);
 		sqlCampaña = new SQLCampana(this);
 		sqlServiciosCampaña = new SQLServiciosCampana(this);
-		
+
 	}
 
 	public String darSeqEpsAndes()
@@ -257,7 +257,7 @@ public class PersistenciaEpsAndes {
 	}
 	public String darTablaCampaña()
 	{
-		
+
 		return tablas.get(19);
 	}
 	public String darTablaServiciosCampaña()
@@ -489,7 +489,7 @@ public class PersistenciaEpsAndes {
 
 			Cita cita = darUltCita();
 			log.trace ("InserciÃ³n de una cita: " + ": " + tuplasInsertadas + " tuplas insertadas");
-            System.out.println("Se adiciono la cita");
+			System.out.println("Se adiciono la cita");
 			return new Cita(cita.getId(), hora, idFecha, idServicio, idAfiliado, idRecepcionista);
 		}
 		catch (Exception e)	
@@ -558,7 +558,7 @@ public class PersistenciaEpsAndes {
 		}
 		catch (Exception e)
 		{
-			        	e.printStackTrace();
+			e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
@@ -681,7 +681,7 @@ public class PersistenciaEpsAndes {
 			tx.commit();
 
 			log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
-			
+
 			Object[] datos = (Object[]) darCampañaPorNombre(nombre).get(0);
 
 			return new Campana(((BigDecimal)datos[0]).longValue(), (String)datos[1], idOrganizador);
@@ -711,9 +711,9 @@ public class PersistenciaEpsAndes {
 			tx.begin();
 			long tuplasInsertadas = sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), idTipoServicio, idCampaña, cantidad);
 			tx.commit();
-            System.out.println("Se añadio");
+			System.out.println("Se añadio");
 			log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
-			
+
 
 			return sqlServiciosCampaña.darServiciosCampana(pmf.getPersistenceManager());
 		}
@@ -742,7 +742,7 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlIPS.buscarIPSPorNombre(pmf.getPersistenceManager(), nombre);
 	}
-	
+
 	public IPS darIPSPorId(long id)
 	{
 		return sqlIPS.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), id);
@@ -798,7 +798,7 @@ public class PersistenciaEpsAndes {
 	}
 	public Cita darUltCita() 
 	{
-	   return sqlPrestanServicio.darUltCita(pmf.getPersistenceManager());	
+		return sqlPrestanServicio.darUltCita(pmf.getPersistenceManager());	
 	}
 	public Fecha darUltFecha()
 	{
@@ -812,9 +812,38 @@ public class PersistenciaEpsAndes {
 	{
 		sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), id);
 	}
+	public void aumentarCapacidadServicio(Long id, int cantidad)
+	{
+
+		sqlServicio.aumentarCapacidadActualServicio(pmf.getPersistenceManager(), id, cantidad);
+	}
 	public List<Object> darCampañaPorNombre(String nombre)
 	{
 		return sqlCampaña.buscarCampañaPorNombre(pmf.getPersistenceManager(), nombre);
+	}
+	public List<Object> darCantidadServiciosPorAfiliado(Long idAfiliado)
+	{
+		return sqlPrestanServicio.darNumeroServiciosReservadorPorAfiliado(pmf.getPersistenceManager(), idAfiliado);
+	}
+	public void eliminarCitas(Long idAfiliado, Long idServicio)
+	{
+		sqlCita.eliminarCitas(pmf.getPersistenceManager(), idAfiliado, idServicio);
+	}
+	public List<Object> darUltFechaIdYHoraServicio(Long idTipoServicio)
+	{
+		return sqlCita.darUltFechaYHoraDeTipoServicio(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public long darServicioDiferente(Long idServicio, Long idTipoServicio)
+	{
+		return sqlPrestanServicio.darIdServicioDiferente(pmf.getPersistenceManager(), idServicio, idTipoServicio);
+	}
+	public List<Object> darServicioRangoFecha(String fechaInicial, String fechaFinal)
+	{
+		return sqlPrestanServicio.darServiciosRangoFechas(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
+	}
+	public void eliminarCitaPorId(Long idCita)
+	{
+		sqlCita.eliminarCitaPorId(pmf.getPersistenceManager(), idCita);
 	}
 
 
@@ -870,7 +899,7 @@ public class PersistenciaEpsAndes {
 			System.out.println("No se ha prestado ningun servicio en las fechas indicadas");
 		}
 	}
-	
+
 	public void requerimientoConsulta5(Long idAfiliado, String fechaInicial, String fechaFinal)
 	{
 		List<Object> lista = sqlPrestanServicio.darServiciosAfiliado(pmf.getPersistenceManager(), idAfiliado, fechaInicial, fechaFinal);
@@ -892,7 +921,7 @@ public class PersistenciaEpsAndes {
 			System.out.println("El usuario no ha tomado ningun servicio en las fechas indicadas");
 		}
 	}
-	
+
 	public void requerimientoConsulta4(int capacidad)
 	{
 		List<Object> lista = sqlServicio.darServiciosConCapacidadMayorA(pmf.getPersistenceManager(), capacidad);
@@ -924,24 +953,24 @@ public class PersistenciaEpsAndes {
 	{
 		List<Object> listaCapacidadTotal = sqlPrestanServicio.darCantidadDeServicios(pmf.getPersistenceManager());
 		List<Object> listaCapacidadActual = sqlPrestanServicio.darCantidadServiciosPrestados(pmf.getPersistenceManager());
-		
+
 		for(int i = 0; i < listaCapacidadActual.size(); i++)
 		{
-                Object[] actual = (Object[]) listaCapacidadActual.get(i);
-                Object[] total = (Object[]) listaCapacidadTotal.get(i);
-                Long idTipo = ((BigDecimal)actual[0]).longValue();
-                Long usoActual = ((BigDecimal)actual[1]).longValue();
-                Long cantidad = ((BigDecimal)total[1]).longValue();
-                
-                TipoServicio tipo = darTipoServicioPorId(idTipo);
-                
-                System.out.println("Indice de uso de " + tipo.getTipo() + " es: " + (double)usoActual/cantidad);
-                
+			Object[] actual = (Object[]) listaCapacidadActual.get(i);
+			Object[] total = (Object[]) listaCapacidadTotal.get(i);
+			Long idTipo = ((BigDecimal)actual[0]).longValue();
+			Long usoActual = ((BigDecimal)actual[1]).longValue();
+			Long cantidad = ((BigDecimal)total[1]).longValue();
+
+			TipoServicio tipo = darTipoServicioPorId(idTipo);
+
+			System.out.println("Indice de uso de " + tipo.getTipo() + " es: " + (double)usoActual/cantidad);
+
 		}
 	}
 	public void registrarCampaña(int cantidadConsultasEspecialista, int cantidadTerapias, int cantidadExamenes, long idOrganizadorCampaña, String nombreCampaña)
 	{
-		
+
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
 
@@ -952,224 +981,224 @@ public class PersistenciaEpsAndes {
 			int cantidadTerapiasFinal = cantidadTerapias;
 			int cantidadExamenesFinal = cantidadExamenes;
 			System.out.println("Registre al organizador como afiliado");
-			 sqlAfiliado.adicionarAfiliado(pmf.getPersistenceManager(), idOrganizadorCampaña, 1, 1);
-			 System.out.println("registre la campaña");
-			 sqlCampaña.adicionarCampaña(pmf.getPersistenceManager(), nombreCampaña, idOrganizadorCampaña);
-             Cita cita = darUltCita();
-             System.out.println("Consegui la ultima cita");
-             Fecha fecha = darFechaPorId(cita.getIdFecha());
-             System.out.println("Fecha esta bien" + fecha != null);
-             String fechaNormal = fecha.getFecha();
-             String[] fechas = fechaNormal.split("-");
-             String año = fechas[0];
-             System.out.println(año);
-             String mes = fechas[1];
-             System.out.println(mes);
-             String dia = fechas[2];
-             System.out.println(dia);
-             System.out.println("Organice la fecha");
-             int hora = cita.getHora();
-             System.out.println("Hora de la cita: " + hora);
-             
-             List<Object> listaIPSCap = darIPSYCantidadActualServicio((long)2);
-             System.out.println("Obtuve las ips que dan el servicio y la capacidad actual");
-             for( int i = 0; i < listaIPSCap.size(); i++)
-             {
-            	 Object[] datos = (Object[])listaIPSCap.get(i);
-            	 
-            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
-            	 System.out.println(capacidadActual);
-            	 
-            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
-            	 System.out.println(idServicio);
-            	 
-            	 Servicio servicio = darServicioPorId(idServicio);
-            	 System.out.println("Obtuve el servicio y "  + servicio != null);
-            	 
-            	  while(capacidadActual-1 != 0 && cantidadConsultasEspecialista != 0)
-            	  {
-            		 
-            	     hora += 1; 
-            	     System.out.println("hora + 1: " +hora);
-            	     System.out.println("hora final: " + servicio.getHoraFinal());
-            	     if(hora > servicio.getHoraFinal())
-            	     {
-            	    	 
-            	    	 hora = servicio.getHoraInicio();
-            	    	  if(Integer.parseInt(dia) + 1 < 10)
-                 	     {
-                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     if(dia.equals("31"))
-                 	     {
-                 	    	 dia = "01";
-                 	     }
-                 	     if(Integer.parseInt(mes) + 1 < 10)
-                 	     {
-                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	     mes = (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     if(mes.equals("13"))
-                 	     {
-                 	    	 mes = "01";
-                 	     }
-            	     }
-            	   
-            	     String fechaTemp = año+"-"+mes+"-"+dia;
-            	     System.out.println(fechaTemp);
-            	     System.out.println(fechaNormal);
-            	     if(!fechaNormal.equals(fechaTemp))
-            	     {
-            	     System.out.println("Voy a adicionar la fecha");
-            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
-            	     System.out.println("ADICIONE LA FECHA HPTA");
-            	     }
-            	     System.out.println("Voy a conseguir la puta fecha");
-            	     Fecha fechaf = darFecha(fechaTemp);
-            	     System.out.println("La agarre");
-            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
-            		 cantidadConsultasEspecialista--;
-            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
-            		 System.out.println("AÑADI HPTA!!!!!");
-            	  }  
-             }
-             Object[] campaña =(Object[]) sqlCampaña.buscarCampañaPorNombre(pmf.getPersistenceManager(), nombreCampaña).get(0);
-             Long idCampaña = ((BigDecimal)campaña[0]).longValue();
-             System.out.println(idCampaña);
-             sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)2, idCampaña, cantidadConsultasEspecialistaFinal);
-             System.out.println("YEII");
-             listaIPSCap = darIPSYCantidadActualServicio((long)3);
-             for( int i = 0; i < listaIPSCap.size(); i++)
-             {
-            	 Object[] datos = (Object[])listaIPSCap.get(i);
-            	 
-            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
-            	 
-            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
-            	 
-            	 Servicio servicio = darServicioPorId(idServicio);
-            	 
-            	  while(capacidadActual-1 != 0 && cantidadTerapias != 0)
-            	  {
-            		 
-            	     hora += 1; 
-            	     if(hora > servicio.getHoraFinal())
-            	     {
-            	    	 
-            	    	 hora = servicio.getHoraInicio();
-            	    	  if(Integer.parseInt(dia) + 1 < 10)
-                 	     {
-                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     if(dia.equals("31"))
-                 	     {
-                 	    	 dia = "01";
-                 	     }
-                 	     if(Integer.parseInt(mes) + 1 < 10)
-                 	     {
-                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	     mes = (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     if(mes.equals("13"))
-                 	     {
-                 	    	 mes = "01";
-                 	     }
-            	     }
-            	     String fechaTemp = año+"-"+mes+"-"+dia;
-            	     if(!fechaNormal.equals(fechaTemp))
-            	     {
-            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
-            	     }
-            	     Fecha fechaf = darFecha(fechaTemp);
-            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
-            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
-            		 cantidadTerapias--;
-            	  }
-            	 
-             }
-             
-             sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)3, idCampaña, cantidadTerapiasFinal);
-             
-             listaIPSCap = darIPSYCantidadActualServicio((long)5);
-             for( int i = 0; i < listaIPSCap.size(); i++)
-             {
-            	 Object[] datos = (Object[])listaIPSCap.get(i);
-            	 
-            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
-            	 
-            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
-            	 
-            	 Servicio servicio = darServicioPorId(idServicio);
-            	 
-            	  while(capacidadActual-1 != 0 && cantidadExamenes != 0)
-            	  {
-            		 
-            	     hora += 1; 
-            	     if(hora > servicio.getHoraFinal())
-            	     {
-            	    	 
-            	    	 hora = servicio.getHoraInicio();
-            	    	  if(Integer.parseInt(dia) + 1 < 10)
-                 	     {
-                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
-                 	     }
-                 	     if(dia.equals("31"))
-                 	     {
-                 	    	 dia = "01";
-                 	     }
-                 	     if(Integer.parseInt(mes) + 1 < 10)
-                 	     {
-                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     else
-                 	     {
-                 	     mes = (Integer.parseInt(mes) + 1) + "";
-                 	     }
-                 	     if(mes.equals("13"))
-                 	     {
-                 	    	 mes = "01";
-                 	     }
-            	     }
-            	     String fechaTemp = año+"-"+mes+"-"+dia;
-            	     if(!fechaNormal.equals(fechaTemp))
-            	     {
-            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
-            	     }
-            	     Fecha fechaf = darFecha(fechaTemp);
-            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
-            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
-            		 cantidadExamenes--;
-            	  }  
-            	  
-            	  sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)5, idCampaña, cantidadExamenesFinal);
-             }
-             System.out.println("Termine");
-             
-             
+			sqlAfiliado.adicionarAfiliado(pmf.getPersistenceManager(), idOrganizadorCampaña, 1, 1);
+			System.out.println("registre la campaña");
+			sqlCampaña.adicionarCampaña(pmf.getPersistenceManager(), nombreCampaña, idOrganizadorCampaña);
+			Cita cita = darUltCita();
+			System.out.println("Consegui la ultima cita");
+			Fecha fecha = darFechaPorId(cita.getIdFecha());
+			System.out.println("Fecha esta bien" + fecha != null);
+			String fechaNormal = fecha.getFecha();
+			String[] fechas = fechaNormal.split("-");
+			String año = fechas[0];
+			System.out.println(año);
+			String mes = fechas[1];
+			System.out.println(mes);
+			String dia = fechas[2];
+			System.out.println(dia);
+			System.out.println("Organice la fecha");
+			int hora = cita.getHora();
+			System.out.println("Hora de la cita: " + hora);
 
-			
-			
+			List<Object> listaIPSCap = darIPSYCantidadActualServicio((long)2);
+			System.out.println("Obtuve las ips que dan el servicio y la capacidad actual");
+			for( int i = 0; i < listaIPSCap.size(); i++)
+			{
+				Object[] datos = (Object[])listaIPSCap.get(i);
+
+				Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+				System.out.println(capacidadActual);
+
+				Long idServicio = ((BigDecimal)datos[2]).longValue();
+				System.out.println(idServicio);
+
+				Servicio servicio = darServicioPorId(idServicio);
+				System.out.println("Obtuve el servicio y "  + servicio != null);
+
+				while(capacidadActual-1 != 0 && cantidadConsultasEspecialista != 0)
+				{
+
+					hora += 1; 
+					System.out.println("hora + 1: " +hora);
+					System.out.println("hora final: " + servicio.getHoraFinal());
+					if(hora > servicio.getHoraFinal())
+					{
+
+						hora = servicio.getHoraInicio();
+						if(Integer.parseInt(dia) + 1 < 10)
+						{
+							dia = "0" +(Integer.parseInt(dia) + 1) + "";
+						}
+						else
+						{
+							dia = (Integer.parseInt(dia) + 1) + "";
+						}
+						if(dia.equals("31"))
+						{
+							dia = "01";
+						}
+						if(Integer.parseInt(mes) + 1 < 10)
+						{
+							mes = "0" + (Integer.parseInt(mes) + 1) + "";
+						}
+						else
+						{
+							mes = (Integer.parseInt(mes) + 1) + "";
+						}
+						if(mes.equals("13"))
+						{
+							mes = "01";
+						}
+					}
+
+					String fechaTemp = año+"-"+mes+"-"+dia;
+					System.out.println(fechaTemp);
+					System.out.println(fechaNormal);
+					if(!fechaNormal.equals(fechaTemp))
+					{
+						System.out.println("Voy a adicionar la fecha");
+						sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+						System.out.println("ADICIONE LA FECHA HPTA");
+					}
+					System.out.println("Voy a conseguir la puta fecha");
+					Fecha fechaf = darFecha(fechaTemp);
+					System.out.println("La agarre");
+					sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+					cantidadConsultasEspecialista--;
+					sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+					System.out.println("AÑADI HPTA!!!!!");
+				}  
+			}
+			Object[] campaña =(Object[]) sqlCampaña.buscarCampañaPorNombre(pmf.getPersistenceManager(), nombreCampaña).get(0);
+			Long idCampaña = ((BigDecimal)campaña[0]).longValue();
+			System.out.println(idCampaña);
+			sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)2, idCampaña, cantidadConsultasEspecialistaFinal);
+			System.out.println("YEII");
+			listaIPSCap = darIPSYCantidadActualServicio((long)3);
+			for( int i = 0; i < listaIPSCap.size(); i++)
+			{
+				Object[] datos = (Object[])listaIPSCap.get(i);
+
+				Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+
+				Long idServicio = ((BigDecimal)datos[2]).longValue();
+
+				Servicio servicio = darServicioPorId(idServicio);
+
+				while(capacidadActual-1 != 0 && cantidadTerapias != 0)
+				{
+
+					hora += 1; 
+					if(hora > servicio.getHoraFinal())
+					{
+
+						hora = servicio.getHoraInicio();
+						if(Integer.parseInt(dia) + 1 < 10)
+						{
+							dia = "0" +(Integer.parseInt(dia) + 1) + "";
+						}
+						else
+						{
+							dia = (Integer.parseInt(dia) + 1) + "";
+						}
+						if(dia.equals("31"))
+						{
+							dia = "01";
+						}
+						if(Integer.parseInt(mes) + 1 < 10)
+						{
+							mes = "0" + (Integer.parseInt(mes) + 1) + "";
+						}
+						else
+						{
+							mes = (Integer.parseInt(mes) + 1) + "";
+						}
+						if(mes.equals("13"))
+						{
+							mes = "01";
+						}
+					}
+					String fechaTemp = año+"-"+mes+"-"+dia;
+					if(!fechaNormal.equals(fechaTemp))
+					{
+						sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+					}
+					Fecha fechaf = darFecha(fechaTemp);
+					sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+					sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+					cantidadTerapias--;
+				}
+
+			}
+
+			sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)3, idCampaña, cantidadTerapiasFinal);
+
+			listaIPSCap = darIPSYCantidadActualServicio((long)5);
+			for( int i = 0; i < listaIPSCap.size(); i++)
+			{
+				Object[] datos = (Object[])listaIPSCap.get(i);
+
+				Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+
+				Long idServicio = ((BigDecimal)datos[2]).longValue();
+
+				Servicio servicio = darServicioPorId(idServicio);
+
+				while(capacidadActual-1 != 0 && cantidadExamenes != 0)
+				{
+
+					hora += 1; 
+					if(hora > servicio.getHoraFinal())
+					{
+
+						hora = servicio.getHoraInicio();
+						if(Integer.parseInt(dia) + 1 < 10)
+						{
+							dia = "0" +(Integer.parseInt(dia) + 1) + "";
+						}
+						else
+						{
+							dia = (Integer.parseInt(dia) + 1) + "";
+						}
+						if(dia.equals("31"))
+						{
+							dia = "01";
+						}
+						if(Integer.parseInt(mes) + 1 < 10)
+						{
+							mes = "0" + (Integer.parseInt(mes) + 1) + "";
+						}
+						else
+						{
+							mes = (Integer.parseInt(mes) + 1) + "";
+						}
+						if(mes.equals("13"))
+						{
+							mes = "01";
+						}
+					}
+					String fechaTemp = año+"-"+mes+"-"+dia;
+					if(!fechaNormal.equals(fechaTemp))
+					{
+						sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+					}
+					Fecha fechaf = darFecha(fechaTemp);
+					sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+					sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+					cantidadExamenes--;
+				}  
+
+				sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)5, idCampaña, cantidadExamenesFinal);
+			}
+			System.out.println("Termine");
+
+
+
+
+
 			tx.commit();
 
-			
+
 
 
 		}
@@ -1187,12 +1216,164 @@ public class PersistenciaEpsAndes {
 			pm.close();
 		} 
 	}
-	
+
 	public void cancelarServiciosCampaña(Long idOrganizador)
 	{
-		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			List<Object> listaServicios = darCantidadServiciosPorAfiliado(idOrganizador);
+			for(int i = 0; i < listaServicios.size(); i++)
+			{
+				Object[] datos = (Object[]) listaServicios.get(i);
+				Long idServicio = ((BigDecimal)datos[0]).longValue();
+				int cantidad = ((BigDecimal)datos[1]).intValue();
+
+				eliminarCitas(idOrganizador, idServicio);
+				aumentarCapacidadServicio(idServicio, cantidad);	
+			}
+			tx.commit();
+		}
+		catch (Exception e)	
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())	
+			{
+				tx.rollback();
+			}
+			pm.close();
+		} 
 	}
-	
-	
+
+	public void DeshabilitarServiciosSalud(Long fechaInicio, Long fechaFinal)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			Fecha fechaInicioF = darFechaPorId(fechaInicio);
+			Fecha fechaFinalF = darFechaPorId(fechaFinal);
+			List<Object> lista = darServicioRangoFecha(fechaInicioF.getFecha(), fechaFinalF.getFecha());
+			for(int i = 0; i < lista.size(); i++)
+			{
+				Object[] datos = (Object[])lista.get(i);
+				Long idServicio = ((BigDecimal)datos[0]).longValue();
+				Long idTipoServicio = ((BigDecimal)datos[1]).longValue(); 
+				Long idCita = ((BigDecimal)datos[2]).longValue(); 
+				Long idAfiliado = ((BigDecimal)datos[3]).longValue(); 
+				Long respuesta = darServicioDiferente(idServicio, idTipoServicio);
+				Servicio servicio = sqlServicio.darServicioPorId(pmf.getPersistenceManager(), idServicio);
+				if(respuesta == -1)
+				{
+					System.out.println("No se puede reasignar la cita para el servicio con ID: "+ idServicio+ " Ya que no se presta otro servicio del mismo tipo" );
+				}
+				else
+				{
+					eliminarCitaPorId(idCita);
+					List<Object> listaDisponibilidad = darUltFechaIdYHoraServicio(idServicio);
+					Object[] datosO = (Object[])listaDisponibilidad.get(0);
+					Fecha fecha = darFechaPorId(((BigDecimal)datos[1]).longValue());
+					String fechaS = fecha.getFecha();
+					String[] fechaDatos = fecha.getFecha().split("-");
+					String año = fechaDatos[0];
+					String mes = fechaDatos[1];
+					String dia = fechaDatos[2];
+					int hora = ((BigDecimal)datos[2]).intValue();
+					hora += 1;
+					if(hora > servicio.getHoraFinal())
+					{
+
+						hora = servicio.getHoraInicio();
+						if(Integer.parseInt(dia) + 1 < 10)
+						{
+							dia = "0" +(Integer.parseInt(dia) + 1) + "";
+						}
+						else
+						{
+							dia = (Integer.parseInt(dia) + 1) + "";
+						}
+						if(dia.equals("31"))
+						{
+							dia = "01";
+						}
+						if(Integer.parseInt(mes) + 1 < 10)
+						{
+							mes = "0" + (Integer.parseInt(mes) + 1) + "";
+						}
+						else
+						{
+							mes = (Integer.parseInt(mes) + 1) + "";
+						}
+						if(mes.equals("13"))
+						{
+							mes = "01";
+						}
+					}
+					String fechaTemp = año+"-"+mes+"-"+dia;
+					if(!fechaS.equals(fechaTemp))
+					{
+						
+						sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+						
+					}
+					Fecha fechaf = darFecha(fechaTemp);
+					sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio,idAfiliado , 2);
+					sqlServicio.deshabilitarServicioDeSalud(pmf.getPersistenceManager(), idServicio);
+					System.out.println("Se reprogramo la cita: " + idCita );
+					
+					
+				}
+			}
+			tx.commit();
+		}
+		catch (Exception e)	
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Ocurrio un error deshabilitando los servicios");
+		}
+		finally
+		{
+			if (tx.isActive())	
+			{
+				tx.rollback();
+			}
+			pm.close();
+		} 
+	}
+	public void rehabilitarServicios(Long idTipoServicio) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			rehabilitarServicios(idTipoServicio);
+			tx.commit();
+		}
+		catch (Exception e)	
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Ocurrio un error deshabilitando los servicios");
+		}
+		finally
+		{
+			if (tx.isActive())	
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}	
+	}
+
+
 
 }
