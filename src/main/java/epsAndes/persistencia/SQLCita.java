@@ -38,13 +38,13 @@ class SQLCita {
 		public List<Object> darUltFechaYHoraDeTipoServicio(PersistenceManager pm, Long idTipoServicio)
 		{
 			String disponible = "Disponible";
-			Query q = pm.newQuery(SQL, "SELECT SERVICIO.ID,FECHA, HORA, MAX(CITAS.ID)"
-					+ " FROM " + pp.darTablaCita()
-					+ ", " + pp.darTablaServicio()
-					+ " WHERE SERVICIO.ID = CITAS.IDSERVICIO "
-					+ " AND SERVICIO.TipoServicio = ?"
-					+ " AND SERVICIO.Estado = ?"
-					+ " GROUP BY SERVICIO.ID, FECHA, hora");
+				Query q = pm.newQuery(SQL, "SELECT SERVICIO.ID,FECHA, HORA, MAX(CITAS.ID)"
+						+ " FROM " + pp.darTablaCita()
+						+ ", " + pp.darTablaServicio()
+						+ " WHERE SERVICIO.ID = CITAS.IDSERVICIO "
+						+ " AND SERVICIO.TipoServicio = ?"
+						+ " AND SERVICIO.Estado = ?"
+						+ " GROUP BY SERVICIO.ID, FECHA, hora");
 			q.setParameters(idTipoServicio, disponible);
 			return q.executeList();
 		}
@@ -164,6 +164,17 @@ class SQLCita {
 					+ " GROUP BY idtiposervicio  , to_number(to_char(TO_DATE(fechaasistida,'YYYY-MM-DD'), 'DD'))"
 					+ " ORDER COUNT(idafiliado) DESC");
 			q.setParameters(idTipoServicio);
+			return q.executeList();
+		}
+		public List<Object> darServiciosSinDemanda(PersistenceManager pm)
+		{
+			Query q = pm.newQuery(SQL, "SELECT idServicio, COUNT(idafiliado)"
+					+ " FROM " + pp.darTablaCita()+ ", "+ pp.darTablaFecha()
+					+ " WHERE FECHA.ID = CITAS.FECHA"
+					+ " AND to_number(to_char(TO_DATE(FECHA,'YYYY-MM-DD'), 'YY')) = ?"
+					+ " GROUP BY idservicio  , to_number(to_char(TO_DATE(FECHA.FECHA,'YYYY-MM-DD'), 'WW'))"
+			        + " HAVING COUNT(idafiliado) < ? ");
+			q.setParameters(18, 3);
 			return q.executeList();
 		}
 		

@@ -1,5 +1,7 @@
 package epsAndes.persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
@@ -23,5 +25,16 @@ class SQLServiciosAfiliado {
 		q.setParameters(idTipoServicio, idAfiliado, fecha, IPS);
 		return (long) q.executeUnique();
 	}
+	
+	public List<Object> darAfiliadosExigentes(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idAfiliado, COUNT(DISTINCT idTipoServicio ), COUNT(idTipoServicio)"
+				+ " FROM " + pp.darTablaServiciosAfiliado()
+				+ " GROUP BY idAfiliado"
+				+ " HAVING COUNT(DISTINCT idTipoServicio ) >= 3"
+				+ " AND COUNT(idTipoServicio) >= 12 ");
+		return q.executeList();
+	}
+	
 	
 }

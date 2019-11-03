@@ -1,6 +1,7 @@
 package epsAndes.main;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +24,6 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
-		 
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)
@@ -60,9 +60,9 @@ public class Controller
 							Object[] datos = (Object[])listaDisponibilidad.get(0);
 							Fecha fecha = persistencia.darFechaPorId(((BigDecimal)datos[1]).longValue());
 							System.out.println("Puedes inscribir desde: " + fecha.getFecha());
-							
+
 							System.out.println("Desde la hora: " +((BigDecimal)datos[2]).longValue());
-							
+
 							System.out.println("Ingrese la fecha que desee");
 							String fechaU = sc.nextLine();
 							Fecha fechaIndicada = persistencia.darFecha(fechaU);
@@ -72,19 +72,20 @@ public class Controller
 							}
 							System.out.println("Ingrese la hora que desea");
 							int hora = Integer.parseInt(sc.nextLine());
-							
+
 							persistencia.adicionarCita(hora, fechaIndicada.getId(), ((BigDecimal)datos[0]).longValue(), usuario.getDocumento(), 2);
-							
-							
-							
+							persistencia.disminuirCapacidadServicio(((BigDecimal)datos[0]).longValue());
+							System.out.println("Se adiciono la cita");
+
+
 						}
 					}
 					else
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
-			
-			
+
+
 			else if(usuario.getRol() == 2) // Case: medico
 			{
 				ControllerView.print("Bienvenido medico.");
@@ -168,8 +169,9 @@ public class Controller
 						action = Integer.parseInt(num);
 					if(action != -1 && (action == 0 || action == 1 || action == 2 || action == 3
 
-							|| action == 4 || action == 5 || action == 6|| action == 7 ))
+							|| action == 4 || action == 5 || action == 6|| action == 7 || action == 8 || action == 9 || action == 10 || action == 11 
 
+							|| action == 12 || action == 13 || action == 14 || action == 15))
 					{
 						if(action == 0)
 							end = true;
@@ -399,91 +401,231 @@ public class Controller
 						}
 						else if(action == 7)
 						{
-							
+
 							System.out.println("Ingrese la fecha de inicio de la busqueda (e.g. 2012-06-05) ");
 							String fechaInicial = sc.nextLine();
 							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
 							String fechaFinal = sc.nextLine();
 							persistencia.requerimientoConsulta1(fechaInicial, fechaFinal);
+
+						}
+						else if(action == 8)
+						{
+							persistencia.requerimientoConsulta3();
+						}
+						else if(action == 9)
+						{
+							System.out.println("Ingrese la capacidad ");
+							int capacidad = Integer.parseInt(sc.nextLine());
+							persistencia.requerimientoConsulta4(capacidad);
+						}
+						else if(action == 10)
+						{
+							System.out.println("Ingrese el documento de la persona que desea consultar (e.g. 7)");
+							Long idAfiliado = Long.parseLong(sc.nextLine());
+							System.out.println("Ingrese la fecha de inicio desde la cual desea consultar (e.g.2012-06-05) ");
+							String fechaS = sc.nextLine();
+							Fecha fechaInicial = persistencia.darFecha(fechaS);
+							if(fechaInicial == null)
+							{
+					           persistencia.adicionarFecha(fechaS);
+					           fechaInicial = persistencia.darFecha(fechaS);
+							}
+							System.out.println("Ingrese la fecha limite para la busqueda (e.g 2012-06-08)");
+							fechaS = sc.nextLine();
+							Fecha fechaFinal = persistencia.darFecha(fechaS);
+							if(fechaFinal == null)
+							{
+								persistencia.adicionarFecha(fechaS);
+						        fechaFinal = persistencia.darFecha(fechaS);
+							}
+							persistencia.requerimientoConsulta5(idAfiliado, fechaInicial.getFecha(), fechaFinal.getFecha());
+						}
+						else if (action == 11)
+						{
+							System.out.println("Ingrese la fecha de inicio");
+							String fechaS = sc.nextLine();
+							Fecha fechaInicial = persistencia.darFecha(fechaS);
+							if(fechaInicial == null)
+							{
+					           persistencia.adicionarFecha(fechaS);
+					           fechaInicial = persistencia.darFecha(fechaS);
+							}
+							System.out.println("Ingrese la fecha limite para la busqueda ");
+							fechaS = sc.nextLine();
+							Fecha fechaFinal = persistencia.darFecha(fechaS);
+							if(fechaFinal == null)
+							{
+								persistencia.adicionarFecha(fechaS);
+						        fechaFinal = persistencia.darFecha(fechaS);
+							}
+							System.out.println("Ingrese el nombre de la IPS al cual desea deshabilitar los servicios");
+							String nombreIPS = sc.nextLine();
+							IPS ips = persistencia.darIPSPorNombre(nombreIPS);
+							if(ips == null)
+							{
+								System.out.println("La ips indicada no existe");
+							}
+							List<String> tipoServicio = new ArrayList<String>();
+							System.out.println("Ingrese el numero de servicios que desea deshabilitar");
+							int numServicios = Integer.parseInt(sc.nextLine());
+							for(int i = 0; i < numServicios; i++)
+							{
+								System.out.println("Ingrese el tipo de servicio: ");
+								String TipoServicio = sc.nextLine();
+								tipoServicio.add(TipoServicio);
+							}
+							
+							persistencia.DeshabilitarServiciosSalud(fechaInicial.getId(), fechaFinal.getId(), ips.getId(), tipoServicio);
+							
+							System.out.println("Servicios deshabilitados");
+						}
+						else if(action == 12)
+						{
+							System.out.println("Ingrese el tipo de servicio que desea rehabilitar");
+							String tipoServicio = sc.nextLine();
+							TipoServicio servicio = persistencia.darTipoServicioPorNombre(tipoServicio);
+							if(servicio == null)
+							{
+								System.out.println("El tipo de servicio proporcionado no es el correcto");
+								continue;
+							}
+							System.out.println("Ingrese el nombre de la IPS");
+							String ipsS = sc.nextLine();
+							IPS  ips = persistencia.darIPSPorNombre(ipsS);
+							if(ips == null)
+							{
+								System.out.println("La ips proporcionada no existe");
+								continue;
+							}
+							persistencia.rehabilitarServicios(servicio.getId(), ips.getId());
+							System.out.println("Se rehabilitaron los servicios de tipo: " + tipoServicio + " de la ips " + ips.getNombre());
+								
 							
 						}
+						else if(action == 13)
+						{
+							System.out.println("Las medidas de tiempo son año, mes, dia, por favor indica que medida de tiempo prefiere");
+							String medida = sc.nextLine();
+							int numMedida = 0;
+							if(medida.equals("año"))
+							{
+								numMedida = 1;
+							}
+							else if(medida.equals("mes"))
+							{
+								numMedida = 2;
+							}
+							else
+							{
+								numMedida = 3;
+							}
+							System.out.println("Ingrese el tipo del servicio sobre el que desea conocer las estadisticas");
+							String tipo = sc.nextLine();
+							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(tipo);
+							if(tipoServicio == null)
+							{
+								System.out.println("El tipo de servicio proporcionado no existe");
+								continue;
+							}
+							persistencia.requerimientoConsulta6(numMedida, tipoServicio.getId());
+						}
+						else if(action == 14)
+						{
+							persistencia.requerimientoConsulta7();
+						}
+						else if( action == 15)
+						{
+							persistencia.requerimientoConsulta8();
+						}
 					}
-					else if(usuario.getRol() == 6) // caso Organizador
-					{
 					
-						System.out.println("Ingrese el nombre de la campaña");
-						
-						String nombreCampaña = sc.nextLine();
-						
-						String sConsultaEspecialista = "ConsultaEspecialista";
-						
-						TipoServicio tipo = persistencia.darTipoServicioPorNombre(sConsultaEspecialista);
-						
-						if(tipo == null)
-						{
-							System.out.println("El tipo especificado no existe");
-							continue;
-						}
-						Long cantidadIPS = persistencia.darCuantasIPSDanServicio(tipo.getId());
-						System.out.println("Ingrese la cantidad de Consultas con el especialista que se necesitan: ");
-						int cantidadConsultasEspecialista = Integer.parseInt(sc.nextLine());
-						
-						Long cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
-						if(cantidadConsultasEspecialista > cantidadDisponible - cantidadIPS)
-						{
-							System.out.println("La cantidad solicitada supera a la canitdad disponible");
-							continue;
-						}
-						
-						String sTerapia = "Terapia"; 
-						tipo = persistencia.darTipoServicioPorNombre(sTerapia);
-						if(tipo == null)
-						{
-							System.out.println("El tipo especificado no existe");
-							continue;
-						}
-						
-						
-						System.out.println("Ingrese el numero de terapias que se necesitan");
-						int cantidadTerapias = Integer.parseInt(sc.nextLine());
-						cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
-						
-						if(cantidadTerapias > cantidadDisponible - cantidadIPS)
-						{
-							System.out.println("La cantidad solicitada supera a la cantidad disponible");
-							continue;
-						}
-						
-						String sExamenes = "Examenes";
-						
-						tipo = persistencia.darTipoServicioPorNombre(sExamenes);
-						if(tipo == null)
-						{
-							System.out.println("El tipo especificado no existe");
-							continue;
-						}
-						
-						System.out.println("Ingrese el numero de examenes que se necesitan");
-						int cantidadExamenes = Integer.parseInt(sc.nextLine());
-						cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
-						
-						if(cantidadExamenes > cantidadDisponible - cantidadIPS)
-						{
-							System.out.println("La cantidad solicitada supera a la cantidad disponible");
-							continue;
-						}
-
-						persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
-						
-
-						
-						
-						
-					}
+					
 					else
 						ControllerView.print("Numero invalido, por favor intentelo de nuevo.");
 				}
 			}
+			else if(usuario.getRol() == 6) // caso Organizador
+			{
+
+				ControllerView.printMenuOrganizador();
+				int opcion = Integer.parseInt(sc.nextLine());
+				
+				if(opcion == 1)
+				{
+					System.out.println("Ingrese el nombre de la campaña");
+
+					String nombreCampaña = sc.nextLine();
+
+					String sConsultaEspecialista = "ConsultaEspecialista";
+
+					TipoServicio tipo = persistencia.darTipoServicioPorNombre(sConsultaEspecialista);
+
+					if(tipo == null)
+					{
+						System.out.println("El tipo especificado no existe");
+						continue;
+					}
+					Long cantidadIPS = persistencia.darCuantasIPSDanServicio(tipo.getId());
+					System.out.println("Ingrese la cantidad de Consultas con el especialista que se necesitan: ");
+					int cantidadConsultasEspecialista = Integer.parseInt(sc.nextLine());
+
+					Long cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+					if(cantidadConsultasEspecialista > cantidadDisponible - cantidadIPS)
+					{
+						System.out.println("La cantidad solicitada supera a la canitdad disponible");
+						continue;
+					}
+
+					String sTerapia = "Terapia"; 
+					tipo = persistencia.darTipoServicioPorNombre(sTerapia);
+					if(tipo == null)
+					{
+						System.out.println("El tipo especificado no existe");
+						continue;
+					}
+
+
+					System.out.println("Ingrese el numero de terapias que se necesitan");
+					int cantidadTerapias = Integer.parseInt(sc.nextLine());
+					cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+
+					if(cantidadTerapias > cantidadDisponible - cantidadIPS)
+					{
+						System.out.println("La cantidad solicitada supera a la cantidad disponible");
+						continue;
+					}
+
+					String sExamenes = "Examenes";
+
+					tipo = persistencia.darTipoServicioPorNombre(sExamenes);
+					if(tipo == null)
+					{
+						System.out.println("El tipo especificado no existe");
+						continue;
+					}
+
+					System.out.println("Ingrese el numero de examenes que se necesitan");
+					int cantidadExamenes = Integer.parseInt(sc.nextLine());
+					cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+
+					if(cantidadExamenes > cantidadDisponible - cantidadIPS)
+					{
+						System.out.println("La cantidad solicitada supera a la cantidad disponible");
+						continue;
+					}
+
+					persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
+
+					System.out.println("Se registro la campaña");
+				}
+				else if(opcion == 2)
+				{
+					persistencia.cancelarServiciosCampaña(usuario.getDocumento());
+					System.out.println("Se ha cancelado la campaña");
+				}
+			}
+
 		}
 		ControllerView.print("¡Hasta luego!");
 	}

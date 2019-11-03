@@ -139,16 +139,17 @@ class SQLPrestanServicio {
 		q.setParameters(idAfiliado);
 		return q.executeList();
 	}
-	public List<Object> darServiciosRangoFechas(PersistenceManager pm, String FechaInicio, String FechaFinal)
+	public List<Object> darServiciosRangoFechas(PersistenceManager pm, String FechaInicio, String FechaFinal, Long idiPS, Long idTipoServicio)
 	{
 		Query q = pm.newQuery(SQL, "SELECT idServicio, SERVICIO.TIPOSERVICIO, CITAS.ID, CITAS.idAfiliado"
 				+ " FROM " + pp.darTablaCita() + ", "+pp.darTablaFecha() + ", "+ pp.darTablaServicio()
 				+ " WHERE CITAS.FECHA = FECHA.ID"
+				+ " AND SERVICIO.idips = ?"
 				+ " AND SERVICIO.ID = CITAS.IDSERVICIO"
+				+ " AND SERVICIO.TIPOSERVICIO = ? "
 				+ " AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD')"
-				+ " AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')"
-				+ " GROUP BY idServicio,idAfiliado");
-		q.setParameters(FechaInicio, FechaFinal);
+				+ " AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD')");
+		q.setParameters(idiPS,idTipoServicio,FechaInicio, FechaFinal);
 		return q.executeList();
 	}
 	public long darIdServicioDiferente(PersistenceManager pm, Long idServicio, Long idTipoServicio)

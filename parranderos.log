@@ -127,3 +127,11 @@ ORA-00904: "IDCAMPAÑA": identificador no válido
 03:21:33,938 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO AFILIADO(DOCUMENTO, FECHANACIMIENTO, EPS) values (?, ?, ?)".
 ORA-00001: restricción única (ISIS2304B051920.AFILIADO_PK) violada
 
+15:07:44,322 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "SELECT idServicio, SERVICIO.TIPOSERVICIO, CITAS.ID, CITAS.idAfiliado FROM CITAS, FECHA, SERVICIO WHERE CITAS.FECHA = FECHA.ID AND SERVICIO.idips = ? AND SERVICIO.ID = CITAS.IDSERVICIO AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') >= TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(FECHA.FECHA, 'YYYY-MM-DD') <= TO_DATE(?, 'YYYY-MM-DD') GROUP BY idServicio,idAfiliado".
+ORA-00979: no es una expresión GROUP BY
+
+15:14:41,668 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "UPDATE SERVICIO SET estado = ?  WHERE id = ?".
+ORA-02290: restricción de control (ISIS2304B051920.ESTADO_CK) violada
+
+15:18:07,329 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : null
+

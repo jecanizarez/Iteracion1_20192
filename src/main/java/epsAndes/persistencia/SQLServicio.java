@@ -70,15 +70,21 @@ class SQLServicio {
 	public void deshabilitarServicioDeSalud(PersistenceManager pm, Long id)
 	{
 		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE id = ?");
-		q.setParameters("Deshabiliado",id);
+		q.setParameters("Deshabilitado",id);
+		q.executeUnique();
+	}
+	public void deshabilitarServicioDeSaludIDYIPS(PersistenceManager pm, Long idIPS, Long idTipoServicio)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE idips = ? AND tiposervicio = ?");
+		q.setParameters("Deshabilitado",idIPS, idTipoServicio);
 		q.executeUnique();
 	}
 	
-	public void habilitarServicioDeSalud(PersistenceManager pm, Long idTipoServicio)
+	public void habilitarServicioDeSalud(PersistenceManager pm, Long idTipoServicio, Long idIPS)
 	{
-		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE TipoServicio = ?"
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET estado = ?  WHERE TipoServicio = ? AND idips = ?"
 				+ " AND estado = ?");
-		q.setParameters("Disponible",idTipoServicio,"Deshabilitado");
+		q.setParameters("Disponible",idTipoServicio,idIPS,"Deshabilitado");
 		q.executeUnique();
 	}
 	

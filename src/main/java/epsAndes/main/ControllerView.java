@@ -68,6 +68,15 @@ public class ControllerView
 		print("0. Salir del programa");
 	}
 	
+	public static void printMenuOrganizador()
+	{
+		print("--------------------------------------------------");
+		print("Ingrese el numero de la accion que desea ejecutar:");
+		print("1. Registrar Campaña");
+		print("2. Cancelar Campaña");
+		print("0. Salir del programa");
+	}
+	
 	/**
 	 * Prints any String.
 	 * @param string The String to print.
