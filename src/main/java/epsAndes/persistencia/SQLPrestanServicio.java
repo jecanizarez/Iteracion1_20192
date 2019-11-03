@@ -8,6 +8,7 @@ import javax.jdo.Query;
 
 import com.sun.org.apache.bcel.internal.generic.IDIV;
 
+import epsAndes.negocio.Cita;
 import epsAndes.negocio.ServiciosAfiliado;
 
 class SQLPrestanServicio {
@@ -82,6 +83,49 @@ class SQLPrestanServicio {
 				+ " GROUP BY idTipoServicio");
 		return q.executeList();
 
+	}
+	
+	public Long darCapacidadDisponiblePorTipoServicio(PersistenceManager pm, long idTipoServicio)
+	{
+		
+		Query q = pm.newQuery(SQL, "SELECT SUM(capacidadActual)"
+				+ " FROM " + pp.darTablaServicio()
+				+ " WHERE TipoServicio = ?"
+				+ " AND estado = ?"
+				+ " GROUP BY TipoServicio");
+		q.setParameters(idTipoServicio, "Disponible");
+		return ((BigDecimal)q.executeUnique()).longValue();
+		
+	}
+	 
+	public Long darCuantasIPSDanServicio(PersistenceManager pm, Long idTipoServicio)
+	{
+		Query q = pm.newQuery(SQL, "SELECT COUNT(PRESTANSERVICIO.idIPS)"
+				+ " FROM " + pp.darTablaPrestanServicio() + ", "
+				+ pp.darTablaServicio()
+				+ " WHERE SERVICIO.id = PRESTANSERVICIO.idServicio"
+				+ " AND Servicio.TipoServicio = ?");
+		
+        q.setParameters(idTipoServicio);
+		return ((BigDecimal)q.executeUnique()).longValue();
+	}
+	
+	public List<Object> darIPSYDisponibilidadDelServicio(PersistenceManager pm, long idTipoServicio)
+	{
+		Query q = pm.newQuery(SQL, "SELECT idips, capacidadActual, id"
+				+ " FROM " + pp.darTablaServicio()
+				+ " WHERE tiposervicio = ? ");
+		q.setParameters(idTipoServicio);
+		return q.executeList();
+	}
+	
+	public Cita darUltCita(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT *"
+				+ " FROM " + pp.darTablaCita()
+		        + " WHERE ID = (SELECT MAX(ID) FROM CITAS)");
+		q.setResultClass(Cita.class);
+		return (Cita)q.executeUnique();
 	}
 
 

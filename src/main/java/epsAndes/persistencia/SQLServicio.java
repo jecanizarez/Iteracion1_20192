@@ -8,6 +8,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import epsAndes.negocio.Rol;
 import epsAndes.negocio.Servicio;
 
 
@@ -22,10 +23,12 @@ class SQLServicio {
 		this.pp = pp;
 	}
 	
-	public long adicionarServicio(PersistenceManager pm, int capacidad, int horaInicio, int horaFinal, long idTipoServicio)
+	public long adicionarServicio(PersistenceManager pm, int capacidad, int horaInicio, int horaFinal, long idTipoServicio, long IPS)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServicio() + "(capacidad, horaInicio, horaFinal, TipoServicio) values (?, ?, ? ,?) ");
-		q.setParameters(capacidad, horaInicio, horaFinal, idTipoServicio);
+		
+		String estado = "Disponible";
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServicio() + "(capacidad, horaInicio, horaFinal, TipoServicio, idIPS, Estado, CapacidadActual) values (?, ?, ? ,?, ?, ?, ?) ");
+		q.setParameters(capacidad, horaInicio, horaFinal, idTipoServicio, IPS, estado, capacidad);
 		return (long) q.executeUnique();
 	}
 	
@@ -43,4 +46,20 @@ class SQLServicio {
 		q.setParameters(capacidad);
 		return q.executeList();
 	}
+	
+	public Servicio darServicioPorId(PersistenceManager pm, Long id)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicio() + " WHERE id = ?");
+		q.setResultClass(Servicio.class);
+		q.setParameters(id);
+		return (Servicio) q.executeUnique();
+	}
+	
+	public void actualizarCapacidadActualServicio(PersistenceManager pm, Long id)
+	{
+		Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaServicio() + " SET capacidadActual = capacidadActual-1 WHERE id = ?");
+		q.setParameters(id);
+		q.executeUnique();
+	}
+	
 }

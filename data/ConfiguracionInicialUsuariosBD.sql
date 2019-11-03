@@ -59,6 +59,9 @@ INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('afil14', 1, 20, 1, 'afil14');
 INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('afil15', 1, 21, 1, 'afil15');
+INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
+VALUES ('CAMAPAÑA', 6, 22, 1, 'CAMPAÑA');
+
 -- Se crea una fecha de nacimiento genérica:
 INSERT INTO Fecha(Fecha) VALUES ('15-12-1997');
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
@@ -92,9 +95,14 @@ VALUES (20, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (21, 1, 1);
 
+
+
+
 --Servicio
-INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado) VALUES (300,1,20,2,1,'Disponible',0);
-INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado) VALUES (30,1,20,1,1 'Disponible',0);
+INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado, capacidadActual) VALUES (300,1,20,2,1,'Disponible',300);
+INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado, capacidadActual) VALUES (30,1,20,1,1, 'Disponible',30);
+INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado, capacidadActual) VALUES (30,1,20,2,1,'Disponible',30);
+
 
 
 --Citas realmente efectuadas

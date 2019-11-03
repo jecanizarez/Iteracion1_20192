@@ -21,9 +21,9 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
-
-			persistencia.requerimientoConsulta3();
 		
+			persistencia.registrarCampaña(2, 0, 0, 22, "Porfavor");
+			//persistencia.adicionarServiciosCampaña((long)2, (long)6, 20);
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)
@@ -49,6 +49,13 @@ public class Controller
 						{
 							// TODO reservar una cita de servicio de salud.
 							System.out.println("Ingrese el tipo de servicio que desea, este debe ser una ConsultaGenereal o una ConsultaEmergencia");
+							String tipo = sc.nextLine();
+							TipoServicio servicio = persistencia.darTipoServicioPorNombre(tipo);
+							if(servicio == null)
+							{
+								System.out.println("El servicio especificado no existe");
+								System.exit(-1);
+							}
 							
 							
 						}
@@ -354,7 +361,7 @@ public class Controller
 								continue;
 							}
 							long idTipoServicio = tipoServicio.getId();
-							Servicio servicio = persistencia.adicionarServicio(capacidad, horaInicio, horaFinal, idTipoServicio);
+							Servicio servicio = persistencia.adicionarServicio(capacidad, horaInicio, horaFinal, idTipoServicio,ips.getId());
 							if(servicio != null)
 							{
 								PrestanServicio result = persistencia.adicionarPrestanServicio(ips.getId(), servicio.getId());
@@ -384,6 +391,74 @@ public class Controller
 					}
 					else if(usuario.getRol() == 6) // caso Organizador
 					{
+					
+						System.out.println("Ingrese el nombre de la campaña");
+						
+						String nombreCampaña = sc.nextLine();
+						
+						String sConsultaEspecialista = "ConsultaEspecialista";
+						
+						TipoServicio tipo = persistencia.darTipoServicioPorNombre(sConsultaEspecialista);
+						
+						if(tipo == null)
+						{
+							System.out.println("El tipo especificado no existe");
+							continue;
+						}
+						Long cantidadIPS = persistencia.darCuantasIPSDanServicio(tipo.getId());
+						System.out.println("Ingrese la cantidad de Consultas con el especialista que se necesitan: ");
+						int cantidadConsultasEspecialista = Integer.parseInt(sc.nextLine());
+						
+						Long cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+						if(cantidadConsultasEspecialista > cantidadDisponible - cantidadIPS)
+						{
+							System.out.println("La cantidad solicitada supera a la canitdad disponible");
+							continue;
+						}
+						
+						String sTerapia = "Terapia"; 
+						tipo = persistencia.darTipoServicioPorNombre(sTerapia);
+						if(tipo == null)
+						{
+							System.out.println("El tipo especificado no existe");
+							continue;
+						}
+						
+						
+						System.out.println("Ingrese el numero de terapias que se necesitan");
+						int cantidadTerapias = Integer.parseInt(sc.nextLine());
+						cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+						
+						if(cantidadTerapias > cantidadDisponible - cantidadIPS)
+						{
+							System.out.println("La cantidad solicitada supera a la cantidad disponible");
+							continue;
+						}
+						
+						String sExamenes = "Examenes";
+						
+						tipo = persistencia.darTipoServicioPorNombre(sExamenes);
+						if(tipo == null)
+						{
+							System.out.println("El tipo especificado no existe");
+							continue;
+						}
+						
+						System.out.println("Ingrese el numero de examenes que se necesitan");
+						int cantidadExamenes = Integer.parseInt(sc.nextLine());
+						cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
+						
+						if(cantidadExamenes > cantidadDisponible - cantidadIPS)
+						{
+							System.out.println("La cantidad solicitada supera a la cantidad disponible");
+							continue;
+						}
+
+						persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
+						
+
+						
+						
 						
 					}
 					else

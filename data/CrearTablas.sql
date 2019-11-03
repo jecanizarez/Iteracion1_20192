@@ -131,9 +131,7 @@ CONSTRAINT SM_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 CREATE TABLE PrestanServicio(
 IdIPS NUMBER,
 IdServicio NUMBER,
-IdMedico NUMBER,
 CONSTRAINT PS_PK_Unique PRIMARY KEY (IdIPS, IdServicio),
-CONSTRAINT PS_IdMedico FOREIGN KEY (IdIPS) REFERENCES IPS(Id),
 CONSTRAINT PS_IdServicio FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
 
 -- Tabla de ServiciosAfiliado:
@@ -199,23 +197,29 @@ Id NUMBER GENERATED ALWAYS AS IDENTITY,
 Hora NUMBER NOT NULL,
 Fecha NUMBER,
 IdServicio NUMBER,
+IdAfiliado NUMBER,
+IdRecepcionista NUMBER,
 CONSTRAINT Citas_PK PRIMARY KEY (Id),
-CONSTRAINT Citas_Fecha_FK FOREIGN KEY (Fecha) REFERENCES Fecha(Id),
-CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id));
+CONSTRAINT Citas_Fecha_FK FOREIGN KEY (Fecha) REFERENCES Fechxa(Id),
+CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id)
+CONSTRAINT Citas_IdAfiliado_FK FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(documento)
+CONSTRAINT Citas_Recepcionista_FK FOREIGN KEY (IdRecepcionista) REFERENCES Recepcionista(documento));
 
-CREATE TABLE Campaña(
+CREATE TABLE Campana(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
 Nombre VARCHAR2(255 BYTE) NOT NULL,
-CONSTRAINT Campaña_Unique  UNIQUE (Nombre),
-CONSTRAINT Campaña_PK PRIMARY KEY (Id));
+IdOrganizador NUMBER,
+CONSTRAINT Campana_Unique  UNIQUE (Nombre),
+CONSTRAINT Campana_PK PRIMARY KEY (Id),
+CONSTRAINT Campana_FK FOREIGN KEY (IdOrganizador) REFERENCES Afiliado(documento));
 
-CREATE TABLE ServiciosCampaña(
+CREATE TABLE ServiciosCampana(
 idTipoServicio NUMBER,
-idCampaña NUMBER,
+idCampana NUMBER,
 CantidadReservada NUMBER NOT NULL,
-CONSTRAINT ServiciosCampaña_PK PRIMARY KEY (idTipoServicio, idCampaña),
-CONSTRAINT Campaña_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
-CONSTRAINT CampañaId_FK FOREIGN KEY (idCampaña) REFERENCES Campaña(Id));
+CONSTRAINT ServiciosCampana_PK PRIMARY KEY (idTipoServicio, idCampana),
+CONSTRAINT CampanaServicio_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
+CONSTRAINT CampanaId_FK FOREIGN KEY (idCampana) REFERENCES Campana(Id));
 
 
 

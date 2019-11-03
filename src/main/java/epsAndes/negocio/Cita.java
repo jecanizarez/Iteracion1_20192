@@ -7,29 +7,33 @@ public class Cita implements VOCita {
 	
 	private long id;
 	
+	private int hora;
+	
+	private long Fecha;
+	
 	private long idServicio; 
 	
 	private long idAfiliado;
 	
-	private long idFecha;
+	private long idRecepcionista;
+		
 	
-    private int hora;
 
-	
-	public Cita(long id, long idServicio, long idAfiliado, long idFecha, int hora)
+	public Cita(long id, int hora, long idFecha, long idServicio, long idAfiliado, long idRecepcionista)
 	{
 		this.id = id;
 		this.idServicio = idServicio;
 		this.idAfiliado = idAfiliado; 
-		this.idFecha = idFecha; 
+		this.Fecha = idFecha; 
 		this.hora = hora;
+		this.idRecepcionista = idRecepcionista;
 	}
 	
 	public Cita()
 	{
 		idAfiliado = 0; 
 		idServicio = 0; 
-        idFecha = 0;
+        Fecha = 0;
         hora = 0;
 	}
 	
@@ -50,11 +54,11 @@ public class Cita implements VOCita {
 	}
 
 	public long getIdFecha() {
-		return idFecha;
+		return Fecha;
 	}
 
-	public void setIdFecha(long idFecha) {
-		this.idFecha = idFecha;
+	public void setFecha(long idFecha) {
+		this.Fecha = idFecha;
 	}
 	
 	public int getHora() {
@@ -70,6 +74,13 @@ public class Cita implements VOCita {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	public long getIdRecepcionista() {
+		return idRecepcionista;
+	}
+
+	public void setIdRecepcionista(long idRecepcionista) {
+		this.idRecepcionista = idRecepcionista;
 	}
 
 	

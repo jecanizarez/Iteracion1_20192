@@ -60,3 +60,70 @@ ORA-02291: integrity constraint (ISIS2304B051920.PS_IDSERVICIO) violated - paren
 11:35:41,954 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO PRESTANSERVICIO(idIPS, idServicio) values (?, ?)".
 ORA-02291: integrity constraint (ISIS2304B051920.PS_IDSERVICIO) violated - parent key not found
 
+23:39:19,737 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+23:46:23,235 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+23:47:55,756 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+23:52:58,264 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+00:01:40,215 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO FECHA Fecha) values (?)".
+ORA-00926: falta la palabra clave VALUES
+
+00:07:16,553 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO FECHA Fecha) values (?)".
+ORA-00926: falta la palabra clave VALUES
+
+00:08:46,792 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO FECHA Fecha) values (?)".
+ORA-00926: falta la palabra clave VALUES
+
+00:18:02,430 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO FECHA Fecha) values (?)".
+ORA-00926: falta la palabra clave VALUES
+
+00:19:28,387 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "SELECT * FROM ROL WHERE FECHA = ?".
+ORA-00904: "FECHA": identificador no válido
+
+00:22:38,357 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS(hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:25:47,684 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:27:05,625 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:28:55,097 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:30:16,561 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:30:57,070 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO CITAS (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?)".
+ORA-02291: restricción de integridad (ISIS2304B051920.CITAS_IDAFILIADO_FK) violada - clave principal no encontrada
+
+00:35:12,784 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO FECHA Fecha) values (?)".
+ORA-00926: falta la palabra clave VALUES
+
+01:37:45,426 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+01:45:46,346 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+01:59:32,256 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+02:08:26,258 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : El Query de JDOQL ha vuelto más que una instancia pero "unica" esta "verdad" o hay solo aggregados asi que debe devolver una como maxima.
+
+02:20:57,262 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO SERVICIOSCAMPANA (idTipoServicio, idCampaña, cantidad) values (?,?,?)".
+ORA-00942: la tabla o vista no existe
+
+02:26:06,891 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO SERVICIOSCAMPANA (idTipoServicio, idCampaña, cantidad) values (?,?,?)".
+ORA-00904: "CANTIDAD": identificador no válido
+
+02:34:08,514 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO SERVICIOSCAMPANA (idTipoServicio, idCampaña, cantidadReservada) values (?,?,?)".
+ORA-00904: "IDCAMPAÑA": identificador no válido
+
+02:43:09,236 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO SERVICIOSCAMPANA (idTipoServicio, idCampaña, cantidadReservada) values (?,?,?)".
+ORA-00904: "IDCAMPAÑA": identificador no válido
+
+03:21:33,938 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error con la ejecucion de Query de SQL "INSERT INTO AFILIADO(DOCUMENTO, FECHANACIMIENTO, EPS) values (?, ?, ?)".
+ORA-00001: restricción única (ISIS2304B051920.AFILIADO_PK) violada
+

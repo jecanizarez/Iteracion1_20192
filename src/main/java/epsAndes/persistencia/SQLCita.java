@@ -3,7 +3,7 @@ package epsAndes.persistencia;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
- class SQLCita {
+class SQLCita {
 
 		private final static String SQL = PersistenciaEpsAndes.SQL;
 		
@@ -14,10 +14,10 @@ import javax.jdo.Query;
 			this.pp = pp;
 		}
 		
-		public long adicionarCita(PersistenceManager pm, long id, int hora, long idFecha, long idServicio, long idAfiliado ) 
+		public long adicionarCita(PersistenceManager pm, int hora, long idFecha, long idServicio, long idAfiliado, long idRecepcionista ) 
 		{
-			Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita() + "(hora, Fecha, idServicio, idAfiliado) values (?, ?, ?, ?) ");
-			q.setParameters(hora, idFecha, idServicio, idAfiliado);
+			Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCita() + " (hora, Fecha, idServicio, idAfiliado, idRecepcionista) values (?, ?, ?, ?, ?) ");
+			q.setParameters(hora, idFecha, idServicio, idAfiliado, idRecepcionista);
 			return (long) q.executeUnique();
 		}
 }

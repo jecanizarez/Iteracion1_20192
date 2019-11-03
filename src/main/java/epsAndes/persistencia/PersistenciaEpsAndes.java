@@ -70,6 +70,10 @@ public class PersistenciaEpsAndes {
 	private SQLUsuario sqlUsuario;
 
 	private SQLServiciosAfiliado sqlServiciosAfiliado;
+	
+	private SQLCampana sqlCampaña;
+	
+	private SQLServiciosCampana sqlServiciosCampaña;
 
 	public PersistenciaEpsAndes()
 	{
@@ -97,6 +101,8 @@ public class PersistenciaEpsAndes {
 		tablas.add("TRABAJAN");
 		tablas.add("USUARIO");
 		tablas.add("SERVICIOSAFILIADO");
+		tablas.add("CAMPANA");
+		tablas.add("SERVICIOSCAMPANA");
 
 	}
 
@@ -168,6 +174,9 @@ public class PersistenciaEpsAndes {
 		sqlTrabajan = new SQLTrabajan(this);
 		sqlUsuario = new SQLUsuario(this);
 		sqlUtil = new SQLUtil(this);
+		sqlCampaña = new SQLCampana(this);
+		sqlServiciosCampaña = new SQLServiciosCampana(this);
+		
 	}
 
 	public String darSeqEpsAndes()
@@ -245,6 +254,15 @@ public class PersistenciaEpsAndes {
 	public String darTablaServiciosAfiliado()
 	{
 		return tablas.get(18);
+	}
+	public String darTablaCampaña()
+	{
+		
+		return tablas.get(19);
+	}
+	public String darTablaServiciosCampaña()
+	{
+		return tablas.get(20);
 	}
 
 	private long nextval()
@@ -457,7 +475,7 @@ public class PersistenciaEpsAndes {
 		}
 	}
 
-	public Cita adicionarCita(int hora, long idFecha, long idServicio, long idAfiliado) 
+	public Cita adicionarCita(int hora, long idFecha, long idServicio, long idAfiliado, long idRecepcionista) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -466,16 +484,17 @@ public class PersistenciaEpsAndes {
 		{
 			tx.begin();
 			long idCita = nextval ();
-			long tuplasInsertadas = sqlCita.adicionarCita(pm, idCita, hora, idFecha, idServicio, idAfiliado);
+			long tuplasInsertadas = sqlCita.adicionarCita(pm, hora, idFecha, idServicio, idAfiliado, idRecepcionista);
 			tx.commit();
 
+			Cita cita = darUltCita();
 			log.trace ("InserciÃ³n de una cita: " + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			return new Cita(idCita, idServicio, idAfiliado, idFecha, hora);
+            System.out.println("Se adiciono la cita");
+			return new Cita(cita.getId(), hora, idFecha, idServicio, idAfiliado, idRecepcionista);
 		}
 		catch (Exception e)	
 		{
-			//        	e.printStackTrace();
+			e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
@@ -531,16 +550,15 @@ public class PersistenciaEpsAndes {
 		{
 			tx.begin();
 			long idFecha = nextval ();
-			long tuplasInsertadas = sqlFecha.AdicionarFecha(pm, idFecha, fecha);
+			long tuplasInsertadas = sqlFecha.AdicionarFecha(pm, fecha);
 			tx.commit();
-
 			log.trace ("Insercion de una fecha: " + fecha + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return darFecha(fecha);
 		}
 		catch (Exception e)
 		{
-			//        	e.printStackTrace();
+			        	e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
 			return null;
 		}
@@ -556,7 +574,7 @@ public class PersistenciaEpsAndes {
 	}
 
 
-	public Servicio adicionarServicio(int capacidad, int horaInicio, int horaFinal, long idTipoServicio)
+	public Servicio adicionarServicio(int capacidad, int horaInicio, int horaFinal, long idTipoServicio, long IPS)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -564,13 +582,13 @@ public class PersistenciaEpsAndes {
 		try
 		{
 			tx.begin();
-			sqlServicio.adicionarServicio(pm, capacidad, horaInicio, horaFinal, idTipoServicio);
+			sqlServicio.adicionarServicio(pm, capacidad, horaInicio, horaFinal, idTipoServicio, IPS);
 			tx.commit();
 
 			long idServicio = sqlServicio.darIdUltimoServicio(pm);
 			log.trace ("Insercion de un fservicio: " + ": " + idServicio + " tuplas insertadas");
 
-			return new Servicio(idServicio, capacidad, horaInicio, horaFinal, idTipoServicio);
+			return new Servicio(idServicio, capacidad, horaInicio, horaFinal, idTipoServicio, IPS, "Disponible", capacidad);
 		}
 		catch (Exception e)
 		{
@@ -651,6 +669,69 @@ public class PersistenciaEpsAndes {
 		}
 
 	}
+	public Campana adicionarCampaña(String nombre, long idOrganizador)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlCampaña.adicionarCampaña(pmf.getPersistenceManager(), nombre, idOrganizador);
+			tx.commit();
+
+			log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+			
+			Object[] datos = (Object[]) darCampañaPorNombre(nombre).get(0);
+
+			return new Campana(((BigDecimal)datos[0]).longValue(), (String)datos[1], idOrganizador);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	public ServiciosCampana adicionarServiciosCampaña(Long idTipoServicio, Long idCampaña, int cantidad) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		try
+		{
+			tx.begin();
+			long tuplasInsertadas = sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), idTipoServicio, idCampaña, cantidad);
+			tx.commit();
+            System.out.println("Se añadio");
+			log.trace ("Insercion de un fservicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
+			
+
+			return sqlServiciosCampaña.darServiciosCampana(pmf.getPersistenceManager());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
 
 	public Usuario darUsuarioPorLogin(String login)
 	{
@@ -690,6 +771,10 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlFecha.buscarFecha(pmf.getPersistenceManager(), fecha);
 	}
+	public Fecha darFechaPorId(long id)
+	{
+		return sqlFecha.buscarFechaId(pmf.getPersistenceManager(), id);
+	}
 	public TipoServicio darTipoServicioPorNombre(String nombre)
 	{
 		return sqlTipoServicio.buscarTipoServicioPorNombre(pmf.getPersistenceManager(), nombre);
@@ -698,6 +783,38 @@ public class PersistenciaEpsAndes {
 	public TipoServicio darTipoServicioPorId(Long id)
 	{
 		return sqlTipoServicio.buscarTipoServicioPorId(pmf.getPersistenceManager(), id);
+	}
+	public Long darCapacidadDisponiblePorTipoServicio(Long idTipoServicio)
+	{
+		return sqlPrestanServicio.darCapacidadDisponiblePorTipoServicio(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public Long darCuantasIPSDanServicio(Long idTipoServicio)
+	{
+		return sqlPrestanServicio.darCuantasIPSDanServicio(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public List<Object> darIPSYCantidadActualServicio(Long idTipoServicio)
+	{
+		return sqlPrestanServicio.darIPSYDisponibilidadDelServicio(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public Cita darUltCita() 
+	{
+	   return sqlPrestanServicio.darUltCita(pmf.getPersistenceManager());	
+	}
+	public Fecha darUltFecha()
+	{
+		return sqlFecha.darUltFecha(pmf.getPersistenceManager());
+	}
+	public Servicio darServicioPorId(Long id)
+	{
+		return sqlServicio.darServicioPorId(pmf.getPersistenceManager(), id);
+	}
+	public void disminuirCapacidadServicio(Long id)
+	{
+		sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), id);
+	}
+	public List<Object> darCampañaPorNombre(String nombre)
+	{
+		return sqlCampaña.buscarCampañaPorNombre(pmf.getPersistenceManager(), nombre);
 	}
 
 
@@ -822,5 +939,260 @@ public class PersistenciaEpsAndes {
                 
 		}
 	}
+	public void registrarCampaña(int cantidadConsultasEspecialista, int cantidadTerapias, int cantidadExamenes, long idOrganizadorCampaña, String nombreCampaña)
+	{
+		
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+
+		try
+		{
+			tx.begin();
+			int cantidadConsultasEspecialistaFinal = cantidadConsultasEspecialista;
+			int cantidadTerapiasFinal = cantidadTerapias;
+			int cantidadExamenesFinal = cantidadExamenes;
+			System.out.println("Registre al organizador como afiliado");
+			 sqlAfiliado.adicionarAfiliado(pmf.getPersistenceManager(), idOrganizadorCampaña, 1, 1);
+			 System.out.println("registre la campaña");
+			 sqlCampaña.adicionarCampaña(pmf.getPersistenceManager(), nombreCampaña, idOrganizadorCampaña);
+             Cita cita = darUltCita();
+             System.out.println("Consegui la ultima cita");
+             Fecha fecha = darFechaPorId(cita.getIdFecha());
+             System.out.println("Fecha esta bien" + fecha != null);
+             String fechaNormal = fecha.getFecha();
+             String[] fechas = fechaNormal.split("-");
+             String año = fechas[0];
+             System.out.println(año);
+             String mes = fechas[1];
+             System.out.println(mes);
+             String dia = fechas[2];
+             System.out.println(dia);
+             System.out.println("Organice la fecha");
+             int hora = cita.getHora();
+             System.out.println("Hora de la cita: " + hora);
+             
+             List<Object> listaIPSCap = darIPSYCantidadActualServicio((long)2);
+             System.out.println("Obtuve las ips que dan el servicio y la capacidad actual");
+             for( int i = 0; i < listaIPSCap.size(); i++)
+             {
+            	 Object[] datos = (Object[])listaIPSCap.get(i);
+            	 
+            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+            	 System.out.println(capacidadActual);
+            	 
+            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
+            	 System.out.println(idServicio);
+            	 
+            	 Servicio servicio = darServicioPorId(idServicio);
+            	 System.out.println("Obtuve el servicio y "  + servicio != null);
+            	 
+            	  while(capacidadActual-1 != 0 && cantidadConsultasEspecialista != 0)
+            	  {
+            		 
+            	     hora += 1; 
+            	     System.out.println("hora + 1: " +hora);
+            	     System.out.println("hora final: " + servicio.getHoraFinal());
+            	     if(hora > servicio.getHoraFinal())
+            	     {
+            	    	 
+            	    	 hora = servicio.getHoraInicio();
+            	    	  if(Integer.parseInt(dia) + 1 < 10)
+                 	     {
+                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     if(dia.equals("31"))
+                 	     {
+                 	    	 dia = "01";
+                 	     }
+                 	     if(Integer.parseInt(mes) + 1 < 10)
+                 	     {
+                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	     mes = (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     if(mes.equals("13"))
+                 	     {
+                 	    	 mes = "01";
+                 	     }
+            	     }
+            	   
+            	     String fechaTemp = año+"-"+mes+"-"+dia;
+            	     System.out.println(fechaTemp);
+            	     System.out.println(fechaNormal);
+            	     if(!fechaNormal.equals(fechaTemp))
+            	     {
+            	     System.out.println("Voy a adicionar la fecha");
+            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+            	     System.out.println("ADICIONE LA FECHA HPTA");
+            	     }
+            	     System.out.println("Voy a conseguir la puta fecha");
+            	     Fecha fechaf = darFecha(fechaTemp);
+            	     System.out.println("La agarre");
+            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+            		 cantidadConsultasEspecialista--;
+            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+            		 System.out.println("AÑADI HPTA!!!!!");
+            	  }  
+             }
+             Object[] campaña =(Object[]) sqlCampaña.buscarCampañaPorNombre(pmf.getPersistenceManager(), nombreCampaña).get(0);
+             Long idCampaña = ((BigDecimal)campaña[0]).longValue();
+             System.out.println(idCampaña);
+             sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)2, idCampaña, cantidadConsultasEspecialistaFinal);
+             System.out.println("YEII");
+             listaIPSCap = darIPSYCantidadActualServicio((long)3);
+             for( int i = 0; i < listaIPSCap.size(); i++)
+             {
+            	 Object[] datos = (Object[])listaIPSCap.get(i);
+            	 
+            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+            	 
+            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
+            	 
+            	 Servicio servicio = darServicioPorId(idServicio);
+            	 
+            	  while(capacidadActual-1 != 0 && cantidadTerapias != 0)
+            	  {
+            		 
+            	     hora += 1; 
+            	     if(hora > servicio.getHoraFinal())
+            	     {
+            	    	 
+            	    	 hora = servicio.getHoraInicio();
+            	    	  if(Integer.parseInt(dia) + 1 < 10)
+                 	     {
+                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     if(dia.equals("31"))
+                 	     {
+                 	    	 dia = "01";
+                 	     }
+                 	     if(Integer.parseInt(mes) + 1 < 10)
+                 	     {
+                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	     mes = (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     if(mes.equals("13"))
+                 	     {
+                 	    	 mes = "01";
+                 	     }
+            	     }
+            	     String fechaTemp = año+"-"+mes+"-"+dia;
+            	     if(!fechaNormal.equals(fechaTemp))
+            	     {
+            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+            	     }
+            	     Fecha fechaf = darFecha(fechaTemp);
+            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+            		 cantidadTerapias--;
+            	  }
+            	 
+             }
+             
+             sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)3, idCampaña, cantidadTerapiasFinal);
+             
+             listaIPSCap = darIPSYCantidadActualServicio((long)5);
+             for( int i = 0; i < listaIPSCap.size(); i++)
+             {
+            	 Object[] datos = (Object[])listaIPSCap.get(i);
+            	 
+            	 Long capacidadActual = ((BigDecimal)datos[1]).longValue();
+            	 
+            	 Long idServicio = ((BigDecimal)datos[2]).longValue();
+            	 
+            	 Servicio servicio = darServicioPorId(idServicio);
+            	 
+            	  while(capacidadActual-1 != 0 && cantidadExamenes != 0)
+            	  {
+            		 
+            	     hora += 1; 
+            	     if(hora > servicio.getHoraFinal())
+            	     {
+            	    	 
+            	    	 hora = servicio.getHoraInicio();
+            	    	  if(Integer.parseInt(dia) + 1 < 10)
+                 	     {
+                 	     dia = "0" +(Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	    	 dia = (Integer.parseInt(dia) + 1) + "";
+                 	     }
+                 	     if(dia.equals("31"))
+                 	     {
+                 	    	 dia = "01";
+                 	     }
+                 	     if(Integer.parseInt(mes) + 1 < 10)
+                 	     {
+                 	    	 mes = "0" + (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     else
+                 	     {
+                 	     mes = (Integer.parseInt(mes) + 1) + "";
+                 	     }
+                 	     if(mes.equals("13"))
+                 	     {
+                 	    	 mes = "01";
+                 	     }
+            	     }
+            	     String fechaTemp = año+"-"+mes+"-"+dia;
+            	     if(!fechaNormal.equals(fechaTemp))
+            	     {
+            	     sqlFecha.AdicionarFecha(pmf.getPersistenceManager(),fechaTemp);
+            	     }
+            	     Fecha fechaf = darFecha(fechaTemp);
+            		 sqlCita.adicionarCita(pmf.getPersistenceManager(), hora, fechaf.getId(), idServicio, idOrganizadorCampaña, 2);
+            		 sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), idServicio);
+            		 cantidadExamenes--;
+            	  }  
+            	  
+            	  sqlServiciosCampaña.adicionarCampaña(pmf.getPersistenceManager(), (long)5, idCampaña, cantidadExamenesFinal);
+             }
+             System.out.println("Termine");
+             
+             
+
+			
+			
+			tx.commit();
+
+			
+
+
+		}
+		catch (Exception e)	
+		{
+			e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+		}
+		finally
+		{
+			if (tx.isActive())	
+			{
+				tx.rollback();
+			}
+			pm.close();
+		} 
+	}
+	
+	public void cancelarServiciosCampaña(Long idOrganizador)
+	{
+		
+	}
+	
+	
 
 }
