@@ -23,9 +23,7 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
-		  
-			System.out.println(persistencia.darServicioDiferente((long)22,(long) 2));
-			System.out.println("yap");
+		 
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)

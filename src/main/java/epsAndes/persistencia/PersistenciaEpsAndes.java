@@ -845,6 +845,47 @@ public class PersistenciaEpsAndes {
 	{
 		sqlCita.eliminarCitaPorId(pmf.getPersistenceManager(), idCita);
 	}
+	public Cita darCitaPorId(Long idCita)
+	{
+		return sqlCita.darCitaPorId(pmf.getPersistenceManager(), idCita);
+	}
+	public List<Object> darServiciosMasSolicitadosPorAño(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMasSolicitadorPorAño(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public List<Object> darServiciosMenosSolicitadosPorAño(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMenosSolicitadorPorAño(pmf.getPersistenceManager(), idTipoServicio);
+	}
+    public List<Object> darServiciosMasPrestadosPorAño(Long idTipoServicio)
+    {
+    	return sqlCita.darServiciosMasPrestadosPorAño(pmf.getPersistenceManager(), idTipoServicio);
+    }
+	public List<Object> darServiciosMasSolicitadosPorMes(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMasSolicitadorPorMes(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public List<Object> darServiciosMenosSolicitadosPorMes(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMenosSolicitadorPorMes(pmf.getPersistenceManager(), idTipoServicio);
+	}
+    public List<Object> darServiciosMasPrestadosPorMes(Long idTipoServicio)
+    {
+    	return sqlCita.darServiciosMasPrestadosPorMes(pmf.getPersistenceManager(), idTipoServicio);
+    }
+	public List<Object> darServiciosMasSolicitadosPorDia(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMasSolicitadorPorDia(pmf.getPersistenceManager(), idTipoServicio);
+	}
+	public List<Object> darServiciosMenosSolicitadosPorDia(Long idTipoServicio)
+	{
+		return sqlCita.darServiciosMenosSolicitadorPorDia(pmf.getPersistenceManager(), idTipoServicio);
+	}
+    public List<Object> darServiciosMasPrestadosPorDia(Long idTipoServicio)
+    {
+    	return sqlCita.darServiciosMasPrestadosPorDia(pmf.getPersistenceManager(), idTipoServicio);
+    }
+	
 
 
 	public void requerimientoConsulta1(String fechaInicial, String fechaFinal)
@@ -1372,6 +1413,140 @@ public class PersistenciaEpsAndes {
 			}
 			pm.close();
 		}	
+	}
+	
+	public void requerimientoConsulta6(int medida, Long idTipoServicio)
+	{
+		if(medida == 1)
+		{
+			
+			
+			List<Object> lista = darServiciosMasSolicitadosPorAño(idTipoServicio);
+			for(int i = 0; i <3 && i < lista.size(); i++)
+			{
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			
+			System.out.println("El año donde más se solicitaron + "+ servicio.getTipo() + "fue: " + año+ " El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			
+			lista = darServiciosMenosSolicitadosPorAño(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El año donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			lista = darServiciosMasPrestadosPorAño(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El año donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			
+		}
+		else if( medida == 2)
+		{
+			List<Object> lista = darServiciosMasSolicitadosPorMes(idTipoServicio);
+			for(int i = 0; i <3 && i < lista.size(); i++)
+			{
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			
+			System.out.println("El Mes donde más se solicitaron + "+ servicio.getTipo() + "fue: " + año+ " El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			
+			lista = darServiciosMenosSolicitadosPorMes(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El mes donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			lista = darServiciosMasPrestadosPorMes(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El Mes donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+		}
+		else if(medida 	 == 3)
+		{
+			List<Object> lista = darServiciosMasSolicitadosPorDia(idTipoServicio);
+			for(int i = 0; i <3 && i < lista.size(); i++)
+			{
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			
+			System.out.println("El Dia donde más se solicitaron + "+ servicio.getTipo() + "fue: " + año+ " El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			
+			lista = darServiciosMenosSolicitadosPorDia(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El Dia donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+			
+			lista = darServiciosMasPrestadosPorDia(idTipoServicio);
+			for(int i = 0; i<3 && i < lista.size(); i++)
+			{
+			
+			Object[] datose = (Object[]) lista.get(i);
+			Long año = ((BigDecimal)datose[0]).longValue();
+			Long idTipoServicioR = ((BigDecimal)datose[1]).longValue();
+			TipoServicio servicio = darTipoServicioPorId(idTipoServicio);
+			Long solicitudes = ((BigDecimal)datose[2]).longValue();
+			
+			System.out.println("El Dia donde menos se solicitaron + "+ servicio.getTipo() + "fue: " + año+" El numero de solicitudes fue: " + solicitudes);
+			}
+		}
 	}
 
 
