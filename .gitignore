@@ -1,0 +1,10 @@
+
+bin/org/datanucleus/samples/jdo/tutorial/
+
+.idea/
+
+*.class
+
+*.kotlin_module
+
+*.iml

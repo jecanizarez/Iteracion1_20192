@@ -5,7 +5,6 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import epsAndes.negocio.Cita;
 

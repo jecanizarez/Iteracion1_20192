@@ -205,14 +205,16 @@ CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id)
 CONSTRAINT Citas_IdAfiliado_FK FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(documento)
 CONSTRAINT Citas_Recepcionista_FK FOREIGN KEY (IdRecepcionista) REFERENCES Recepcionista(documento));
 
+-- Tabla de campaña:
 CREATE TABLE Campana(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
 Nombre VARCHAR2(255 BYTE) NOT NULL,
 IdOrganizador NUMBER,
-CONSTRAINT Campana_Unique  UNIQUE (Nombre),
-CONSTRAINT Campana_PK PRIMARY KEY (Id),
-CONSTRAINT Campana_FK FOREIGN KEY (IdOrganizador) REFERENCES Afiliado(documento));
+CONSTRAINT CMP_Unique  UNIQUE (Nombre),
+CONSTRAINT CMP_PK PRIMARY KEY (Id),
+CONSTRAINT CMP_IdOrganizador_FK FOREIGN KEY (IdOrganizador) REFERENCES Afiliado(documento));
 
+-- Tabla de servicios de campaña:
 CREATE TABLE ServiciosCampana(
 idTipoServicio NUMBER,
 idCampana NUMBER,
