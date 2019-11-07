@@ -1,12 +1,8 @@
 package epsAndes.persistencia;
 
-import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Rol;
-import uniandes.isis2304.parranderos.negocio.Bebedor;
+import java.util.List;
 
 class SQLServiciosAfiliado {
 
@@ -21,7 +17,7 @@ class SQLServiciosAfiliado {
 	
 	public long adicionarServiciosAfiliado(PersistenceManager pm, long idTipoServicio, long idAfiliado, String fecha, long IPS)
 	{
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServiciosAfiliado() + "(idServicio, idAfiliado, fechaAsistida, IPS) values (?,?,?,?) ");
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaServiciosAfiliado() + "(idTipoServicio, idAfiliado, fechaAsistida, IPS) values (?,?,?,?) ");
 		q.setParameters(idTipoServicio, idAfiliado, fecha, IPS);
 		return (long) q.executeUnique();
 	}

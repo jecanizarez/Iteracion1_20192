@@ -119,8 +119,8 @@ CONSTRAINT Estado_CK CHECK(Estado IN ('Disponible','Deshabilitado')));
 
 -- Tabla de ServicioMedico:
 CREATE TABLE ServicioMedico(
-IdMedico NUMBER,
-IdServicio NUMBER,
+IdMedico NUMBER NOT NULL,
+IdServicio NUMBER NOT NULL,
 CONSTRAINT SM_IdMedico_Unique UNIQUE (IdMedico),
 CONSTRAINT SM_IdServicio_Unique UNIQUE (IdServicio),
 CONSTRAINT SM_PK PRIMARY KEY (IdMedico, IdServicio),
@@ -210,7 +210,7 @@ CREATE TABLE Campana(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
 Nombre VARCHAR2(255 BYTE) NOT NULL,
 IdOrganizador NUMBER,
-CONSTRAINT CMP_Unique  UNIQUE (Nombre),
+CONSTRAINT CMP_Unique UNIQUE (Nombre),
 CONSTRAINT CMP_PK PRIMARY KEY (Id),
 CONSTRAINT CMP_IdOrganizador_FK FOREIGN KEY (IdOrganizador) REFERENCES Afiliado(documento));
 
@@ -222,6 +222,7 @@ CantidadReservada NUMBER NOT NULL,
 CONSTRAINT ServiciosCampana_PK PRIMARY KEY (idTipoServicio, idCampana),
 CONSTRAINT CampanaServicio_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT CampanaId_FK FOREIGN KEY (idCampana) REFERENCES Campana(Id));
+
 
 
 

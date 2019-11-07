@@ -1,27 +1,17 @@
 package epsAndes.persistencia;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import epsAndes.negocio.*;
+import org.apache.log4j.Logger;
+
+import javax.jdo.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.jdo.JDODataStoreException;
-import javax.jdo.JDOHelper;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Transaction;
-
-import org.apache.log4j.Logger;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import epsAndes.negocio.*;
-import epsAndes.persistencia.*;
-import uniandes.isis2304.parranderos.negocio.TipoBebida;
-import uniandes.isis2304.parranderos.persistencia.PersistenciaParranderos;
 
 public class PersistenciaEpsAndes {
 
@@ -491,7 +481,7 @@ public class PersistenciaEpsAndes {
 
 			Cita cita = darUltCita();
 			log.trace ("InserciÃ³n de una cita: " + ": " + tuplasInsertadas + " tuplas insertadas");
-			System.out.println("Se adiciono la cita");
+			System.out.println("Se adiciono la cita.");
 			return new Cita(cita.getId(), hora, idFecha, idServicio, idAfiliado, idRecepcionista);
 		}
 		catch (Exception e)	
@@ -588,7 +578,7 @@ public class PersistenciaEpsAndes {
 			tx.commit();
 
 			long idServicio = sqlServicio.darIdUltimoServicio(pm);
-			log.trace ("Insercion de un fservicio: " + ": " + idServicio + " tuplas insertadas");
+			log.trace ("Insercion de un servicio: " + ": " + idServicio + " tuplas insertadas");
 
 			return new Servicio(idServicio, capacidad, horaInicio, horaFinal, idTipoServicio, IPS, "Disponible", capacidad);
 		}
@@ -613,13 +603,11 @@ public class PersistenciaEpsAndes {
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
-
 		try
 		{
 			tx.begin();
 			long tuplasInsertadas = sqlPrestanServicio.adicionarPrestanServicio(pm, idIPS,idServicio );
 			tx.commit();
-
 			log.trace ("Insercion de un servicio: " + ": " + tuplasInsertadas + " tuplas insertadas");
 			System.out.println("Se ha adicionado correctamente");
 			return new PrestanServicio(idIPS, idServicio);
@@ -659,6 +647,7 @@ public class PersistenciaEpsAndes {
 		{
 			e.printStackTrace();
 			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			System.out.println("Transaction rollback.");
 			return null;
 		}
 		finally
@@ -810,6 +799,12 @@ public class PersistenciaEpsAndes {
 	{
 		return sqlServicio.darServicioPorId(pmf.getPersistenceManager(), id);
 	}
+
+	public List<Object> darServicioPorIdTipo(long id)
+	{
+		return sqlServicio.darServiciosPorTipo(pmf.getPersistenceManager(), id);
+	}
+
 	public void disminuirCapacidadServicio(Long id)
 	{
 		sqlServicio.actualizarCapacidadActualServicio(pmf.getPersistenceManager(), id);
@@ -910,7 +905,7 @@ public class PersistenciaEpsAndes {
 				Long id = ((BigDecimal) datos[0]).longValue();
 				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
 				IPS tipo = darIPSPorId(id);
-				System.out.print("IPS: " + tipo.getNombre()+ " Solicitudes: " + repeticiones);
+				System.out.println("IPS: " + tipo.getNombre()+ " Solicitudes: " + repeticiones);
 
 			}
 		}
@@ -927,8 +922,6 @@ public class PersistenciaEpsAndes {
 
 	public void requerimientoConsulta2(String fechaInicial, String fechaFinal)
 	{
-
-
 		List<Object> lista = sqlPrestanServicio.darLos20ServiciosMasSolicitados(pmf.getPersistenceManager(), fechaInicial, fechaFinal);
 		if(!lista.isEmpty())
 		{
@@ -940,8 +933,7 @@ public class PersistenciaEpsAndes {
 				Long idTipoServicio = ((BigDecimal) datos[0]).longValue();
 				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
 				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
-				System.out.print("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
-
+				System.out.println("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
 			}
 		}
 		else
@@ -953,7 +945,7 @@ public class PersistenciaEpsAndes {
 	public void requerimientoConsulta5(Long idAfiliado, String fechaInicial, String fechaFinal)
 	{
 		List<Object> lista = sqlPrestanServicio.darServiciosAfiliado(pmf.getPersistenceManager(), idAfiliado, fechaInicial, fechaFinal);
-		System.out.println("El usuario ha tomado los siguientes servicios");
+		System.out.println("El usuario ha tomado los siguientes servicios:");
 		if(!lista.isEmpty())
 		{
 			for(Object e: lista)
@@ -963,7 +955,7 @@ public class PersistenciaEpsAndes {
 				Long idTipoServicio = ((BigDecimal) datos[0]).longValue();
 				Long repeticiones  = ((BigDecimal) datos[1]).longValue();
 				TipoServicio tipo = darTipoServicioPorId(idTipoServicio);
-				System.out.print("Servicio: " + tipo.getTipo()+ " Solicitudes: " + repeticiones);
+				System.out.println("Servicio: " + tipo.getTipo()+ ", Solicitudes: " + repeticiones);
 			}
 		}
 		else
@@ -1013,8 +1005,8 @@ public class PersistenciaEpsAndes {
 			Long cantidad = ((BigDecimal)total[1]).longValue();
 
 			TipoServicio tipo = darTipoServicioPorId(idTipo);
-
-			System.out.println("Indice de uso de " + tipo.getTipo() + " es: " + (double)usoActual/cantidad);
+			long ind = Math.round((double) usoActual*100/cantidad);
+			System.out.println("Indice de uso de " + tipo.getTipo() + " es: " + ind + "%");
 
 		}
 	}

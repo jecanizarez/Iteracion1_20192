@@ -135,3 +135,13 @@ ORA-02290: restricción de control (ISIS2304B051920.ESTADO_CK) violada
 
 15:18:07,329 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : null
 
+07:01:16,485 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO ORDENES(idAfiliado, idMedico, TipoServicio) values (?, ?, ?)".
+ORA-00001: unique constraint (ISIS2304B051920.ORDENES_IDMEDICO_UNIQUE) violated
+
+07:58:17,087 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO PRESTANSERVICIO (idIPS, idServicio) VALUES (?, ?)".
+ORA-02291: integrity constraint (ISIS2304B051920.PS_IDSERVICIO) violated - parent key not found
+
+08:22:06,765 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : null
+
+08:24:34,888 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : null
+

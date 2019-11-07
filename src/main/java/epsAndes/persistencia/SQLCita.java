@@ -1,12 +1,10 @@
 package epsAndes.persistencia;
 
-import java.util.List;
+import epsAndes.negocio.Cita;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-
-import epsAndes.negocio.Cita;
+import java.util.List;
 
 class SQLCita {
 
@@ -37,13 +35,12 @@ class SQLCita {
 		public List<Object> darUltFechaYHoraDeTipoServicio(PersistenceManager pm, Long idTipoServicio)
 		{
 			String disponible = "Disponible";
-				Query q = pm.newQuery(SQL, "SELECT SERVICIO.ID,FECHA, HORA, MAX(CITAS.ID)"
+				Query q = pm.newQuery(SQL, "SELECT SERVICIO.ID,FECHA, HORAINICIO,horafinal, MAX(CITAS.ID)"
 						+ " FROM " + pp.darTablaCita()
 						+ ", " + pp.darTablaServicio()
-						+ " WHERE SERVICIO.ID = CITAS.IDSERVICIO "
-						+ " AND SERVICIO.TipoServicio = ?"
+						+ " WHERE SERVICIO.TipoServicio = ?"
 						+ " AND SERVICIO.Estado = ?"
-						+ " GROUP BY SERVICIO.ID, FECHA, hora");
+						+ " GROUP BY SERVICIO.ID, FECHA, horainicio,horafinal");
 			q.setParameters(idTipoServicio, disponible);
 			return q.executeList();
 		}

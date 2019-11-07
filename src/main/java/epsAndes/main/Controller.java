@@ -1,12 +1,14 @@
 package epsAndes.main;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import epsAndes.negocio.*;
 import epsAndes.persistencia.PersistenciaEpsAndes;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
 public class Controller 
 {
@@ -24,6 +26,7 @@ public class Controller
 		PersistenciaEpsAndes persistencia = new PersistenciaEpsAndes();
 		while(!end)
 		{
+			ControllerView.printMenuLogin();
 			String login = sc.nextLine();
 			Usuario usuario = persistencia.darUsuarioPorLogin(login);
 			if(usuario == null)
@@ -47,22 +50,25 @@ public class Controller
 							end = true;
 						else if(action == 1)
 						{
-							// TODO reservar una cita de servicio de salud.
-							System.out.println("Ingrese el tipo de servicio que desea, este debe ser una ConsultaGenereal o una ConsultaEmergencia");
+							System.out.println("Ingrese el tipo de servicio que desea, este debe ser una ConsultaControl o una ConsultaEmergencia");
 							String tipo = sc.nextLine();
 							TipoServicio servicio = persistencia.darTipoServicioPorNombre(tipo);
 							if(servicio == null)
 							{
-								System.out.println("El servicio especificado no existe");
+								System.out.println("El servicio especificado no existe.");
 								continue;
 							}
 							List<Object> listaDisponibilidad = persistencia.darUltFechaIdYHoraServicio(servicio.getId());
+							if(listaDisponibilidad.isEmpty())
+							{
+								ControllerView.print("No hay servicios de " + tipo + ".");
+								continue;
+							}
 							Object[] datos = (Object[])listaDisponibilidad.get(0);
 							Fecha fecha = persistencia.darFechaPorId(((BigDecimal)datos[1]).longValue());
 							System.out.println("Puedes inscribir desde: " + fecha.getFecha());
-
 							System.out.println("Desde la hora: " +((BigDecimal)datos[2]).longValue());
-
+							System.out.println("Hasta la hora: " +((BigDecimal)datos[3]).longValue());
 							System.out.println("Ingrese la fecha que desee");
 							String fechaU = sc.nextLine();
 							Fecha fechaIndicada = persistencia.darFecha(fechaU);
@@ -72,10 +78,8 @@ public class Controller
 							}
 							System.out.println("Ingrese la hora que desea");
 							int hora = Integer.parseInt(sc.nextLine());
-
 							persistencia.adicionarCita(hora, fechaIndicada.getId(), ((BigDecimal)datos[0]).longValue(), usuario.getDocumento(), 2);
 							persistencia.disminuirCapacidadServicio(((BigDecimal)datos[0]).longValue());
-							System.out.println("Se adiciono la cita");
 
 
 						}
@@ -106,12 +110,13 @@ public class Controller
 							System.out.println("Ingrese el documento del afiliado");
 							long idAfiliado = Long.parseLong(sc.nextLine());
 							System.out.println("Ingrese el tipo de servicio Ej: (ConsultaEmergencia, ConsultaEspecialista, Terapia, ConsultaControl, " + "\n" + 
-									"Examenes,Hospitalizacion, ProcesoMedicoEspecializado ");
+									"Examenes,Hospitalizacion, ProcesoMedicoEspecializado)");
 							String NombreServicio = sc.nextLine();
 							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(NombreServicio);
 							if(tipoServicio == null)
 							{
-								System.out.println("El tipo de servicio no existe");
+								System.out.println("El tipo de servicio no existe.");
+								continue;
 							}
 							long idTipoServicio = tipoServicio.getId();
 							persistencia.adicionarOrden(idAfiliado, usuario.getDocumento(), idTipoServicio);
@@ -138,7 +143,6 @@ public class Controller
 							end = true;
 						else if(action == 1)
 						{
-							// TODO registrar la prestación de un servicio de salud.
 							System.out.println("Ingrese el documento del paciente");
 							long idPaciente = Long.parseLong(sc.nextLine());
 							System.out.println("Ingrese el tipo de servicio ");
@@ -146,11 +150,20 @@ public class Controller
 							TipoServicio tipoServicio = persistencia.darTipoServicioPorNombre(nombreTipoServicio);
 							if(tipoServicio == null)
 							{
-								System.out.println("Nombre incorrecto");
+								System.out.println("Nombre incorrecto.");
+								continue;
 							}
-							persistencia.adicionarPrestanServicio(tipoServicio.getId(), idPaciente);
-
-
+							Date today = new Date();
+							SimpleDateFormat formatter = new SimpleDateFormat("yyyy/dd/MM");
+							String dateToday = formatter.format(today);
+							// TODO Buscar IPS bien (dado login de recepcionista).
+							List<Object> datos = persistencia.darServicioPorIdTipo(tipoServicio.getId());
+							if(datos.isEmpty())
+							{
+								System.out.println("No hay servicios de " + tipoServicio.getTipo() + " en la IPS.");
+								continue;
+							}
+ 							persistencia.adicionarServiciosAfiliado(tipoServicio.getId(), idPaciente, dateToday, 1);
 						}
 					}
 					else
@@ -274,7 +287,6 @@ public class Controller
 						}
 						else if(action == 4)
 						{
-							// TODO registrar afiliado.
 							int rolAfiliado = 1;
 							System.out.println("Ingrese el numero de documento (e.g., numero de CC)");
 							int documento = Integer.parseInt(sc.nextLine()); 
@@ -324,7 +336,6 @@ public class Controller
 						}
 						else if(action == 5)
 						{
-							// TODO registrar servicio de salud.
 							System.out.println("Ingrese el nombre de la IPS la cual desea registrar el servicio de salud (e.g., Fundacion Santa Fe de Bogota)");
 							String nombreIPS = sc.nextLine();
 							IPS ips = persistencia.darIPSPorNombre(nombreIPS);
@@ -401,8 +412,7 @@ public class Controller
 						}
 						else if(action == 7)
 						{
-
-							System.out.println("Ingrese la fecha de inicio de la busqueda (e.g. 2012-06-05) ");
+							System.out.println("Ingrese la fecha de inicio de la busqueda (e.g. 2012-06-05)");
 							String fechaInicial = sc.nextLine();
 							System.out.println("Ingrese la fecha limite que desea (e.g. 2012-06-08)");
 							String fechaFinal = sc.nextLine();
@@ -415,15 +425,15 @@ public class Controller
 						}
 						else if(action == 9)
 						{
-							System.out.println("Ingrese la capacidad ");
+							System.out.println("Ingrese la capacidad (e.g., 20):");
 							int capacidad = Integer.parseInt(sc.nextLine());
 							persistencia.requerimientoConsulta4(capacidad);
 						}
 						else if(action == 10)
 						{
-							System.out.println("Ingrese el documento de la persona que desea consultar (e.g. 7)");
+							System.out.println("Ingrese el documento de la persona que desea consultar (e.g., 7)");
 							Long idAfiliado = Long.parseLong(sc.nextLine());
-							System.out.println("Ingrese la fecha de inicio desde la cual desea consultar (e.g.2012-06-05) ");
+							System.out.println("Ingrese la fecha de inicio desde la cual desea consultar (e.g., 2012-06-05)");
 							String fechaS = sc.nextLine();
 							Fecha fechaInicial = persistencia.darFecha(fechaS);
 							if(fechaInicial == null)
@@ -431,7 +441,7 @@ public class Controller
 					           persistencia.adicionarFecha(fechaS);
 					           fechaInicial = persistencia.darFecha(fechaS);
 							}
-							System.out.println("Ingrese la fecha limite para la busqueda (e.g 2012-06-08)");
+							System.out.println("Ingrese la fecha limite para la busqueda (e.g., 2012-06-08)");
 							fechaS = sc.nextLine();
 							Fecha fechaFinal = persistencia.darFecha(fechaS);
 							if(fechaFinal == null)

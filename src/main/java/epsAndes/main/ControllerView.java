@@ -26,7 +26,7 @@ public class ControllerView
 	{
 		print("--------------------------------------------------");
 		print("Ingrese el numero de la accion que desea ejecutar:");
-		print("1. Reservar una cita de servicio de salud");
+		print("1. [RF8] Reservar una cita de servicio de salud");
 		print("0. Salir del programa");
 	}
 	
@@ -37,7 +37,7 @@ public class ControllerView
 	{
 		print("--------------------------------------------------");
 		print("Ingrese el numero de la accion que desea ejecutar:");
-		print("1. Registrar una orden de servicio de salud");
+		print("1. [RF7] Registrar una orden de servicio de salud");
 		print("0. Salir del programa");
 	}
 	
@@ -48,7 +48,7 @@ public class ControllerView
 	{
 		print("--------------------------------------------------");
 		print("Ingrese el numero de la accion que desea ejecutar:");
-		print("1. Registrar la prestación de un servicio de salud");
+		print("1. [RF9] Registrar la prestación de un servicio de salud");
 		print("0. Salir del programa");
 	}
 	
@@ -57,14 +57,18 @@ public class ControllerView
 	 */
 	public static void printMenuAdministrador()
 	{
-		print("--------------------------------------------------");
+		print("--------------------------------------------------------------------------------------------------------------------");
 		print("Ingrese el numero de la accion que desea ejecutar:");
-		print("1. Registrar roles");
-		print("2. Registrar IPS");
-		print("3. Registrar Medico");
-		print("4. Registrar Afiliado");
-		print("5. Registrar Servicio de salud");
-		print("6. Mostrar los 20 servicios mas solicitados");
+		print("1. [RF1] Registrar roles");
+		print("2. [RF3] Registrar IPS");
+		print("3. [RF4] Registrar Medico");
+		print("4. [RF5] Registrar Afiliado");
+		print("5. [RF6] Registrar Servicio de salud");
+		print("6. [RFC2] Mostrar los 20 servicios mas solicitados");
+		print("7. [RFC1] Mostrar la cantidad de servicios prestados por cada IPS durante un periodo de tiempo y en el año corrido.");
+		print("8. [RFC3] Mostrar el índice de uso de cada uno de los servicios provistos.");
+		print("9. [RFC4] Dar servicios con capacidad mayor a una capacidad.");
+		print("10. [RFC5] Mostrar la utilización de servicios de EPSAndes por un afiliado dado en un rango de fechas indicado.");
 		print("0. Salir del programa");
 	}
 	

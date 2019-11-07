@@ -1,15 +1,12 @@
 package epsAndes.persistencia;
 
 
-import java.math.BigDecimal;
-
-import java.util.List;
+import epsAndes.negocio.Servicio;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Rol;
-import epsAndes.negocio.Servicio;
+import java.math.BigDecimal;
+import java.util.List;
 
 
 class SQLServicio {
@@ -46,7 +43,14 @@ class SQLServicio {
 		q.setParameters(capacidad);
 		return q.executeList();
 	}
-	
+
+	public List<Object> darServiciosPorTipo(PersistenceManager pm, long idTipo)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicio() + " WHERE TipoServicio = ?");
+		q.setParameters(idTipo);
+		return q.executeList();
+	}
+
 	public Servicio darServicioPorId(PersistenceManager pm, Long id)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaServicio() + " WHERE id = ?");
