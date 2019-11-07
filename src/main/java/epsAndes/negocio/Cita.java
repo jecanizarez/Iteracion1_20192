@@ -1,7 +1,5 @@
 package epsAndes.negocio;
 
-import java.sql.Date;
-
 public class Cita implements VOCita {
 
 	

@@ -1,10 +1,9 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.Rol;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Rol;
-import uniandes.isis2304.parranderos.negocio.Bebedor;
 
 class SQLRol {
 

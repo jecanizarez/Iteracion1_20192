@@ -15,15 +15,14 @@
 
 package uniandes.isis2304.parranderos.persistencia;
 
+import uniandes.isis2304.parranderos.negocio.Visitan;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-
-import uniandes.isis2304.parranderos.negocio.Visitan;
 
 /**
  * Clase que encapsula los métodos que hacen acceso a la base de datos para el concepto VISITAN de Parranderos

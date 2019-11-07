@@ -15,11 +15,9 @@
 
 package uniandes.isis2304.parranderos.interfazDemo;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 /**
  * Clase de interfaz para mostrar los resultados de la ejecución de las 

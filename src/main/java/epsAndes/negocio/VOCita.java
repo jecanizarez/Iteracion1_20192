@@ -1,7 +1,5 @@
 package epsAndes.negocio;
 
-import java.sql.Date;
-
 public interface VOCita {
 
 	public long getIdServicio();

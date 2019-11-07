@@ -1,12 +1,11 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.TipoServicio;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import epsAndes.negocio.Rol;
-import epsAndes.negocio.TipoServicio;
-
-class SQLTipoServicio {
+public class SQLTipoServicio {
 
 	private final static String SQL = PersistenciaEpsAndes.SQL;
 	
@@ -26,7 +25,7 @@ class SQLTipoServicio {
 	
 	public TipoServicio buscarTipoServicioPorNombre(PersistenceManager pm, String nombre)
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE TIPO = ?");
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaTipoServicio() + " WHERE TIPO = ? ");
 		q.setResultClass(TipoServicio.class);
 		q.setParameters(nombre);
 		return (TipoServicio) q.executeUnique();

@@ -58,15 +58,17 @@ public class Controller
 								System.out.println("El servicio especificado no existe.");
 								continue;
 							}
-							List<Object> listaDisponibilidad = persistencia.darUltFechaIdYHoraServicio(servicio.getId());
+							List<Object> listaDisponibilidad = persistencia.darServicioPorIdTipo(servicio.getId());
 							if(listaDisponibilidad.isEmpty())
 							{
 								ControllerView.print("No hay servicios de " + tipo + ".");
 								continue;
 							}
 							Object[] datos = (Object[])listaDisponibilidad.get(0);
-							Fecha fecha = persistencia.darFechaPorId(((BigDecimal)datos[1]).longValue());
-							System.out.println("Puedes inscribir desde: " + fecha.getFecha());
+							Date date = new Date();
+							SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+							String fecha = formatter.format(date);
+							System.out.println("Puedes inscribir desde: " + fecha);
 							System.out.println("Desde la hora: " +((BigDecimal)datos[2]).longValue());
 							System.out.println("Hasta la hora: " +((BigDecimal)datos[3]).longValue());
 							System.out.println("Ingrese la fecha que desee");
@@ -510,8 +512,6 @@ public class Controller
 							}
 							persistencia.rehabilitarServicios(servicio.getId(), ips.getId());
 							System.out.println("Se rehabilitaron los servicios de tipo: " + tipoServicio + " de la ips " + ips.getNombre());
-								
-							
 						}
 						else if(action == 13)
 						{
@@ -557,20 +557,16 @@ public class Controller
 			}
 			else if(usuario.getRol() == 6) // caso Organizador
 			{
-
+				ControllerView.print("Bienvenido organizador.");
 				ControllerView.printMenuOrganizador();
 				int opcion = Integer.parseInt(sc.nextLine());
 				
 				if(opcion == 1)
 				{
 					System.out.println("Ingrese el nombre de la campaña");
-
 					String nombreCampaña = sc.nextLine();
-
 					String sConsultaEspecialista = "ConsultaEspecialista";
-
 					TipoServicio tipo = persistencia.darTipoServicioPorNombre(sConsultaEspecialista);
-
 					if(tipo == null)
 					{
 						System.out.println("El tipo especificado no existe");
@@ -579,35 +575,28 @@ public class Controller
 					Long cantidadIPS = persistencia.darCuantasIPSDanServicio(tipo.getId());
 					System.out.println("Ingrese la cantidad de Consultas con el especialista que se necesitan: ");
 					int cantidadConsultasEspecialista = Integer.parseInt(sc.nextLine());
-
 					Long cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
 					if(cantidadConsultasEspecialista > cantidadDisponible - cantidadIPS)
 					{
 						System.out.println("La cantidad solicitada supera a la canitdad disponible");
 						continue;
 					}
-
-					String sTerapia = "Terapia"; 
+					String sTerapia = "Terapia";
 					tipo = persistencia.darTipoServicioPorNombre(sTerapia);
 					if(tipo == null)
 					{
 						System.out.println("El tipo especificado no existe");
 						continue;
 					}
-
-
-					System.out.println("Ingrese el numero de terapias que se necesitan");
+					System.out.println("Ingrese el numero de Terapias que se necesitan:");
 					int cantidadTerapias = Integer.parseInt(sc.nextLine());
 					cantidadDisponible = persistencia.darCapacidadDisponiblePorTipoServicio(tipo.getId());
-
 					if(cantidadTerapias > cantidadDisponible - cantidadIPS)
 					{
-						System.out.println("La cantidad solicitada supera a la cantidad disponible");
+						System.out.println("La cantidad solicitada supera a la cantidad disponible.");
 						continue;
 					}
-
 					String sExamenes = "Examenes";
-
 					tipo = persistencia.darTipoServicioPorNombre(sExamenes);
 					if(tipo == null)
 					{
@@ -621,13 +610,11 @@ public class Controller
 
 					if(cantidadExamenes > cantidadDisponible - cantidadIPS)
 					{
-						System.out.println("La cantidad solicitada supera a la cantidad disponible");
+						System.out.println("La cantidad solicitada supera a la cantidad disponible.");
 						continue;
 					}
-
 					persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
-
-					System.out.println("Se registro la campaña");
+					System.out.println("Se registro la campaña.");
 				}
 				else if(opcion == 2)
 				{

@@ -15,46 +15,24 @@
 
 package uniandes.isis2304.parranderos.interfazDemo;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.util.List;
-
-import javax.jdo.JDODataStoreException;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
+import org.apache.log4j.Logger;
 import uniandes.isis2304.parranderos.interfazApp.PanelDatos;
-import uniandes.isis2304.parranderos.negocio.Parranderos;
-import uniandes.isis2304.parranderos.negocio.VOBar;
-import uniandes.isis2304.parranderos.negocio.VOBebedor;
-import uniandes.isis2304.parranderos.negocio.VOBebida;
-import uniandes.isis2304.parranderos.negocio.VOGustan;
-import uniandes.isis2304.parranderos.negocio.VOSirven;
-import uniandes.isis2304.parranderos.negocio.VOTipoBebida;
-import uniandes.isis2304.parranderos.negocio.VOVisitan;
+import uniandes.isis2304.parranderos.negocio.*;
+
+import javax.jdo.JDODataStoreException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.lang.reflect.Method;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Clase principal de la interfaz

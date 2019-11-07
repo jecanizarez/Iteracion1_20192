@@ -59,8 +59,9 @@ INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('afil14', 1, 20, 1, 'afil14');
 INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
 VALUES ('afil15', 1, 21, 1, 'afil15');
+-- Organizador de la campaña.
 INSERT INTO Usuario(Login, Rol, Documento, TipoDocumento, Nombre)
-VALUES ('CAMAPAÑA', 6, 22, 1, 'CAMPAÑA');
+VALUES ('org1', 6, 22, 1, 'org1');
 
 -- Se crea una fecha de nacimiento genérica:
 INSERT INTO Fecha(Fecha) VALUES ('15-12-1997');
@@ -94,10 +95,9 @@ INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (20, 1, 1);
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (21, 1, 1);
+-- El organizador es afiliado.
 INSERT INTO Afiliado(Documento, FechaNacimiento, EPS)
 VALUES (22, 1, 1);
-
-
 
 
 --Servicio
@@ -105,6 +105,15 @@ INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, est
 INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado, capacidadActual) VALUES (30,1,20,1,1, 'Disponible',30);
 INSERT INTO SERVICIO (capacidad, horaInicio, horafinal, tiposervicio, idIps, estado, capacidadActual) VALUES (30,1,20,2,1,'Disponible',30);
 
+-- Prestan servicio:
+INSERT INTO PrestanServicio(IdIps, IdServicio) VALUES (1, 1);
+INSERT INTO PrestanServicio(IdIps, IdServicio) VALUES (1, 2);
+INSERT INTO PrestanServicio(IdIps, IdServicio) VALUES (1, 3);
+
+-- Servicio médico:
+INSERT INTO ServicioMedico(IdMedico, IdServicio) VALUES (3, 1);
+INSERT INTO ServicioMedico(IdMedico, IdServicio) VALUES (4, 2);
+INSERT INTO ServicioMedico(IdMedico, IdServicio) VALUES (5, 3);
 
 
 --Citas realmente efectuadas

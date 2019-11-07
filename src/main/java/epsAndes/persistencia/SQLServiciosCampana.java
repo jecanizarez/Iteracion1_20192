@@ -1,10 +1,9 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.ServiciosCampana;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Cita;
-import epsAndes.negocio.ServiciosCampana;
 
 class SQLServiciosCampana{
 

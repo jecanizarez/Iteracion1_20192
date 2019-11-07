@@ -1,11 +1,9 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.Fecha;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Cita;
-import epsAndes.negocio.Fecha;
-import epsAndes.negocio.Rol;
 
 class SQLFecha {
 

@@ -1,10 +1,9 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.Medico;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Medico;
-import epsAndes.negocio.Rol;
 
 class SQLMedico {
 

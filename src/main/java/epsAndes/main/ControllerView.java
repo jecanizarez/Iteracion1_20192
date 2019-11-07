@@ -14,7 +14,8 @@ public class ControllerView
 		print("----------------------------------------------");
 		print("Ingrese su login (genericos, 'admin1' para rol Admin,");
 		print("'gerente1' para rol Gerente, 'med1' para rol Medico,");
-		print("'afil1' para rol Afiliado y 'recep1' para rol Recepcionista).");
+		print("'afil1' para rol Afiliado, 'recep1' para rol Recepcionista ");
+		print("o 'org1' para el rol de Organizador de campaña).");
 		print("-------------------------------------------------------------");
 		print("No ingrese comillas sencillas o dobles:\n");
 	}
@@ -69,6 +70,11 @@ public class ControllerView
 		print("8. [RFC3] Mostrar el índice de uso de cada uno de los servicios provistos.");
 		print("9. [RFC4] Dar servicios con capacidad mayor a una capacidad.");
 		print("10. [RFC5] Mostrar la utilización de servicios de EPSAndes por un afiliado dado en un rango de fechas indicado.");
+		print("11. [RF12] Deshabilitar servicios de salud.");
+		print("12. [RF13] Registrar la reapertura de servicios de salud.");
+		print("13. [RFC6] Analizar la operación de EPSAndes.");
+		print("14. [RFC7] Encontrar los afiliados exigentes.");
+		print("15. [RFC8] Encontrar los servicios que no tienen mucha demanda.");
 		print("0. Salir del programa");
 	}
 	
@@ -76,8 +82,8 @@ public class ControllerView
 	{
 		print("--------------------------------------------------");
 		print("Ingrese el numero de la accion que desea ejecutar:");
-		print("1. Registrar Campaña");
-		print("2. Cancelar Campaña");
+		print("1. [RF10] Registrar Campaña");
+		print("2. [RF11] Cancelar Campaña");
 		print("0. Salir del programa");
 	}
 	

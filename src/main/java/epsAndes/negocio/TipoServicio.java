@@ -2,9 +2,9 @@ package epsAndes.negocio;
 
 public class TipoServicio implements VOTipoServicio{
 
-	private long id; 
+	public long id;
 	
-	private String tipo;
+	public String tipo;
 	
 	public TipoServicio(long id , String tipo)
 	{

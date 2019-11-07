@@ -1,11 +1,9 @@
 package epsAndes.persistencia;
 
+import epsAndes.negocio.IPS;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.IPS;
-import epsAndes.negocio.TipoServicio;
-import epsAndes.negocio.Usuario;
 
 class SQLIPS {
 

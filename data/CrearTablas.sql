@@ -200,9 +200,9 @@ IdServicio NUMBER,
 IdAfiliado NUMBER,
 IdRecepcionista NUMBER,
 CONSTRAINT Citas_PK PRIMARY KEY (Id),
-CONSTRAINT Citas_Fecha_FK FOREIGN KEY (Fecha) REFERENCES Fechxa(Id),
-CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id)
-CONSTRAINT Citas_IdAfiliado_FK FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(documento)
+CONSTRAINT Citas_Fecha_FK FOREIGN KEY (Fecha) REFERENCES Fecha(Id),
+CONSTRAINT Citas_IdServicio_FK FOREIGN KEY (IdServicio) REFERENCES Servicio(Id),
+CONSTRAINT Citas_IdAfiliado_FK FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(documento),
 CONSTRAINT Citas_Recepcionista_FK FOREIGN KEY (IdRecepcionista) REFERENCES Recepcionista(documento));
 
 -- Tabla de campaña:

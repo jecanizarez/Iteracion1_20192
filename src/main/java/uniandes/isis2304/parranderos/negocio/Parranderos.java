@@ -15,13 +15,13 @@
 
 package uniandes.isis2304.parranderos.negocio;
 
+import com.google.gson.JsonObject;
+import org.apache.log4j.Logger;
+import uniandes.isis2304.parranderos.persistencia.PersistenciaParranderos;
+
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
-import com.google.gson.JsonObject;
-import uniandes.isis2304.parranderos.persistencia.PersistenciaParranderos;
 
 /**
  * Clase principal del negocio

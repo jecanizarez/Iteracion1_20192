@@ -7,9 +7,9 @@ DROP TABLE PrestanServicio;
 
 DROP TABLE ServiciosAfiliado;
 
-DROP TABLE ServiciosCampaña;
+DROP TABLE ServiciosCampana;
 
-DROP TABLE Campaña;
+DROP TABLE Campana;
 
 DROP TABLE Trabajan;
 

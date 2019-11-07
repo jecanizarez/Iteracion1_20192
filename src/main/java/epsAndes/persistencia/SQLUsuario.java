@@ -1,12 +1,9 @@
  package epsAndes.persistencia;
 
- import java.util.List;
+ import epsAndes.negocio.Usuario;
 
-import javax.jdo.PersistenceManager;
+ import javax.jdo.PersistenceManager;
  import javax.jdo.Query;
-
-import epsAndes.negocio.Usuario;
-import uniandes.isis2304.parranderos.negocio.Bar;
  
 class SQLUsuario {
 

@@ -1,12 +1,8 @@
 package epsAndes.persistencia;
 
-import java.util.List;
-
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import epsAndes.negocio.Campana;
-import epsAndes.negocio.Rol;
+import java.util.List;
 
 class SQLCampana{
 

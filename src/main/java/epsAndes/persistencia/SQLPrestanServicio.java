@@ -1,15 +1,11 @@
 package epsAndes.persistencia;
 
-import java.math.BigDecimal;
-import java.util.List;
+import epsAndes.negocio.Cita;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-
-import com.sun.org.apache.bcel.internal.generic.IDIV;
-
-import epsAndes.negocio.Cita;
-import epsAndes.negocio.ServiciosAfiliado;
+import java.math.BigDecimal;
+import java.util.List;
 
 class SQLPrestanServicio {
 
@@ -94,8 +90,8 @@ class SQLPrestanServicio {
 				+ " AND estado = ?"
 				+ " GROUP BY TipoServicio");
 		q.setParameters(idTipoServicio, "Disponible");
-		return ((BigDecimal)q.executeUnique()).longValue();
-		
+		BigDecimal result = (BigDecimal) q.executeUnique();
+		return result == null ? 0 : result.longValue();
 	}
 	 
 	public Long darCuantasIPSDanServicio(PersistenceManager pm, Long idTipoServicio)

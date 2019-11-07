@@ -1,7 +1,5 @@
 package epsAndes.negocio;
 
-import java.sql.Date;
-
 public class Fecha implements VOFecha{
     
 	public long id;

@@ -26,4 +26,6 @@ INSERT INTO EPS(Nombre) VALUES ('EPSAndes');
 -- Inicialización de las IPS:
 INSERT INTO IPS(Nombre, Localizacion) 
 VALUES ('Fundacion Santa Fe de Bogota', 'Cra. 7 ##117 -15');
+-- Trabajan:
+INSERT INTO Trabajan(IdEPS, IdIPS) VALUES (1, 1);
 COMMIT;
