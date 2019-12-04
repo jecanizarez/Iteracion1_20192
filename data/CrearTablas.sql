@@ -7,24 +7,24 @@ CREATE SEQUENCE EPS_sequence;
 -- Tabla de Rol:
 CREATE TABLE Rol(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Rol VARCHAR2(255 BYTE) NOT NULL,
+Rol VARCHAR2(32 BYTE) NOT NULL,
 CONSTRAINT Rol_Rol_Unique UNIQUE (Rol),
 CONSTRAINT Rol_PK PRIMARY KEY (ID));
 
 -- Tabla TipoDocumento:
 CREATE TABLE TipoDocumento(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-TipoDocumento VARCHAR2(255 BYTE) NOT NULL,
+TipoDocumento VARCHAR2(32 BYTE) NOT NULL,
 CONSTRAINT TD_TipoDocumento_Unique UNIQUE (TipoDocumento),
 CONSTRAINT TD_PK PRIMARY KEY(Id));
 
 -- Tabla Usuario:
 CREATE TABLE Usuario(
-Login VARCHAR2(255 BYTE),
+Login VARCHAR2(32 BYTE),
 Rol NUMBER,
 Documento NUMBER,
 TipoDocumento NUMBER,
-Nombre VARCHAR2(255 BYTE),
+Nombre VARCHAR2(48 BYTE) NOT NULL,
 CONSTRAINT Usuario_Login_Unique UNIQUE (Login),
 CONSTRAINT Usuario_PK PRIMARY KEY (Login, Documento),
 CONSTRAINT Usuario_Documento_CK CHECK(Documento >= 0),
@@ -35,8 +35,8 @@ CONSTRAINT Usuario_TipoDocumento_FK FOREIGN KEY (TipoDocumento) REFERENCES TipoD
 -- Tabla de IPS:
 CREATE TABLE IPS(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Nombre VARCHAR2(255 BYTE) NOT NULL,
-Localizacion VARCHAR2(255 BYTE) NOT NULL,
+Nombre VARCHAR2(48 BYTE) NOT NULL,
+Localizacion VARCHAR2(32 BYTE) NOT NULL,
 CONSTRAINT IPS_PK PRIMARY KEY (Id),
 CONSTRAINT IPS_Nombre_Unique UNIQUE (Nombre));
 
@@ -52,7 +52,7 @@ CONSTRAINT Recepcionista_Documento_FK FOREIGN KEY (Documento) REFERENCES Usuario
 CREATE TABLE Medico(
 NumRegistroMed NUMBER,
 Documento NUMBER,
-Especialidad VARCHAR2(255 BYTE) NOT NULL,
+Especialidad VARCHAR2(32 BYTE) NOT NULL,
 IPS NUMBER,
 CONSTRAINT Medico_Documento_Unique UNIQUE (Documento),
 CONSTRAINT Medico_PK PRIMARY KEY (NumRegistroMed, Documento),
@@ -64,14 +64,14 @@ CONSTRAINT Medico_Documento_FK FOREIGN KEY (Documento) REFERENCES Usuario(Docume
 -- Tabla de Fecha:
 CREATE TABLE Fecha(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Fecha VARCHAR2(255 BYTE) NOT NULL,
+Fecha VARCHAR2(16 BYTE) NOT NULL,
 CONSTRAINT Fecha_PK PRIMARY KEY (Id),
 CONSTRAINT Fecha_Fecha_Unique UNIQUE (Fecha));
 
 -- Tabla de EPS:
 CREATE TABLE EPS(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Nombre VARCHAR2(255 BYTE) NOT NULL,
+Nombre VARCHAR2(16 BYTE) NOT NULL,
 CONSTRAINT EPS_PK PRIMARY KEY (Id));
 
 -- Tabla de Afiliado:
@@ -91,7 +91,7 @@ CONSTRAINT Afiliado_FechaNacimiento_FK FOREIGN KEY (FechaNacimiento) REFERENCES 
 -- Tabla de TipoServicio:
 CREATE TABLE TipoServicio(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Tipo VARCHAR2(255 BYTE) NOT NULL,
+Tipo VARCHAR2(32 BYTE) NOT NULL,
 CONSTRAINT TipoServicio_PK PRIMARY KEY (Id),
 CONSTRAINT TipoServicio_Tipo_Unique UNIQUE (Tipo),
 CONSTRAINT TipoServicio_Tipo_CK CHECK (Tipo IN ('ConsultaEmergencia', 'ConsultaEspecialista', 
@@ -105,7 +105,7 @@ HoraInicio NUMBER NOT NULL,
 HoraFinal NUMBER NOT NULL,
 TipoServicio NUMBER,
 IdIPS NUMBER,
-Estado VARCHAR2(255 BYTE) NOT NULL,
+Estado VARCHAR2(16 BYTE) NOT NULL,
 CapacidadActual NUMBER NOT NULL,
 CONSTRAINT Servicio_PK PRIMARY KEY (Id),
 CONSTRAINT Servicio_Capacidad_CK CHECK (Capacidad > 0),
@@ -139,7 +139,7 @@ CREATE TABLE ServiciosAfiliado(
 --IdServicio NUMBER,
 IdTipoServicio NUMBER,
 IdAfiliado NUMBER,
-FechaAsistida VARCHAR2(255 BYTE) NOT NULL,
+FechaAsistida VARCHAR2(16 BYTE) NOT NULL,
 IPS NUMBER,
 CONSTRAINT SA_PK PRIMARY KEY (IdTipoServicio, IdAfiliado, FechaAsistida),
 CONSTRAINT SA_IPS_FK FOREIGN KEY (IPS) REFERENCES IPS(Id),
@@ -178,7 +178,7 @@ CONSTRAINT Ordenes_TipoServicio_FK FOREIGN KEY (TipoServicio) REFERENCES TipoSer
 -- Tabla de Prioridad:
 CREATE TABLE Prioridad(
 Id NUMBER GENERATED ALWAYS AS IDENTITY,
-Prioridad VARCHAR2(255 BYTE) NOT NULL,
+Prioridad VARCHAR2(8 BYTE) NOT NULL,
 CONSTRAINT Prioridad_PK PRIMARY KEY (Id),
 CONSTRAINT Prioridad_Prioridad_Unique UNIQUE (Prioridad),
 CONSTRAINT Prioridad_Prioridad_CK CHECK (Prioridad IN ('Baja', 'Media', 'Alta')));
@@ -222,18 +222,3 @@ CantidadReservada NUMBER NOT NULL,
 CONSTRAINT ServiciosCampana_PK PRIMARY KEY (idTipoServicio, idCampana),
 CONSTRAINT CampanaServicio_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT CampanaId_FK FOREIGN KEY (idCampana) REFERENCES Campana(Id));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
