@@ -9,6 +9,8 @@ DROP TABLE ServiciosAfiliado;
 
 DROP TABLE ServiciosCampana;
 
+DROP TABLE AfiliadosCampana;
+
 DROP TABLE Campana;
 
 DROP TABLE Trabajan;
@@ -19,9 +21,9 @@ DROP TABLE Ordenes;
 
 DROP TABLE ConsultaEmergencia;
 
-DROP TABLE Recepcionista;
-
 DROP TABLE Citas;
+
+DROP TABLE Recepcionista;
 
 DROP TABLE Afiliado;
 

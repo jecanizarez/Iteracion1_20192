@@ -150,8 +150,6 @@ CONSTRAINT SA_IdAfiliado FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(Documento)
 CREATE TABLE Trabajan(
 IdEPS NUMBER,
 IdIPS NUMBER,
-CONSTRAINT Trabajan_IdEPS_Unique UNIQUE (IdEPS),
-CONSTRAINT Trabajan_IdIPS_Unique UNIQUE (IdIPS),
 CONSTRAINT Trabajan_PK PRIMARY KEY (IdEPS, IdIPS),
 CONSTRAINT Trabajan_IdEPS_FK FOREIGN KEY (IdEPS) REFERENCES EPS(Id),
 CONSTRAINT Trabajan_IdIPS_FK FOREIGN KEY (IdIPS) REFERENCES IPS(Id));
@@ -222,3 +220,13 @@ CantidadReservada NUMBER NOT NULL,
 CONSTRAINT ServiciosCampana_PK PRIMARY KEY (idTipoServicio, idCampana),
 CONSTRAINT CampanaServicio_FK FOREIGN KEY (idTipoServicio) REFERENCES TipoServicio(Id),
 CONSTRAINT CampanaId_FK FOREIGN KEY (idCampana) REFERENCES Campana(Id));
+
+-- Tabla de afiliados en campaña:
+CREATE TABLE AfiliadosCampana(
+IdAfiliado NUMBER,
+IdCampana NUMBER,
+CONSTRAINT AC_PK PRIMARY KEY (idAfiliado, idCampana),
+CONSTRAINT AC_IdAfiliado_FK FOREIGN KEY (IdAfiliado) REFERENCES Afiliado(documento),
+CONSTRAINT AC_IdCampana_FK FOREIGN KEY (IdCampana) REFERENCES Campana(Id));
+
+COMMIT;
