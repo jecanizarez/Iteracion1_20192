@@ -75,6 +75,7 @@ public class ControllerView
 		print("13. [RFC6] Analizar la operación de EPSAndes.");
 		print("14. [RFC7] Encontrar los afiliados exigentes.");
 		print("15. [RFC8] Encontrar los servicios que no tienen mucha demanda.");
+		print("16. [RFC9] Consultar la prestación de servicios en EPSAndes.");
 		print("0. Salir del programa");
 	}
 	

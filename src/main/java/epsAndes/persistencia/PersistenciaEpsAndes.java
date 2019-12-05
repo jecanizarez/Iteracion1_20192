@@ -1014,6 +1014,23 @@ public class PersistenciaEpsAndes {
 
 		}
 	}
+	public void registrarCampania(long idOrganizador, String nombre)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlCampaña.adicionarCampaña(pm, nombre, idOrganizador);
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			tx.rollback();
+		}
+	}
+
 	public void registrarCampaña(int cantidadConsultasEspecialista, int cantidadTerapias, int cantidadExamenes, long idOrganizadorCampaña, String nombreCampaña)
 	{
 
@@ -1258,6 +1275,15 @@ public class PersistenciaEpsAndes {
 			}
 			pm.close();
 		} 
+	}
+
+	public List<Object> RFC9()
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Query q = pm.newQuery(SQL, "SELECT u.Nombre, ts.Tipo, sa.FechaAsistida, i.Nombre FROM " +
+				"Afiliado a, Usuario u, ServiciosAfiliado sa, TipoServicio ts, IPS i " +
+				"WHERE a.Documento = u.Documento AND sa.IdAfiliado = a.Documento AND sa.IdTipoServicio = ts.Id;");
+		return  q.executeList();
 	}
 
 	public void cancelarServiciosCampaña(Long idOrganizador)

@@ -548,6 +548,11 @@ public class Controller
 						{
 							persistencia.requerimientoConsulta8();
 						}
+						else if(action == 16)
+						{
+							List<Object> list = persistencia.RFC9();
+							System.out.println(list);
+						}
 					}
 					
 					
@@ -613,7 +618,8 @@ public class Controller
 						System.out.println("La cantidad solicitada supera a la cantidad disponible.");
 						continue;
 					}
-					persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
+					//persistencia.registrarCampaña(cantidadConsultasEspecialista, cantidadTerapias, cantidadExamenes, usuario.getRol(), nombreCampaña);
+					persistencia.registrarCampania(usuario.getDocumento(), nombreCampaña);
 					System.out.println("Se registro la campaña.");
 				}
 				else if(opcion == 2)

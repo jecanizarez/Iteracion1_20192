@@ -166,3 +166,6 @@ ORA-00001: unique constraint (ISIS2304B051920.FECHA_FECHA_UNIQUE) violated
 18:35:53,565 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO FECHA (Fecha) values (?)".
 ORA-00001: unique constraint (ISIS2304B051920.FECHA_FECHA_UNIQUE) violated
 
+08:27:24,287 (main) ERROR [epsAndes.persistencia.PersistenciaEpsAndes] - Exception : Error executing SQL query "INSERT INTO CAMPANA (nombre, idOrganizador) values (?, ?)".
+ORA-02291: integrity constraint (ISIS2304B051920.CMP_IDORGANIZADOR_FK) violated - parent key not found
+
